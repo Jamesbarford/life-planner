@@ -1,7 +1,12 @@
 import * as React from "react";
 import { render } from "react-dom";
-import "./style.scss";
+import { DateRenderer } from "../dates/DateRender";
 
-const App = () => <div className="example">hello world</div>;
+import "./style.scss";
+class App extends React.Component<{}, {}> {
+  render() {
+    return ( <DateRenderer /> );
+  }
+}
 
 render( <App />, document.getElementById("root") );
