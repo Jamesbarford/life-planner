@@ -48,7 +48,7 @@ export class NormaliseDate {
    * @returns {*} Full date and local time.
    * @example
    * NormaliseDate.getEpochDate();
-   * => Sat Jan 05 2019 22:11:54 GMT+0000 (Greenwich Mean Time)
+   * => "Sat Jan 05 2019 22:11:54 GMT+0000 (Greenwich Mean Time)"
    */
   static getEpochDate(): Date {
     return new Date();
