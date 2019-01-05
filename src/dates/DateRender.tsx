@@ -15,6 +15,7 @@ interface DateRendererProps {
   showMonth?: boolean;
   showYear?: boolean;
   showAll?: boolean;
+  showSeconds?: boolean;
 }
 
 export class DateRenderer extends React.Component<
@@ -29,7 +30,7 @@ export class DateRenderer extends React.Component<
       day: NormaliseDate.getDayName(),
       month: NormaliseDate.getCurrentMonthName(),
       year: NormaliseDate.getYear(),
-      showSeconds: false
+      showSeconds: this.props.showSeconds || false
     }
   }
 
