@@ -241,7 +241,6 @@ export class NormaliseDate {
     return newYear;
   }
 
-
   /**
    * 
    * @param year A numeric value for the year.

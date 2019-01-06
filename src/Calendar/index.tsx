@@ -31,16 +31,14 @@ export class Calendar extends React.Component<{}, CalendarState> {
 
   setDate = () => {
     const {
-      day,
       month,
       year,
       date
     } = this.state;
 
-    const setDate = NormaliseDate.setFullDate(year, month, date);
-    console.log({date});
+    const newDate = NormaliseDate.setFullDate(year, month, date);
 
-    return date;
+    return newDate;
   }
 
   nextYear = () => this.setState({ year: this.state.year + 1 });
