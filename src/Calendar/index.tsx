@@ -5,6 +5,7 @@ interface CalendarState {
   day: number;
   month: number;
   year: number;
+  date: number;
 }
 
 export class Calendar extends React.Component<{}, CalendarState> {
@@ -12,7 +13,8 @@ export class Calendar extends React.Component<{}, CalendarState> {
   state = {
     day: NormaliseDate.currentDayNumerical(),
     month: NormaliseDate.currentMonthNumerical(),
-    year: NormaliseDate.getYear()
+    year: NormaliseDate.getYear(),
+    date: NormaliseDate.getDate()
   }
 
   previousMonth = () => {
@@ -27,6 +29,20 @@ export class Calendar extends React.Component<{}, CalendarState> {
     return this.setState({ month: nextMonth });
   }
 
+  setDate = () => {
+    const {
+      day,
+      month,
+      year,
+      date
+    } = this.state;
+
+    const setDate = NormaliseDate.setFullDate(year, month, date);
+    console.log({date});
+
+    return date;
+  }
+
   nextYear = () => this.setState({ year: this.state.year + 1 });
 
   previousYear = () => this.setState({ year: this.state.year - 1 });
@@ -38,7 +54,8 @@ export class Calendar extends React.Component<{}, CalendarState> {
       year
     } = this.state
 
-    console.log({day, month, year})
+    this.setDate()
+
     return (
       <>
         <div>current month: {NormaliseDate.getCurrentMonthName(month)}</div>

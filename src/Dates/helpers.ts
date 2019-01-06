@@ -39,12 +39,14 @@ const dayNames = [
 ];
 
 /**
+ * 
  * @class NormaliseDate
  * 
  * A utlity class providing some absractions and helpers for the built in Date Api
  */
 export class NormaliseDate {
   /**
+   * 
    * @param date Epoch time in setMilliseconds.
    * @returns {*} Full date and local time.
    * @example
@@ -57,6 +59,7 @@ export class NormaliseDate {
   };
 
   /**
+   * 
    * @returns {*} Month as a number 0 - 11.
    * @example
    * NormaliseDate.currentMonthNumerical();
@@ -67,6 +70,18 @@ export class NormaliseDate {
   }
 
   /**
+   * 
+   * @returns {*} day of month as a number
+   * @example
+   * NormaliseDate.dayOfMonthNumerical();
+   * => 27
+   */
+  static getDate(): number {
+    return NormaliseDate.getFullDate().getDate();
+  }
+
+  /**
+   * 
    * @returns {*} Month as a number 0 - 6.
    * @example
    * NormaliseDate.currentDayNumerical();
@@ -77,6 +92,7 @@ export class NormaliseDate {
   }
 
   /**
+   * 
    * @returns {*} Year as a number.
    * @example
    * NormaliseDate.getYear();
@@ -87,6 +103,7 @@ export class NormaliseDate {
   }
 
   /**
+   * 
    * @returns {*} Hours as a 1 - 24.
    * @example
    * NormaliseDate.getHours();
@@ -97,6 +114,7 @@ export class NormaliseDate {
   }
   
   /**
+   * 
    * @returns {*} minutes as a number, to 2 floating points.
    * @example 
    * NormaliseDate.getMinutes();
@@ -107,6 +125,7 @@ export class NormaliseDate {
   }
 
   /**
+   * 
    * @returns {*} seconds as a number, to 2 floating points.
    * @example 
    * NormaliseDate.getSeconds();
@@ -117,6 +136,7 @@ export class NormaliseDate {
   }
   
   /**
+   * 
    * @returns {*} month as a string.
    * @param {*} month passed in as numeric value.
    * @example 
@@ -129,6 +149,7 @@ export class NormaliseDate {
   }
 
   /**
+   * 
    * @returns {*} day as a string.
    * @param {*} day passed in as numeric value.
    * @example 
@@ -141,6 +162,7 @@ export class NormaliseDate {
   }
 
   /**
+   * 
    * @param {showSeconds} boolean as to whether to show seconds on clock
    * @returns {*} time as a string.
    * @example 
@@ -177,20 +199,65 @@ export class NormaliseDate {
   }
 
   /**
+   *
+   * @param date A numeric value for the date 1 - 31.
+   * @returns {*} `Date`
+   * @example
+   * NormaliseDate.setDate(21);
+   * => "Thu Dec 21 2018 22:45:49 GMT+0000 (Greenwich Mean Time)"
+   */
+  static setDate(day: number): Date {
+    const setDate = NormaliseDate.getFullDate();
+    setDate.setDate(day);
+    return setDate;
+  }
+
+  /**
+   *
+   * @param year A numeric value for the month 0 - 11.
+   * @returns {*} `Date`
+   * @example
+   * NormaliseDate.setMonth(2);
+   * => "Thu Dec 02 2018 22:45:49 GMT+0000 (Greenwich Mean Time)"
+   */
+  static setMonth(month: number): Date {
+    const newMonth = NormaliseDate.getFullDate();
+    newMonth.setMonth(month);
+    return newMonth;
+
+  }
+
+  /**
+   *
+   * @param year A numeric value for the year.
+   * @returns {*} `Date`
+   * @example
+   * NormaliseDate.setYear(1982);
+   * => "Thu Dec 06 1982 22:45:49 GMT+0000 (Greenwich Mean Time)"
+   */
+  static setYear(year: number): Date {
+    const newYear = NormaliseDate.getFullDate();
+    newYear.setFullYear(year);
+    return newYear;
+  }
+
+
+  /**
    * 
    * @param year A numeric value for the year.
    * @param month A numeric value equal to the month. The value for January is 0, and other month values follow consecutively.
-   * @param day A numeric value representing the day of the month. If this value is not supplied, the value from a call to the getDate method is used.
-   * 
-   * @returns {*} - number
+   * @param day A numeric value representing the day of the month.
+   * If this value is not supplied, the value from a call to the getDate method is used. 1 - 31;
+   * @returns {*} `Date`
    * @example
-   * NormaliseDate.setDate(0, 1);
-   * =>
+   * NormaliseDate.setDate(2019, 1, 21);
+   * => "Thu Dec 06 2018 22:45:49 GMT+0000 (Greenwich Mean Time)"
    */
-  static setDate(year: number, month?: number, day?: number): Date {
-    const currentDate = NormaliseDate.getFullDate();
-    let y = currentDate.setFullYear(year, month, day);
-    const newDate = NormaliseDate.getFullDate(y);
+  static setFullDate(year: number, month?: number, day?: number): Date {
+    const newDate = NormaliseDate.getFullDate();
+    newDate.setDate(day);
+    newDate.setMonth(month);
+    newDate.setFullYear(year);
     return newDate;
   }
 }
