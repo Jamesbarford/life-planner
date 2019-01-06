@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NormaliseDate } from ".";
+import { NormaliseDate } from "./helpers";
 
 interface DateRendererState {
   time: string;

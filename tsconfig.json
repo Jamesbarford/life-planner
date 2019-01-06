@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "noImplicitAny": true,
+    "lib": ["es6", "dom"],
     "target": "es5",
     "sourceMap": true,
     "jsx": "react"
