@@ -1,5 +1,6 @@
 import * as React from "react";
 import { NormaliseDate } from "./helpers";
+import { MonthView } from "./MonthView";
 
 interface DateRendererState {
   time: string;
@@ -63,6 +64,7 @@ export class DateRenderer extends React.Component<
         }}>
           show seconds?
         </button>
+        <MonthView />
       </div>
     );
   }

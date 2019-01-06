@@ -60,6 +60,17 @@ export class NormaliseDate {
 
   /**
    * 
+   * @returns {*} Month as a number 0 - 6.
+   * @example
+   * NormaliseDate.currentDayNumerical();
+   * => 6
+   */
+  static currentDayNumerical(): number {
+    return NormaliseDate.getFullDate().getDay();
+  }
+
+  /**
+   * 
    * @returns {*} Month as a number 0 - 11.
    * @example
    * NormaliseDate.currentMonthNumerical();
@@ -78,17 +89,6 @@ export class NormaliseDate {
    */
   static getDate(): number {
     return NormaliseDate.getFullDate().getDate();
-  }
-
-  /**
-   * 
-   * @returns {*} Month as a number 0 - 6.
-   * @example
-   * NormaliseDate.currentDayNumerical();
-   * => 6
-   */
-  static currentDayNumerical(): number {
-    return NormaliseDate.getFullDate().getDay();
   }
 
   /**
