@@ -23,16 +23,13 @@ export class DateRenderer extends React.Component<
   DateRendererProps,
   DateRendererState
 > {
-  constructor(props: DateRendererProps) {
-    super(props);
 
-    this.state = {
-      time: NormaliseDate.getCurrentTime(false),
-      day: NormaliseDate.getDayName(),
-      month: NormaliseDate.getCurrentMonthName(),
-      year: NormaliseDate.getYear(),
-      showSeconds: this.props.showSeconds || false
-    }
+  state = {
+    time: NormaliseDate.getCurrentTime(false),
+    day: NormaliseDate.getDayName(),
+    month: NormaliseDate.getCurrentMonthName(),
+    year: NormaliseDate.getYear(),
+    showSeconds: this.props.showSeconds || false
   }
 
   componentDidMount() {
