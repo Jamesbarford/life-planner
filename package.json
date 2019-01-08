@@ -13,6 +13,7 @@
   "author": "James Barford-Evans",
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.23.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
   },

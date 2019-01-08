@@ -1,21 +1,22 @@
 import * as React from "react";
-import { NormaliseDate } from "./helpers";
+import { DateHelper } from "./dateHelper";
+import { Moment } from "moment";
 
 interface MonthViewState {
   day: number;
   month: number;
   year: number;
-  date: number;
+  date: string | number | Moment;
   numberOfDays: Array<number>;
 }
 
 export class MonthView extends React.Component<{}, MonthViewState> {
 
   state = {
-    day: NormaliseDate.currentDayNumerical(),
-    month: NormaliseDate.currentMonthNumerical(),
-    year: NormaliseDate.getYear(),
-    date: NormaliseDate.getDate(),
+    day: DateHelper.getTodayNumeric(),
+    month: DateHelper.getMonthNumeric(),
+    year: DateHelper.getYear(),
+    date: DateHelper.getDate(),
     numberOfDays: [1]
   }
 
@@ -28,7 +29,7 @@ export class MonthView extends React.Component<{}, MonthViewState> {
     const { month, year } = this.state;
     const dayArray: Array<number> = [];
     const normaliseDay = 1;
-    const daysInMonth = NormaliseDate.getNumberOfDaysInMonth(month, year);
+    const daysInMonth = DateHelper.getNumberOfDaysInMonth(month, year);
     for(let i = 0; i < daysInMonth; i++) dayArray.push(i + normaliseDay);
 
     return dayArray;
@@ -41,7 +42,7 @@ export class MonthView extends React.Component<{}, MonthViewState> {
       <div>
         <ul>
         {this.state.numberOfDays.map((day) => (
-          <li key={day}>{`${day} ${NormaliseDate.getCurrentMonthName(month)} ${year}`}</li>
+          <li key={day}>{`${DateHelper.formatDate(day)} ${DateHelper.getMonthString(month)} ${year}`}</li>
         ))}
         </ul>
       </div>
