@@ -1,5 +1,5 @@
 import * as moment from "moment";
-import { Moment, unitOfTime } from "moment";
+import { Moment } from "moment";
 
 const monthNames = [
   "January",
