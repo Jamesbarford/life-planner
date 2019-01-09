@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack",
     "start": "NODE_ENV=development webpack-dev-server --open",
-    "build:analyse": "NODE_ENV=analyse webpack"
+    "build:analyse": "NODE_ENV=analyse webpack",
+    "prettierSrc": "prettier --write **/src/**/*.{ts,tsx,js,jsx,json,css,scss}"
   },
   "husky": {
     "hooks": {
@@ -16,10 +17,7 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,json,css,scss}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{ts,tsx,js,jsx,json,css,scss}": ["prettier --write", "git add"]
   },
   "author": "James Barford-Evans",
   "license": "ISC",

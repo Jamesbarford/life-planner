@@ -1,0 +1,85 @@
+{
+	"extends": ["tslint-eslint-rules", "tslint-config-prettier"],
+	"linterOptions": {
+		"typeCheck": true
+	},
+	"rules": {
+		"align": {
+			"options": ["parameters", "statements", "members"]
+		},
+		"ban-types": {
+			"options": [
+				["Object", "Avoid using the `Object` type. Did you mean `object`?"],
+				[
+					"Function",
+					"Avoid using the `Function` type. Prefer a specific function type, like `() => void`."
+				],
+				["Boolean", "Avoid using the `Boolean` type. Did you mean `boolean`?"],
+				["Number", "Avoid using the `Number` type. Did you mean `number`?"],
+				["String", "Avoid using the `String` type. Did you mean `string`?"],
+				["Symbol", "Avoid using the `Symbol` type. Did you mean `symbol`?"]
+			]
+		},
+		"class-name": true,
+		"interface-name": [true, "never-prefix"],
+		"label-position": true,
+		"new-parens": true,
+		"no-any": false,
+		"no-arg": true,
+		"no-bitwise": false,
+		"no-conditional-assignment": true,
+		"no-construct": true,
+		"no-debugger": true,
+		"no-duplicate-super": true,
+		"no-empty": false,
+		"no-eval": true,
+		"no-internal-module": true,
+		"no-invalid-template-strings": true,
+		"no-invalid-this": false,
+		"no-misused-new": true,
+		"no-namespace": true,
+		"no-object-literal-type-assertion": false,
+		"no-parameter-properties": false,
+		"no-reference": true,
+		"no-reference-import": true,
+		"no-shadowed-variable": false,
+		"no-sparse-arrays": true,
+		"no-string-literal": true,
+		"no-string-throw": true,
+		"no-switch-case-fall-through": false,
+		"no-trailing-whitespace": true,
+		"no-unnecessary-initializer": true,
+		"no-unsafe-finally": true,
+		"no-unused-expression": true,
+		"no-use-before-declare": false,
+		"no-var-keyword": true,
+		"no-var-requires": true,
+		"object-literal-key-quotes": {
+			"options": ["as-needed"]
+		},
+		"object-literal-shorthand": true,
+		"one-variable-per-declaration": {
+			"options": ["ignore-for-loop"]
+		},
+		"prefer-const": true,
+		"prefer-for-of": true,
+		"radix": true,
+		"triple-equals": [true, "allow-null-check"],
+		"unified-signatures": true,
+		"use-isnan": true,
+		"variable-name": {
+			"options": ["ban-keywords", "check-format", "allow-pascal-case"]
+		},
+		"whitespace": [
+			true,
+			"check-branch",
+			"check-decl",
+			"check-operator",
+			"check-module",
+			"check-separator",
+			"check-type",
+			"check-preblock"
+		]
+	},
+	"defaultSeverity": "warning"
+}
