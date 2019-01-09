@@ -1,0 +1,15 @@
+{
+  "printWidth": 80,
+  "singleQuote": false,
+  "useTabs": true,
+  "semi": true,
+  "overrides": [
+    {
+      "files": "package.json",
+      "options": {
+        "useTabs": false,
+        "tabWidth": 2
+      }
+    }
+  ]
+}

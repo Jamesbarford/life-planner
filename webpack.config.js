@@ -48,7 +48,7 @@ const WebpackConfig = {
         loader: "awesome-typescript-loader"
       },
       {
-        test: /\.scss$/,
+        test: /\.(scss|css)$/,
         use: [
           "style-loader",
           MiniCssExtractPlugin.loader,

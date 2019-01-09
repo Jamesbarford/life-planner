@@ -1,62 +1,80 @@
 import * as React from "react";
-import { DateHelper, TimePoint } from "../Dates/dateHelper";
+import * as moment from "moment";
 import { Moment } from "moment";
-import { MonthView } from "../Dates/MonthView";
+import { cloneDeep } from "lodash";
+
+// HELPERS
+import { TimePoint } from "../helpers/dateHelper";
+
+// COMPONENTS
+import { Week } from "./Week";
+import { DayNames } from "./Day";
 
 interface CalendarState {
-  day: number;
-  month: number;
-  year: number;
-  date: number | string | Moment;
+  date: Moment;
 }
 
 export class Calendar extends React.Component<{}, CalendarState> {
 
-  state = {
-    day: DateHelper.getTodayNumeric(),
-    month: DateHelper.getMonthNumeric(),
-    year: DateHelper.getYear(),
-    date: DateHelper.getDate()
-  }
+  state = { date: moment() };
 
   previousMonth = () => {
-    let previousMonth = this.state.month - 1;
-    if (previousMonth === -1) previousMonth = 11;
-    return this.setState({ month: previousMonth });
+    this.setState({
+      date: this.state.date.subtract(1, TimePoint.month)
+    });
   }
 
   nextMonth = () => {
-    let nextMonth = this.state.month + 1;
-    if (nextMonth === 12) nextMonth = 0;
-    return this.setState({ month: nextMonth });
+    this.setState({
+      date: this.state.date.add(1, TimePoint.month)
+    });
   }
 
-  setDate = () => {
-    const newDate = DateHelper.setTimePoint(TimePoint.day, 7);
-    console.log({newDate});
+  nextYear = () => {
+    this.setState({
+      date: this.state.date.add(1, TimePoint.year)
+    });
   }
 
-  nextYear = () => this.setState({ year: this.state.year + 1 });
+  previousYear = () => {
+    this.setState({
+      date: this.state.date.subtract(1, TimePoint.year)
+    });
+  }
 
-  previousYear = () => this.setState({ year: this.state.year - 1 });
+  calculateWeeks = () => {
+    const { date } = this.state;
+    let done = false;
+    let count = 0;
+    let monthIndex = date.month();
+    const weeks: Array<Moment> = [];
+    const mutableDate = date.clone()
+      .startOf(TimePoint.month)
+      .add(-1, "w")
+      .day("Sunday");
+
+    while (!done) {
+      mutableDate.add(1, "w");
+      weeks.push(cloneDeep(mutableDate));
+      done = count++ > 2 && monthIndex !== mutableDate.month();
+      monthIndex = mutableDate.month();
+    }
+    return weeks;
+  }
 
   render() {
-    const {
-      day,
-      month,
-      year
-    } = this.state
-
-    this.setDate()
+    const { date } = this.state;
+    const weeks = this.calculateWeeks();
 
     return (
       <>
-        <div>current month: {DateHelper.getMonthString(month)}</div>
-        <div>number of days in month: {DateHelper.getNumberOfDaysInMonth(month, year)}</div>
-        <button onClick={this.previousMonth}> previousMonth</button>
-        <div>current year: {year}</div>
-        <button onClick={this.previousYear}> previousYear </button>
-        <MonthView />
+        <button onClick={this.previousMonth}> previous month</button>
+        <button onClick={this.nextMonth}> next month</button>
+        <div>current year: {date.format("YYYY")}</div>
+        <button onClick={this.previousYear}> previous year </button>
+        <button onClick={this.nextYear}> next year </button>
+        <DayNames />
+        {weeks.map(week => ( <Week key={week.toString()} week={week} month={week.month()}/> ))}
       </>
     );
   }
