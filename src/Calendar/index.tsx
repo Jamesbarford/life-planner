@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as moment from "moment";
+import * as moment from 'moment';
 import { Moment } from "moment";
 import { cloneDeep } from "lodash";
 
