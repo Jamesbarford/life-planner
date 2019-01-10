@@ -12,12 +12,19 @@ import { DayNames } from "./Day";
 interface CalendarState {
   date: Moment;
   months: Array<Moment>;
+  selectedDay: Moment;
+}
+
+export interface CalendarFunctions {
+  selectedDay: Moment;
+  select: (date: Moment) => void;
 }
 
 export class Calendar extends React.Component<{}, CalendarState> {
   state = {
     date: moment(),
-    months: [] as Array<Moment>
+    months: [] as Array<Moment>,
+    selectedDay: moment().startOf(TimePoint.day)
   };
 
   private cache = (date: Moment) => calculate(date);
@@ -33,9 +40,9 @@ export class Calendar extends React.Component<{}, CalendarState> {
     this.calculateWeeks();
   };
 
-  previous = (key: unitOfTime.DurationConstructor) => {
+  previous = (key: TimePoint) => {
     this.setState({
-      date: this.state.date.subtract(1, key)
+      date: this.state.date.subtract(1, key as unitOfTime.DurationConstructor)
     });
     this.calculateWeeks();
   };
@@ -46,8 +53,10 @@ export class Calendar extends React.Component<{}, CalendarState> {
     this.setState({ months });
   };
 
+  select = (date: Moment) => this.setState({ selectedDay: date });
+
   render() {
-    const { date, months } = this.state;
+    const { date, months, selectedDay } = this.state;
 
     return (
       <>
@@ -67,6 +76,8 @@ export class Calendar extends React.Component<{}, CalendarState> {
               key={month.toString()}
               month={month}
               monthIndex={month.month()}
+              selectedDay={selectedDay}
+              select={this.select}
             />
           ))}
         </div>

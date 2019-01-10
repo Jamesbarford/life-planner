@@ -5,8 +5,9 @@ import { cloneDeep } from "lodash";
 
 // Copmonents
 import { Day } from "./Day";
+import { CalendarFunctions } from ".";
 
-interface WeekProps {
+interface WeekProps extends CalendarFunctions {
   monthIndex: number;
   month: Moment;
 }
@@ -26,11 +27,17 @@ export class Week extends React.Component<WeekProps> {
 
   render() {
     const days = this.renderDays();
+    const { select, selectedDay } = this.props;
 
     return (
       <div className="calendar-row">
-        {days.map((day, i) => (
-          <Day key={i} day={day} />
+        {days.map(day => (
+          <Day
+            select={select}
+            selectedDay={selectedDay}
+            key={day.toISOString()}
+            day={day}
+          />
         ))}
       </div>
     );
