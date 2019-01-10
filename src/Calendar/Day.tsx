@@ -1,6 +1,8 @@
 import * as React from "react";
 import { dayNames } from "../helpers/dateHelper";
 import { Moment } from "moment";
+import moment = require("moment");
+import { classNames } from "../helpers/util";
 
 export const DayNames: React.FunctionComponent = () => (
   <div className="row day-names">
@@ -18,9 +20,14 @@ interface DayProps {
 
 export class Day extends React.Component<DayProps> {
   render() {
+    const today = moment()
+      .startOf("day")
+      .toISOString();
+    const select = today === this.props.day.toISOString();
+
     return (
-      <div className="calendar-column">
-        {this.props.day.format("dd DD MMM YYYY")}
+      <div className={classNames(["calendar-cell", select ? "today" : ""])}>
+        {this.props.day.format("DD MMM YYYY")}
       </div>
     );
   }

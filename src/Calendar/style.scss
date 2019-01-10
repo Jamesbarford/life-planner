@@ -27,15 +27,20 @@ $border: 1px solid #aaa;
   @include flexbox;
 }
 
-.calendar-column {
+.calendar-cell {
   height: 20%;
   width: 100%;
+  font-size: 12px;
   @include flexbox;
   justify-content: center;
   border-left: $border;
   border-bottom: $border;
+
+  &.today {
+    background: red;
+  }
 }
 
-.calendar-column:last-child {
+.calendar-cell:last-child {
   border-right: $border;
 }

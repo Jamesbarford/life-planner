@@ -26,3 +26,7 @@ export function removeWhiteSpace(string: string): string {
 export function isString(string: any): boolean {
   return toString.call(string) === "[object String]";
 }
+
+export function classNames(classes: Array<string>) {
+  return classes.join(" ").trim();
+}
