@@ -8,14 +8,13 @@ import { Day } from "./Day";
 import { CalendarShared } from ".";
 
 interface WeekProps extends CalendarShared {
-  monthIndex: number;
-  month: Moment;
+  week: Moment;
 }
 
 export class Week extends React.Component<WeekProps> {
   renderDays = () => {
-    const { month } = this.props;
-    let _date = cloneDeep(month);
+    const { week } = this.props;
+    let _date = cloneDeep(week);
 
     const days = dayNames.map(() => {
       _date = cloneDeep(_date);

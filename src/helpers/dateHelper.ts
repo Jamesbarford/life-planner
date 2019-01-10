@@ -33,11 +33,11 @@ interface WeekCache {
  * this contains a while loop so better to cache the array of moments than
  * re-compute
  */
-export const calculate = (date: Moment) => {
+export const calculate = <D extends Moment>(
+  date: D
+): ((d: D) => Array<Moment>) => {
   // intializers
   let _done = false;
-  let _count = 0;
-  let _monthIndex = date.month();
 
   // state of function
   const cache: WeekCache = {};
@@ -49,19 +49,20 @@ export const calculate = (date: Moment) => {
     .add(-1, "w")
     .day("Sunday");
 
-  return (d: Moment): Array<Moment> => {
-    const key = d.format("DD MM YYYY");
-    const x = removeWhiteSpace(key);
+  return d => {
+    const formatDate = d.format("DD MM YYYY");
+    const key = removeWhiteSpace(formatDate);
 
-    if (x in cache) return cache[x];
+    // don't execute loop if we have that month in the cache
+    if (key in cache) return cache[key];
     else {
       while (!_done) {
         mutableDate.add(1, "w");
         weeks.push(cloneDeep(mutableDate));
-        _done = _count++ > 2 && _monthIndex !== mutableDate.month();
-        _monthIndex = mutableDate.month();
+
+        _done = weeks.length === 5;
       }
-      cache[x] = weeks;
+      cache[key] = weeks;
       return weeks;
     }
   };
