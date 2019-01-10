@@ -7,8 +7,7 @@
     {
       "files": "package.json",
       "options": {
-        "useTabs": false,
-        "tabWidth": 1
+        "useTabs": true,
       }
     }
   ]
