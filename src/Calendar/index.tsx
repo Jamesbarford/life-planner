@@ -15,7 +15,7 @@ interface CalendarState {
   selectedDay: Moment;
 }
 
-export interface CalendarFunctions {
+export interface CalendarShared {
   selectedDay: Moment;
   select: (date: Moment) => void;
 }

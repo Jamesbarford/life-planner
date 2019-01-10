@@ -5,9 +5,9 @@ import { cloneDeep } from "lodash";
 
 // Copmonents
 import { Day } from "./Day";
-import { CalendarFunctions } from ".";
+import { CalendarShared } from ".";
 
-interface WeekProps extends CalendarFunctions {
+interface WeekProps extends CalendarShared {
   monthIndex: number;
   month: Moment;
 }

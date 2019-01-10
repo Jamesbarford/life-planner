@@ -2,7 +2,7 @@ import * as React from "react";
 import { dayNames } from "../helpers/dateHelper";
 import { Moment } from "moment";
 import { classNames } from "../helpers/util";
-import { CalendarFunctions } from ".";
+import { CalendarShared } from ".";
 
 export const DayNames: React.FunctionComponent = () => (
   <div className="row day-names">
@@ -14,7 +14,7 @@ export const DayNames: React.FunctionComponent = () => (
   </div>
 );
 
-interface DayProps extends CalendarFunctions {
+interface DayProps extends CalendarShared {
   day: Moment;
 }
 
