@@ -17,7 +17,10 @@
     }
   },
   "lint-staged": {
-    "*.{ts,tsx,js,jsx,json,css,scss}": ["prettier --write", "git add"]
+    "*.{ts,tsx,js,jsx,json,css,scss}": [
+      "prettier --write",
+      "git add"
+    ]
   },
   "author": "James Barford-Evans",
   "license": "ISC",
@@ -42,6 +45,10 @@
     "prettier": "^1.15.3",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "ts-lint": "^4.5.1",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-eslint-rules": "^5.4.0",
+    "tslint-loader": "^3.5.4",
     "typescript": "^3.2.2",
     "webpack": "^4.28.3",
     "webpack-bundle-analyzer": "^3.0.3",
