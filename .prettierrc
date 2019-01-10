@@ -2,12 +2,13 @@
   "printWidth": 80,
   "singleQuote": false,
   "useTabs": true,
+  "tabWidth": 2,
   "semi": true,
   "overrides": [
     {
       "files": "package.json",
       "options": {
-        "useTabs": true,
+        "useTabs": true
       }
     }
   ]
