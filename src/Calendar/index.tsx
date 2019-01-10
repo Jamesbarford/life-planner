@@ -52,19 +52,21 @@ export class Calendar extends React.Component<{}, CalendarState> {
 		return (
 			<>
 				<button onClick={() => this.previous(TimePoint.month)}>
-					{" "}
 					previous month
 				</button>
 				<button onClick={() => this.next(TimePoint.month)}> next month</button>
 				<div>current year: {date.format("YYYY")}</div>
 				<button onClick={() => this.previous(TimePoint.year)}>
-					{" "}
-					previous year{" "}
+					previous year
 				</button>
 				<button onClick={() => this.next(TimePoint.year)}> next year </button>
 				<DayNames />
 				{months.map(month => (
-					<Week key={month.toString()} week={month} month={month.month()} />
+					<Week
+						key={month.toString()}
+						month={month}
+						monthIndex={month.month()}
+					/>
 				))}
 			</>
 		);
