@@ -3,29 +3,29 @@ import { cloneDeep } from "lodash";
 import { removeWhiteSpace } from "./util";
 
 export const dayNames = [
-	"Sunday",
-	"Monday",
-	"Tuesday",
-	"Wednesday",
-	"Thursday",
-	"Friday",
-	"Saturday"
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
 ];
 
 export enum TimePoint {
-	day = "day",
-	week = "week",
-	month = "month",
-	year = "year",
-	date = "date",
-	hour = "hour",
-	minute = "minute",
-	second = "second",
-	millisecond = "millisecond"
+  day = "day",
+  week = "week",
+  month = "month",
+  year = "year",
+  date = "date",
+  hour = "hour",
+  minute = "minute",
+  second = "second",
+  millisecond = "millisecond"
 }
 
 interface WeekCache {
-	[key: string]: Array<Moment>;
+  [key: string]: Array<Moment>;
 }
 
 /**
@@ -34,35 +34,35 @@ interface WeekCache {
  * re-compute
  */
 export const calculate = (date: Moment) => {
-	// intializers
-	let done = false;
-	let count = 0;
-	let monthIndex = date.month();
+  // intializers
+  let done = false;
+  let count = 0;
+  let monthIndex = date.month();
 
-	// state of function
-	const cache: WeekCache = {};
-	const weeks: Array<Moment> = [];
+  // state of function
+  const cache: WeekCache = {};
+  const weeks: Array<Moment> = [];
 
-	const mutableDate = date
-		.clone()
-		.startOf(TimePoint.month)
-		.add(-1, "w")
-		.day("Sunday");
+  const mutableDate = date
+    .clone()
+    .startOf(TimePoint.month)
+    .add(-1, "w")
+    .day("Sunday");
 
-	return (d: Moment): Array<Moment> => {
-		const key = d.format("DD MM YYYY");
-		const x = removeWhiteSpace(key);
+  return (d: Moment): Array<Moment> => {
+    const key = d.format("DD MM YYYY");
+    const x = removeWhiteSpace(key);
 
-		if (x in cache) return cache[x];
-		else {
-			while (!done) {
-				mutableDate.add(1, "w");
-				weeks.push(cloneDeep(mutableDate));
-				done = count++ > 2 && monthIndex !== mutableDate.month();
-				monthIndex = mutableDate.month();
-			}
-			cache[x] = weeks;
-			return weeks;
-		}
-	};
+    if (x in cache) return cache[x];
+    else {
+      while (!done) {
+        mutableDate.add(1, "w");
+        weeks.push(cloneDeep(mutableDate));
+        done = count++ > 2 && monthIndex !== mutableDate.month();
+        monthIndex = mutableDate.month();
+      }
+      cache[x] = weeks;
+      return weeks;
+    }
+  };
 };

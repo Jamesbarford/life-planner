@@ -9,8 +9,8 @@
  *
  */
 export function removeWhiteSpace(string: string): string {
-	if (!isString(string)) return string;
-	return string.replace(/\s/g, "");
+  if (!isString(string)) return string;
+  return string.replace(/\s/g, "");
 }
 
 /**
@@ -24,5 +24,5 @@ export function removeWhiteSpace(string: string): string {
  * isString(num) // false;
  */
 export function isString(string: any): boolean {
-	return toString.call(string) === "[object String]";
+  return toString.call(string) === "[object String]";
 }

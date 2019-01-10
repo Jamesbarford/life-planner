@@ -7,32 +7,32 @@ import { cloneDeep } from "lodash";
 import { Day } from "./Day";
 
 interface WeekProps {
-	monthIndex: number;
-	month: Moment;
+  monthIndex: number;
+  month: Moment;
 }
 
 export class Week extends React.Component<WeekProps> {
-	renderDays = () => {
-		const { month } = this.props;
-		let _date = cloneDeep(month);
+  renderDays = () => {
+    const { month } = this.props;
+    let _date = cloneDeep(month);
 
-		const days = dayNames.map(() => {
-			_date = cloneDeep(_date);
-			_date.add(1, "day");
-			return _date;
-		});
-		return days;
-	};
+    const days = dayNames.map(() => {
+      _date = cloneDeep(_date);
+      _date.add(1, "day");
+      return _date;
+    });
+    return days;
+  };
 
-	render() {
-		const days = this.renderDays();
+  render() {
+    const days = this.renderDays();
 
-		return (
-			<div>
-				{days.map((day, i) => (
-					<Day key={i} day={day} />
-				))}
-			</div>
-		);
-	}
+    return (
+      <div>
+        {days.map((day, i) => (
+          <Day key={i} day={day} />
+        ))}
+      </div>
+    );
+  }
 }

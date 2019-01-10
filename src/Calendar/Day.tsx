@@ -3,21 +3,21 @@ import { dayNames } from "../helpers/dateHelper";
 import { Moment } from "moment";
 
 export const DayNames: React.FunctionComponent = () => (
-	<div className="row day-names">
-		{dayNames.map(day => (
-			<span key={day} className="day">
-				{day.slice(0, 3)}
-			</span>
-		))}
-	</div>
+  <div className="row day-names">
+    {dayNames.map(day => (
+      <span key={day} className="day">
+        {day.slice(0, 3)}
+      </span>
+    ))}
+  </div>
 );
 
 interface DayProps {
-	day: Moment;
+  day: Moment;
 }
 
 export class Day extends React.Component<DayProps> {
-	render() {
-		return <div>{this.props.day.format("dd DD MMM YYYY")}</div>;
-	}
+  render() {
+    return <div>{this.props.day.format("dd DD MMM YYYY")}</div>;
+  }
 }

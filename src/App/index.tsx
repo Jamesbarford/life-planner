@@ -5,13 +5,13 @@ import "normalize.css";
 import "./style.scss";
 import { Calendar } from "../Calendar";
 class App extends React.Component<{}, {}> {
-	render() {
-		return (
-			<>
-				<Calendar />
-			</>
-		);
-	}
+  render() {
+    return (
+      <>
+        <Calendar />
+      </>
+    );
+  }
 }
 
 render(<App />, document.getElementById("root"));
