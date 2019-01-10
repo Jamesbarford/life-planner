@@ -1,10 +1,9 @@
 import * as React from "react";
 import * as moment from "moment";
-import { Moment } from "moment";
-import { cloneDeep } from "lodash";
+import { Moment, unitOfTime } from "moment";
 
 // HELPERS
-import { TimePoint } from "../helpers/dateHelper";
+import { TimePoint, calculate } from "../helpers/dateHelper";
 
 // COMPONENTS
 import { Week } from "./Week";
@@ -12,70 +11,60 @@ import { DayNames } from "./Day";
 
 interface CalendarState {
 	date: Moment;
+	months: Array<Moment>;
 }
 
 export class Calendar extends React.Component<{}, CalendarState> {
-	state = { date: moment() };
-
-	previousMonth = () => {
-		this.setState({
-			date: this.state.date.subtract(1, TimePoint.month)
-		});
+	state = {
+		date: moment(),
+		months: [] as Array<Moment>
 	};
 
-	nextMonth = () => {
+	private cache = (date: Moment) => calculate(date);
+
+	componentDidMount() {
+		this.calculateWeeks();
+	}
+
+	next = (key: unitOfTime.DurationConstructor) => {
 		this.setState({
-			date: this.state.date.add(1, TimePoint.month)
+			date: this.state.date.add(1, key)
 		});
+		this.calculateWeeks();
 	};
 
-	nextYear = () => {
+	previous = (key: unitOfTime.DurationConstructor) => {
 		this.setState({
-			date: this.state.date.add(1, TimePoint.year)
+			date: this.state.date.subtract(1, key)
 		});
-	};
-
-	previousYear = () => {
-		this.setState({
-			date: this.state.date.subtract(1, TimePoint.year)
-		});
+		this.calculateWeeks();
 	};
 
 	calculateWeeks = () => {
 		const { date } = this.state;
-		let done = false;
-		let count = 0;
-		let monthIndex = date.month();
-		const weeks: Array<Moment> = [];
-		const mutableDate = date
-			.clone()
-			.startOf(TimePoint.month)
-			.add(-1, "w")
-			.day("Sunday");
-
-		while (!done) {
-			mutableDate.add(1, "w");
-			weeks.push(cloneDeep(mutableDate));
-			done = count++ > 2 && monthIndex !== mutableDate.month();
-			monthIndex = mutableDate.month();
-		}
-		return weeks;
+		const months = this.cache(date)(date);
+		this.setState({ months });
 	};
 
 	render() {
-		const { date } = this.state;
-		const weeks = this.calculateWeeks();
+		const { date, months } = this.state;
 
 		return (
 			<>
-				<button onClick={this.previousMonth}> previous month</button>
-				<button onClick={this.nextMonth}> next month</button>
+				<button onClick={() => this.previous(TimePoint.month)}>
+					{" "}
+					previous month
+				</button>
+				<button onClick={() => this.next(TimePoint.month)}> next month</button>
 				<div>current year: {date.format("YYYY")}</div>
-				<button onClick={this.previousYear}> previous year </button>
-				<button onClick={this.nextYear}> next year </button>
+				<button onClick={() => this.previous(TimePoint.year)}>
+					{" "}
+					previous year{" "}
+				</button>
+				<button onClick={() => this.next(TimePoint.year)}> next year </button>
 				<DayNames />
-				{weeks.map(week => (
-					<Week key={week.toString()} week={week} month={week.month()} />
+				{months.map(month => (
+					<Week key={month.toString()} week={month} month={month.month()} />
 				))}
 			</>
 		);
