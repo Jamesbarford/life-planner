@@ -2,7 +2,7 @@ import * as React from "react";
 import { dayNames } from "../helpers/dateHelper";
 import { Moment } from "moment";
 
-export const DayNames: React.SFC<{}> = () => (
+export const DayNames: React.FunctionComponent = () => (
 	<div className="row day-names">
 		{dayNames.map(day => (
 			<span key={day} className="day">
