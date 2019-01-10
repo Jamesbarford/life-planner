@@ -28,7 +28,7 @@ export class Week extends React.Component<WeekProps> {
     const days = this.renderDays();
 
     return (
-      <div>
+      <div className="calendar-row">
         {days.map((day, i) => (
           <Day key={i} day={day} />
         ))}

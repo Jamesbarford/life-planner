@@ -2,7 +2,8 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
+  .BundleAnalyzerPlugin;
 
 const production = process.env.NODE_ENV === "production";
 const analyse = process.env.NODE_ENV === "analyse";
@@ -15,8 +16,8 @@ const WebpackConfig = {
   entry: "./src/App/index.tsx",
   mode,
   output: {
-      filename: "[name].[contenthash].js",
-      path: path.resolve(__dirname, "dist"),
+    filename: "[name].[contenthash].js",
+    path: path.resolve(__dirname, "dist")
   },
   // To split chunks
   optimization: {
@@ -33,9 +34,10 @@ const WebpackConfig = {
       }
     }
   },
-  devtool: process.env.NODE_ENV === "development" ? "inline-source-map" : "source-map",
+  devtool:
+    process.env.NODE_ENV === "development" ? "inline-source-map" : "source-map",
   resolve: {
-    extensions: [".js", ".json", ".ts", ".tsx"],
+    extensions: [".js", ".json", ".ts", ".tsx"]
   },
   devServer: {
     contentBase: "./dist"
@@ -53,6 +55,7 @@ const WebpackConfig = {
           "style-loader",
           MiniCssExtractPlugin.loader,
           "css-loader",
+          "postcss-loader?parser=postcss-scss",
           "sass-loader"
         ]
       }

@@ -35,9 +35,9 @@ interface WeekCache {
  */
 export const calculate = (date: Moment) => {
   // intializers
-  let done = false;
-  let count = 0;
-  let monthIndex = date.month();
+  let _done = false;
+  let _count = 0;
+  let _monthIndex = date.month();
 
   // state of function
   const cache: WeekCache = {};
@@ -55,11 +55,11 @@ export const calculate = (date: Moment) => {
 
     if (x in cache) return cache[x];
     else {
-      while (!done) {
+      while (!_done) {
         mutableDate.add(1, "w");
         weeks.push(cloneDeep(mutableDate));
-        done = count++ > 2 && monthIndex !== mutableDate.month();
-        monthIndex = mutableDate.month();
+        _done = _count++ > 2 && _monthIndex !== mutableDate.month();
+        _monthIndex = mutableDate.month();
       }
       cache[x] = weeks;
       return weeks;

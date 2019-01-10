@@ -18,6 +18,10 @@ interface DayProps {
 
 export class Day extends React.Component<DayProps> {
   render() {
-    return <div>{this.props.day.format("dd DD MMM YYYY")}</div>;
+    return (
+      <div className="calendar-column">
+        {this.props.day.format("dd DD MMM YYYY")}
+      </div>
+    );
   }
 }

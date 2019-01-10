@@ -60,14 +60,16 @@ export class Calendar extends React.Component<{}, CalendarState> {
           previous year
         </button>
         <button onClick={() => this.next(TimePoint.year)}> next year </button>
-        <DayNames />
-        {months.map(month => (
-          <Week
-            key={month.toString()}
-            month={month}
-            monthIndex={month.month()}
-          />
-        ))}
+        <div className="calendar-wrapper">
+          <DayNames />
+          {months.map(month => (
+            <Week
+              key={month.toString()}
+              month={month}
+              monthIndex={month.month()}
+            />
+          ))}
+        </div>
       </>
     );
   }
