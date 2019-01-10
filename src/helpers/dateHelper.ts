@@ -33,9 +33,7 @@ interface WeekCache {
  * this contains a while loop so better to cache the array of moments than
  * re-compute
  */
-export const calculate = <D extends Moment>(
-  date: D
-): ((d: D) => Array<Moment>) => {
+export const calculate = (date: Moment): ((d: Moment) => Array<Moment>) => {
   // intializers
   let _done = false;
 
