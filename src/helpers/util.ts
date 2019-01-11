@@ -23,7 +23,7 @@ export function removeWhiteSpace(string: string): string {
  * isString(str) // true;
  * isString(num) // false;
  */
-export function isString(string: any): boolean {
+export function isString<T>(string: T): boolean {
   return toString.call(string) === "[object String]";
 }
 

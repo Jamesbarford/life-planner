@@ -1,8 +1,7 @@
 import * as React from "react";
 import { dayNames } from "../helpers/dateHelper";
 import { Moment } from "moment";
-import { classNames } from "../helpers/util";
-import { CalendarShared } from ".";
+import { CalendarShared } from "./types";
 
 export const DayNames: React.FunctionComponent = () => (
   <div className="row day-names">

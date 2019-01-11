@@ -16,20 +16,15 @@ interface CalendarState {
   currentMonth: number;
 }
 
-export interface CalendarShared {
-  selectedDay: Moment;
-  select: (date: Moment) => void;
-}
-
 export class Calendar extends React.Component<{}, CalendarState> {
+  private cache = (date: Moment) => calculate(date);
+
   state = {
-    date: moment(),
+    date: moment().startOf(TimePoint.day),
     weeks: [] as Array<Moment>,
     selectedDay: moment().startOf(TimePoint.day),
     currentMonth: moment().month()
   };
-
-  private cache = (date: Moment) => calculate(date);
 
   componentDidMount() {
     this.calculateWeeks();
@@ -59,17 +54,15 @@ export class Calendar extends React.Component<{}, CalendarState> {
 
   render() {
     const { date, weeks, selectedDay } = this.state;
+    const { month, year } = TimePoint;
+
     return (
       <>
-        <button onClick={() => this.previous(TimePoint.month)}>
-          previous month
-        </button>
-        <button onClick={() => this.next(TimePoint.month)}> next month</button>
+        <button onClick={() => this.previous(month)}>previous month</button>
+        <button onClick={() => this.next(month)}> next month</button>
         <div>current year: {date.format("YYYY")}</div>
-        <button onClick={() => this.previous(TimePoint.year)}>
-          previous year
-        </button>
-        <button onClick={() => this.next(TimePoint.year)}> next year </button>
+        <button onClick={() => this.previous(year)}>previous year</button>
+        <button onClick={() => this.next(year)}> next year </button>
         <div className="calendar-wrapper">
           <DayNames />
           {weeks.map(week => (

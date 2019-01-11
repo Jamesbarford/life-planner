@@ -1,6 +1,7 @@
 import { Moment } from "moment";
 import { cloneDeep } from "lodash";
 import { removeWhiteSpace } from "./util";
+import { StringIndexSignature } from "../types/global";
 
 export const dayNames = [
   "Sunday",
@@ -24,9 +25,7 @@ export enum TimePoint {
   millisecond = "millisecond"
 }
 
-interface WeekCache {
-  [key: string]: Array<Moment>;
-}
+interface WeekCache extends StringIndexSignature<Array<Moment>> {}
 
 /**
  * Memoized date storage
