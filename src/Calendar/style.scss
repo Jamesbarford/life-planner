@@ -4,12 +4,8 @@ $border: 1px solid #aaa;
 
 .calendar-wrapper {
   width: 100%;
-  flex: 1 1 0%;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+  @include flexAmount(1 1 0%);
+  @include flexbox;
   flex-direction: column;
   position: absolute;
   top: 20px;
@@ -36,39 +32,32 @@ $border: 1px solid #aaa;
 }
 
 .calendar-row {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  display: flex;
-  -webkit-box-flex: 1 1 0%;
-  -webkit-flex: 1 1 0%;
-  flex: 1 1 0%;
+  @include flexbox;
+  @include flexAmount(1 1 0%);
   position: relative;
 }
 
 .calendar-cell {
   width: 100%;
   font-size: 12px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
+  @include flexbox;
+  @include flexAmount(1 1 0%);
   justify-content: center;
   border: none; // reset button border
   border-left: 1px solid #aaa;
   border-bottom: 1px solid #aaa;
-  webkit-box-flex: 1 1 0%;
-  -webkit-flex: 1 1 0%;
-  flex: 1 1 0%;
 
   &.calendar-cell:focus {
     outline: 1px solid #333;
     z-index: 2;
+    @include transition(opacity 1s ease-in-out);
+    @include fade;
   }
 
-  &.today {
+  .today {
     background: red;
+    @include fade;
+    @include transition(opacity 1s ease-in-out);
   }
 }
 

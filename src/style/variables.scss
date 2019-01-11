@@ -1,6 +1,36 @@
 @mixin flexbox {
-  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-  display: -ms-flexbox; /* TWEENER - IE 10 */
-  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
-  display: flex; /* NEW, Spec - Firefox, Chrome, Opera */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: flex;
+}
+
+@mixin flexAmount($var) {
+  -webkit-box-flex: $var;
+  -webkit-flex: $var;
+  flex: $var;
+}
+
+@mixin transition($var) {
+  -webkit-transition: $var;
+  -moz-transition: $var;
+  -ms-transition: $var;
+  -o-transition: $var;
+}
+
+@keyframes fade-animation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@mixin fade {
+  -webkit-animation: fade-animation 1s ease-in-out; /* Safari 4+ */
+  -moz-animation: fade-animation 1s ease-in-out; /* Fx 5+ */
+  -o-animation: fade-animation 1s ease-in-out; /* Opera 12+ */
+  animation: fade-animation 1s ease-in-out; /* IE 10+, Fx 29+ */
 }

@@ -24,11 +24,10 @@ export class Day extends React.Component<DayProps> {
     const selected = selectedDay.toISOString() === day.toISOString();
 
     return (
-      <button
-        className={classNames(["calendar-cell", selected ? "today" : ""])}
-        onClick={() => select(day)}
-      >
-        {day.format("DD MMM YYYY")}
+      <button className="calendar-cell" onClick={() => select(day)}>
+        <span className={`${selected ? "today" : ""}`}>
+          {day.format("DD MMM YYYY")}
+        </span>
       </button>
     );
   }
