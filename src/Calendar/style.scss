@@ -2,16 +2,19 @@
 
 $border: 1px solid #aaa;
 
+.calendar-navigation {
+  height: 48px;
+  padding: 8px;
+  @include flexAmount(1 1 0%);
+  @include flexbox;
+}
+
 .calendar-wrapper {
   width: 100%;
   @include flexAmount(1 1 0%);
   @include flexbox;
   flex-direction: column;
-  position: absolute;
-  top: 20px;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  height: calc(100% - 67px);
 
   .day-names:nth-child(1) {
     border-right: $border;

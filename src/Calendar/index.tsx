@@ -15,6 +15,7 @@ import {
 
 // COMPONENTS
 import { MonthView } from "./MonthView";
+import { Select } from "../components/Select";
 
 interface CalendarState {
   weeks: Array<Moment>;
@@ -63,18 +64,20 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
 
     return (
       <>
-        <button onClick={() => this.previous(month)}>previous month</button>
-        <button onClick={() => this.next(month)}> next month</button>
+        <div className="calendar-navigation">
+          <div>{date.format("MMMM YYYY")}</div>
 
-        <select onChange={this.changeView} defaultValue={month}>
-          <option value={day}>Day</option>
-          <option value={week}>Week</option>
-          <option value={month}>Month</option>
-        </select>
+          <button onClick={() => this.previous(month)}>previous month</button>
+          <button onClick={() => this.next(month)}> next month</button>
+          <Select onChange={this.changeView} defaultValue={month}>
+            <option value={day}>Day</option>
+            <option value={week}>Week</option>
+            <option value={month}>Month</option>
+          </Select>
 
-        <div>current year: {date.format("YYYY")}</div>
-        <button onClick={() => this.previous(year)}>previous year</button>
-        <button onClick={() => this.next(year)}> next year </button>
+          <button onClick={() => this.previous(year)}>previous year</button>
+          <button onClick={() => this.next(year)}> next year </button>
+        </div>
 
         <MonthView
           weeks={weeks}

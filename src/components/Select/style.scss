@@ -1,0 +1,20 @@
+.custom-select-input {
+  height: 35px;
+  padding-right: 22px;
+  padding-left: 10px;
+  line-height: 35px;
+  width: 100%;
+  box-sizing: border-box;
+  cursor: default;
+  background-color: #fefefe;
+  background-size: 9px 6px;
+  background-origin: content-box;
+  background-repeat: no-repeat;
+  background-position: right -14.5px center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-size: 10px 10px;
+  border-radius: 3px;
+  border-top: 1px solid #ccc;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
+}
