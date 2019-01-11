@@ -26,21 +26,21 @@ type CalendarProps = MapStateToProps & MapDispatchToProps;
 class Calendar extends React.Component<CalendarProps, CalendarState> {
   private cache = (date: Moment) => calculate(date);
 
-  state = {
-    weeks: [] as Array<Moment>
-  };
+  state = { weeks: [] as Array<Moment> };
 
   componentDidMount() {
     this.calculateWeeks();
   }
 
-  next = (key: unitOfTime.DurationConstructor) => {
-    this.props.next(1, key);
+  next = () => {
+    const { next, view } = this.props;
+    next(1, view as unitOfTime.DurationConstructor);
     this.calculateWeeks();
   };
 
-  previous = (key: unitOfTime.DurationConstructor) => {
-    this.props.previous(1, key);
+  previous = () => {
+    const { previous, view } = this.props;
+    previous(1, view as unitOfTime.DurationConstructor);
     this.calculateWeeks();
   };
 
@@ -60,23 +60,20 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
   render() {
     const { weeks } = this.state;
     const { date, selectedDay } = this.props;
-    const { day, week, month, year } = TimePoint;
+    const { day, week, month } = TimePoint;
 
     return (
       <>
         <div className="calendar-navigation">
           <div>{date.format("MMMM YYYY")}</div>
 
-          <button onClick={() => this.previous(month)}>previous month</button>
-          <button onClick={() => this.next(month)}> next month</button>
           <Select onChange={this.changeView} defaultValue={month}>
             <option value={day}>Day</option>
             <option value={week}>Week</option>
             <option value={month}>Month</option>
           </Select>
-
-          <button onClick={() => this.previous(year)}>previous year</button>
-          <button onClick={() => this.next(year)}> next year </button>
+          <button onClick={() => this.previous()}>previous month</button>
+          <button onClick={() => this.next()}> next month</button>
         </div>
 
         <MonthView
