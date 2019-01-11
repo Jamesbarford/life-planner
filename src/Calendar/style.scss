@@ -48,16 +48,23 @@ $border: 1px solid #aaa;
   border-bottom: 1px solid #aaa;
 
   &.calendar-cell:focus {
-    outline: 1px solid #333;
-    z-index: 2;
-    @include transition(opacity 1s ease-in-out);
-    @include fade;
+    outline: 0;
+    outline-style: auto;
+    outline-offset: -2px;
+    background: #efefef;
+    transition: 0.4s ease-in-out;
   }
 
   .today {
-    background: red;
-    @include fade;
-    @include transition(opacity 1s ease-in-out);
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0000ff4f;
+    border-radius: 50%;
+    text-align: center;
+    transition: 0.1s ease-in-out;
   }
 }
 

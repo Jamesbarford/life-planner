@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Moment } from "moment";
+
+// COMPONENTS
 import { Week } from "./Week";
 import { DayNames } from "./Day";
 

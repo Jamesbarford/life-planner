@@ -3,8 +3,10 @@ import { Moment } from "moment";
 import { dayNames } from "../helpers/dateHelper";
 import { cloneDeep } from "lodash";
 
-// Copmonents
+// COMPONENTS
 import { Day } from "./Day";
+
+// TYPES
 import { CalendarShared } from "./types";
 
 interface WeekProps extends CalendarShared {

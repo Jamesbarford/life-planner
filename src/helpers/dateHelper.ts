@@ -64,3 +64,24 @@ export const calculate = (date: Moment): ((d: Moment) => Array<Moment>) => {
     }
   };
 };
+
+/**
+ * This is due to some numbers not centering in the circle:
+ * - `10`, `12`, `13`, `18` & `19`
+ * @param day Moment - the day to determine if padding is needed
+ * @returns either "2px" or "0px"
+ *
+ */
+export function paddingRight(day: Moment): string {
+  switch (parseInt(day.format("D"))) {
+    case 10:
+    case 12:
+    case 13:
+    case 18:
+    case 19:
+      return "2px";
+
+    default:
+      return "0px";
+  }
+}

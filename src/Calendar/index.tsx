@@ -1,6 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import { Moment, unitOfTime } from "moment";
+
+// HELPERS
+import { TimePoint, calculate } from "../helpers/dateHelper";
+
+// ACTIONS
 import {
   CalendarNext,
   CalendarPrevious,
@@ -8,12 +13,8 @@ import {
   SelectDay
 } from "./actions";
 
-// HELPERS
-import { TimePoint, calculate } from "../helpers/dateHelper";
-
 // COMPONENTS
 import { MonthView } from "./MonthView";
-import { ApplicationState } from "../App/types";
 
 interface CalendarState {
   weeks: Array<Moment>;
