@@ -40,12 +40,6 @@ export const calculate = (date: Moment): ((d: Moment) => Array<Moment>) => {
   const cache: WeekCache = {};
   const weeks: Array<Moment> = [];
 
-  const mutableDate = date
-    .clone()
-    .startOf(TimePoint.month)
-    .add(-1, "w")
-    .day("Sunday");
-
   return d => {
     const formatDate = d.format("DD MM YYYY");
     const key = removeWhiteSpace(formatDate);
@@ -53,6 +47,12 @@ export const calculate = (date: Moment): ((d: Moment) => Array<Moment>) => {
     // don't execute loop if we have that month in the cache
     if (key in cache) return cache[key];
     else {
+      const mutableDate = date
+        .clone()
+        .startOf(TimePoint.month)
+        .add(-1, "w")
+        .day("Sunday");
+
       while (!_done) {
         mutableDate.add(1, "w");
         weeks.push(cloneDeep(mutableDate));
