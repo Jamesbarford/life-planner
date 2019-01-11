@@ -26,11 +26,15 @@
   "author": "James Barford-Evans",
   "license": "ISC",
   "dependencies": {
+    "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "normalize.css": "^8.0.1",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.15",
@@ -38,6 +42,8 @@
     "@types/jest": "^23.3.12",
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
+    "@types/react-redux": "^6.0.12",
+    "@types/redux-logger": "^3.0.6",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.6.0",

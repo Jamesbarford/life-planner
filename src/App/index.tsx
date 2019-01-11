@@ -1,18 +1,38 @@
 import * as React from "react";
 import { render } from "react-dom";
+import { Provider } from "react-redux";
+import { Store } from "redux";
+import { createStore, applyMiddleware } from "redux";
+import { createLogger } from "redux-logger";
+import { isPlainObject } from "lodash";
+import { combineReducers } from "redux";
+import { calendarReducer } from "../Calendar/reducer";
+
+export const allReducers = combineReducers({
+  calendar: calendarReducer
+});
+
 import "normalize.css";
 
 import "./style.scss";
-import { Calendar } from "../Calendar";
+import { CalendarConnected } from "../Calendar";
 
-class App extends React.Component<{}, {}> {
-  render() {
-    return (
-      <>
-        <Calendar />
-      </>
-    );
-  }
-}
+const stripClassActions = <State, Action>(store: Store<State>) => {
+  return (next: (a: Action) => void) => (action: Action) =>
+    next(isPlainObject(action) ? action : Object.assign({}, action));
+};
+
+const logger = createLogger();
+
+export const store = createStore(
+  allReducers,
+  applyMiddleware(stripClassActions, logger)
+);
+
+const App: React.FunctionComponent = () => (
+  <Provider store={store}>
+    <CalendarConnected />
+  </Provider>
+);
 
 render(<App />, document.getElementById("root"));
