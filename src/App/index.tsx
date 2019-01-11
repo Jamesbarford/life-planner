@@ -6,16 +6,20 @@ import { createStore, applyMiddleware } from "redux";
 import { createLogger } from "redux-logger";
 import { isPlainObject } from "lodash";
 import { combineReducers } from "redux";
+
+// REDUCERS
 import { calendarReducer } from "../Calendar/reducer";
+
+// INITIAL COMPONENT RENDER
+import { CalendarConnected } from "../Calendar";
+
+// STYLES
+import "normalize.css";
+import "./style.scss";
 
 export const allReducers = combineReducers({
   calendar: calendarReducer
 });
-
-import "normalize.css";
-
-import "./style.scss";
-import { CalendarConnected } from "../Calendar";
 
 const stripClassActions = <State, Action>(store: Store<State>) => {
   return (next: (a: Action) => void) => (action: Action) =>
