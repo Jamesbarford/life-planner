@@ -31,13 +31,8 @@ export class Day extends React.Component<DayProps> {
 
     return (
       <button className="calendar-cell" onClick={() => select(day)}>
-        <div
-          className={classNames([
-            "calendar-cell__inner",
-            `${selected ? "today" : ""}`
-          ])}
-        >
-          <span style={{ paddingRight: paddingRight(day) }}>
+        <div className={classNames(["calendar-cell__inner"])}>
+          <span className={`${selected ? "today" : ""}`}>
             {day.format("D")}
           </span>
         </div>
