@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Moment, unitOfTime } from "moment";
 
 // HELPERS
-import { TimePoint, calculate } from "../helpers/dateHelper";
+import { TimePoint, calculate, TimePointType } from "../helpers/dateHelper";
 
 // ACTIONS
 import {
@@ -34,13 +34,13 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
 
   next = () => {
     const { next, view } = this.props;
-    next(1, view as unitOfTime.DurationConstructor);
+    next(1, view);
     this.calculateWeeks();
   };
 
   previous = () => {
     const { previous, view } = this.props;
-    previous(1, view as unitOfTime.DurationConstructor);
+    previous(1, view);
     this.calculateWeeks();
   };
 
@@ -59,7 +59,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
 
   render() {
     const { weeks } = this.state;
-    const { date, selectedDay } = this.props;
+    const { date, selectedDay, view } = this.props;
     const { day, week, month } = TimePoint;
 
     return (
@@ -72,8 +72,8 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
             <option value={week}>Week</option>
             <option value={month}>Month</option>
           </Select>
-          <button onClick={() => this.previous()}>previous month</button>
-          <button onClick={() => this.next()}> next month</button>
+          <button onClick={() => this.previous()}>previous {view}</button>
+          <button onClick={() => this.next()}>next {view}</button>
         </div>
 
         <MonthView
@@ -90,15 +90,12 @@ interface MapStateToProps {
   date: Moment;
   selectedDay: Moment;
   currentMonth: number;
-  view: TimePoint;
+  view: TimePointType;
 }
 
 interface MapDispatchToProps {
-  next: (unitOfTime: number, timePoint: unitOfTime.DurationConstructor) => void;
-  previous: (
-    unitOfTime: number,
-    timePoint: unitOfTime.DurationConstructor
-  ) => void;
+  next: (unitOfTime: number, timePoint: TimePointType) => void;
+  previous: (unitOfTime: number, timePoint: TimePointType) => void;
   changeView: (newView: TimePoint) => void;
   selectDay: (date: Moment) => void;
 }

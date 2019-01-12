@@ -1,6 +1,6 @@
 import { Moment } from "moment";
 import * as moment from "moment";
-import { TimePoint } from "../helpers/dateHelper";
+import { TimePoint, TimePointType } from "../helpers/dateHelper";
 import { CalendarActions, CalendarActionTypes } from "./actions";
 
 export class CalendarState {
@@ -8,7 +8,7 @@ export class CalendarState {
     public date: Moment = moment().startOf(TimePoint.day),
     public selectedDay: Moment = moment().startOf(TimePoint.day),
     public currentMonth: number = moment().month(),
-    public view: TimePoint = TimePoint.month
+    public view: TimePointType = TimePoint.month
   ) {}
 }
 
