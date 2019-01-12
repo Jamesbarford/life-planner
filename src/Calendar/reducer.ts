@@ -9,10 +9,10 @@ import {
 } from "../helpers/dateHelper";
 import { CalendarActions, CalendarActionTypes } from "./actions";
 import { MomentDictionary } from "./types";
-import { createMomentList, createHashFromMonth } from "./selectors";
+import { createMomentList, createHash } from "./selectors";
 
 const newDate = moment().startOf(TimePoint.day);
-const hash = createHashFromMonth(newDate.month(), TimePoint.month);
+const hash = createHash(newDate, TimePoint.month);
 const newList = List(
   calculate(newDate, TimePoint.month)(newDate, TimePoint.month)
 );
@@ -21,8 +21,9 @@ const map = Map({ [hash]: newList });
 export class CalendarState {
   constructor(
     public date: Moment = newDate,
-    public selectedDay: Moment = newDate,
+    public selectedDay: Moment = newDate.clone(),
     public currentMonth: number = moment().month(),
+    public currentWeek: number = moment().week(),
     public view: TimePointType = TimePoint.month,
     public momentList: MomentDictionary = map
   ) {}
@@ -38,7 +39,8 @@ export function calendarReducer(
       return {
         ...state,
         date,
-        currentMonth: date.month()
+        currentMonth: date.month(),
+        currentWeek: date.week()
       };
     }
 
@@ -47,7 +49,8 @@ export function calendarReducer(
       return {
         ...state,
         date,
-        currentMonth: date.month()
+        currentMonth: date.month(),
+        currentWeek: date.week()
       };
     }
 
@@ -56,7 +59,7 @@ export function calendarReducer(
       return {
         ...state,
         view: action.newView,
-        moment: state.momentList.merge(momentList)
+        momentList: state.momentList.merge(momentList)
       };
     }
     case CalendarActions.CalendarSelectDay:

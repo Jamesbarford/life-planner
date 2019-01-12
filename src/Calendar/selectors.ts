@@ -1,7 +1,7 @@
 import * as moment from "moment";
 import { Moment } from "moment";
 import { List, Map } from "immutable";
-import { TimePointType, calculate } from "../helpers/dateHelper";
+import { TimePointType, calculate, getHashIndex } from "../helpers/dateHelper";
 import { removeWhiteSpace } from "../helpers/util";
 import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
@@ -16,12 +16,11 @@ export const getCalendarState = (state: ApplicationState) => state.calendar;
  * @param t timepoint i.e month
  * @returns a date hash
  * @example
- * createHashFromMonth(1, TimePoint.month);
+ * createHash(1, TimePoint.month);
  * => "month-12022019"
  */
-export function createHashFromMonth(month: number, t: TimePointType): string {
-  const date = moment().month(month);
-  const formattedDate = date.format("DD MM YYYY");
+export function createHash(date: Moment, t: TimePointType): string {
+  const formattedDate = date.startOf("day").toISOString();
   const hash = removeWhiteSpace(formattedDate);
   return `${t}-${hash}`;
 }
@@ -52,7 +51,8 @@ export function createMomentList(
   t: TimePointType,
   state: CalendarState
 ): MomentDictionary {
-  const hash = createHashFromMonth(state.date.month(), t);
+  const hashIndex = getHashIndex(t, state);
+  const hash = createHash(hashIndex, t);
   if (state.momentList.get(hash)) return state.momentList;
   const hashMap = createDateHashMap(state, t);
   return hashMap;
@@ -80,7 +80,8 @@ export function createDateHashMap(
   state: CalendarState,
   t: TimePointType
 ): MomentDictionary {
-  const hash = createHashFromMonth(state.date.month(), t);
+  const hashIndex = getHashIndex(t, state);
+  const hash = createHash(hashIndex, t);
   const newList = List(calculate(state.date, t)(state.date, t));
   const hashMap = Map({ [hash]: newList });
   return hashMap;
@@ -105,4 +106,10 @@ export function selectMomentFromList(
   momentDictionary: MomentDictionary
 ): List<Moment> {
   return momentDictionary.get(hash);
+}
+
+export function createNewView(state: ApplicationState) {
+  // generate hash map for a week
+  // change view state
+  // change moment list state
 }

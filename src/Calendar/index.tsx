@@ -4,7 +4,7 @@ import { Moment } from "moment";
 
 // HELPERS
 import { TimePoint, TimePointType } from "../helpers/dateHelper";
-import { createHashFromMonth, selectMomentFromList } from "./selectors";
+import { createHash, selectMomentFromList } from "./selectors";
 
 // ACTIONS
 import {
@@ -47,20 +47,22 @@ class Calendar extends React.Component<CalendarProps> {
 
   changeView = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const view = e.target.value as TimePointType;
-    this.props.changeView(view);
+    const { calculateMomentArray, changeView } = this.props;
+    calculateMomentArray(view);
+    changeView(view);
   };
 
   select = (date: Moment) => this.props.selectDay(date);
 
   getMomentArray = () => {
-    const { currentMonth, view, momentList } = this.props;
-    const dateHash = createHashFromMonth(currentMonth, view);
+    const { currentMonth, view, momentList, currentWeek, date } = this.props;
+    const dateHash = createHash(date, view);
     const timeArr = selectMomentFromList(dateHash, momentList);
     return timeArr;
   };
 
   render() {
-    const { date, selectedDay, view, momentList, currentMonth } = this.props;
+    const { date, selectedDay, view } = this.props;
     const { day, week, month, year } = TimePoint;
     const timeArr = this.getMomentArray();
 
@@ -132,6 +134,7 @@ interface MapStateToProps {
   momentList: MomentDictionary;
   selectedDay: Moment;
   currentMonth: number;
+  currentWeek: number;
 }
 
 interface MapDispatchToProps {
@@ -148,7 +151,8 @@ export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
     view: state.calendar.view,
     momentList: state.calendar.momentList,
     selectedDay: state.calendar.selectedDay,
-    currentMonth: state.calendar.currentMonth
+    currentMonth: state.calendar.currentMonth,
+    currentWeek: state.calendar.currentWeek
   }),
   dispatch => ({
     next: (unitOfTime, timePoint) =>

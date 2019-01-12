@@ -2,6 +2,8 @@ import { Moment, unitOfTime } from "moment";
 import { cloneDeep, isEqual } from "lodash";
 import { removeWhiteSpace } from "./util";
 import { StringIndexSignature } from "../types/global";
+import moment = require("moment");
+import { CalendarState } from "../Calendar/reducer";
 
 export const dayNames = [
   "Sunday",
@@ -88,6 +90,30 @@ export const findIncrementalTimePoint = (timePoint: TimePointType) => {
   }
 };
 
+function getIndex(t: TimePointType) {
+  switch (t) {
+    case TimePoint.month:
+      return 5;
+
+    case TimePoint.week:
+      return 1;
+
+    default:
+      return 5;
+  }
+}
+
+export function getHashIndex(t: TimePointType, state: CalendarState) {
+  switch (t) {
+    case TimePoint.week:
+      return state.date.week(state.currentWeek);
+    case TimePoint.month:
+      return state.date.month(state.currentMonth);
+    case TimePoint.day:
+      return state.date.dayOfYear(1);
+  }
+}
+
 /**
  * Memoized date storage
  * this contains a while loop so better to cache the array of moments than
@@ -99,10 +125,11 @@ export const calculate = (
 ): ((d: Moment, t?: TimePointType) => Array<Moment>) => {
   // intializers
   let _done = false;
+  let _index = getIndex(timePoint);
 
   // state of function
   const cache: WeekCache = {};
-  const weeks: Array<Moment> = [];
+  const momentArr: Array<Moment> = [];
 
   return (d, t) => {
     const formatDate = date.format("DD MM YYYY");
@@ -117,13 +144,16 @@ export const calculate = (
         .add(-1, incrementor)
         .day("Saturday");
 
+      const end = mutableDate.clone().endOf(t);
+
       while (!_done) {
-        weeks.push(cloneDeep(mutableDate));
+        momentArr.push(cloneDeep(mutableDate));
         mutableDate.add(1, incrementor);
-        _done = weeks.length === 5;
+        // count++ > 2 && monthIndex !== date.month()
+        _done = momentArr.length === _index;
       }
-      cache[key] = weeks;
-      return weeks;
+      cache[key] = momentArr;
+      return momentArr;
     }
   };
 };

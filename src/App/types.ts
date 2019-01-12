@@ -8,6 +8,7 @@ export interface ApplicationState {
     selectedDay: Moment;
     view: TimePointType;
     currentMonth: number;
+    currentWeek: number;
     momentList: MomentDictionary;
   };
 }
