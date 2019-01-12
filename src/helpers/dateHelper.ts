@@ -148,3 +148,18 @@ export function paddingRight(day: Moment): string {
       return "0px";
   }
 }
+
+/**
+ *
+ * @param date the date of which the time will alter
+ * @param incrementor how far to increment the time
+ * @param t timepoint ie month
+ * @returns Moment
+ * @example
+ * alterTime(moment(), 1, TimePoint.month)
+ */
+export const alterTime = (
+  date: Moment,
+  incrementor: number,
+  t: TimePointType
+) => date.add(incrementor, t);

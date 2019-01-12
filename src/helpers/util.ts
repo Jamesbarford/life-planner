@@ -27,11 +27,27 @@ export function isString<T>(string: T): boolean {
   return toString.call(string) === "[object String]";
 }
 
-export function classNames(classes: Array<string>) {
+/**
+ *
+ * @param classes array of string, css class names to join
+ * @returns string
+ * @example
+ * classNames(["navigation", "selected"]);
+ * => "navigation selected"
+ */
+export function classNames(classes: Array<string>): string {
   return classes.join(" ").trim();
 }
 
-export function isEmptyObject<T>(obj: T): boolean | T {
-  if (typeof obj !== "object") return obj;
+/**
+ *
+ * @param obj an object
+ * @returns boolean
+ * @example
+ * const obj = {};
+ * isEmptyObject(obj);
+ * => true
+ */
+export function isEmptyObject(obj: object): boolean {
   return Object.keys(obj).length > 1;
 }

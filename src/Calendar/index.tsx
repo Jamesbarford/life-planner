@@ -26,6 +26,8 @@ import {
 } from "../components/IconButton/style";
 import { ToolTip } from "../components/ToolTip";
 import { MomentDictionary } from "./types";
+import { DayNames } from "./Day";
+import { Week } from "./Week";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 class Calendar extends React.Component<CalendarProps> {
@@ -51,7 +53,7 @@ class Calendar extends React.Component<CalendarProps> {
   render() {
     const { date, selectedDay, view, momentList, currentMonth } = this.props;
     const { day, week, month, year } = TimePoint;
-    const dateHash = createHashFromMonth(currentMonth);
+    const dateHash = createHashFromMonth(currentMonth, view);
     const timeArr = selectMomentFromList(dateHash, momentList);
 
     return (
@@ -92,12 +94,25 @@ class Calendar extends React.Component<CalendarProps> {
             </ToolTip>
           </div>
         </div>
-
-        <MonthView
-          weeks={timeArr}
-          selectedDay={selectedDay}
-          select={this.select}
-        />
+        <div className="calendar-wrapper">
+          <DayNames />
+          {view === TimePoint.month && (
+            <MonthView
+              weeks={timeArr}
+              selectedDay={selectedDay}
+              select={this.select}
+            />
+          )}
+          {view === TimePoint.week &&
+            timeArr.map(day => (
+              <Week
+                key={day.toString()}
+                week={day}
+                selectedDay={this.props.selectedDay}
+                select={this.select}
+              />
+            ))}
+        </div>
       </>
     );
   }

@@ -16,18 +16,13 @@ interface MonthViewState {}
 
 export class MonthView extends React.Component<MonthViewProps, MonthViewState> {
   render() {
-    return (
-      <div className="calendar-wrapper">
-        <DayNames />
-        {this.props.weeks.map(week => (
-          <Week
-            key={week.toString()}
-            week={week}
-            selectedDay={this.props.selectedDay}
-            select={this.props.select}
-          />
-        ))}
-      </div>
-    );
+    return this.props.weeks.map(week => (
+      <Week
+        key={week.toString()}
+        week={week}
+        selectedDay={this.props.selectedDay}
+        select={this.props.select}
+      />
+    ));
   }
 }

@@ -1,13 +1,18 @@
 import { Moment } from "moment";
 import * as moment from "moment";
 import { List, Map } from "immutable";
-import { TimePoint, TimePointType, calculate } from "../helpers/dateHelper";
+import {
+  TimePoint,
+  TimePointType,
+  calculate,
+  alterTime
+} from "../helpers/dateHelper";
 import { CalendarActions, CalendarActionTypes } from "./actions";
 import { MomentDictionary } from "./types";
 import { createMomentList, createHashFromMonth } from "./selectors";
 
 const newDate = moment().startOf(TimePoint.day);
-const hash = createHashFromMonth(newDate.month());
+const hash = createHashFromMonth(newDate.month(), TimePoint.month);
 const newList = List(
   calculate(newDate, TimePoint.month)(newDate, TimePoint.month)
 );
@@ -28,23 +33,23 @@ export function calendarReducer(
   action: CalendarActionTypes
 ) {
   switch (action.type) {
-    case CalendarActions.CalendarNext:
+    case CalendarActions.CalendarNext: {
+      const date = alterTime(state.date, 1, action.timePoint);
       return {
         ...state,
-        date: state.date.add(action.unitOfTime, action.timePoint),
-        currentMonth: state.date
-          .add(action.unitOfTime, action.timePoint)
-          .month()
+        date,
+        currentMonth: date.month()
       };
+    }
 
-    case CalendarActions.CalendarPrevious:
+    case CalendarActions.CalendarPrevious: {
+      const date = alterTime(state.date, -1, action.timePoint);
       return {
         ...state,
-        date: state.date.subtract(action.unitOfTime, action.timePoint),
-        currentMonth: state.date
-          .subtract(action.unitOfTime, action.timePoint)
-          .month()
+        date,
+        currentMonth: date.month()
       };
+    }
 
     case CalendarActions.CalendarChangeView:
       return {
