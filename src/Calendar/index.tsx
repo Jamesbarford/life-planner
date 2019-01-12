@@ -24,6 +24,7 @@ import {
   CircularButton,
   BackgroundColor
 } from "../components/IconButton/style";
+import { ToolTip } from "../components/ToolTip";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 class Calendar extends React.Component<CalendarProps> {
@@ -61,19 +62,22 @@ class Calendar extends React.Component<CalendarProps> {
             <option value={month}>Month</option>
             <option value={year}>Year</option>
           </Select>
-
-          <Icon
-            hoverBackground={BackgroundColor.lightGray}
-            btnStyle={CircularButton}
-            onClick={this.previous}
-            iconName="keyboard_arrow_left"
-          />
-          <Icon
-            hoverBackground={BackgroundColor.lightGray}
-            btnStyle={CircularButton}
-            onClick={this.next}
-            iconName="keyboard_arrow_right"
-          />
+          <ToolTip helper={`previous ${view}`}>
+            <Icon
+              hoverBackground={BackgroundColor.lightGray}
+              btnStyle={CircularButton}
+              onClick={this.previous}
+              iconName="keyboard_arrow_left"
+            />
+          </ToolTip>
+          <ToolTip helper={`next ${view}`}>
+            <Icon
+              hoverBackground={BackgroundColor.lightGray}
+              btnStyle={CircularButton}
+              onClick={this.next}
+              iconName="keyboard_arrow_right"
+            />
+          </ToolTip>
         </div>
 
         <MonthView
