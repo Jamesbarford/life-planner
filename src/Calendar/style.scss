@@ -1,6 +1,10 @@
 @import "../style/variables.scss";
 
-$border: 1px solid #aaa;
+$border: 1px solid #dadce0;
+
+html {
+  font-family: "Raleway", sans-serif;
+}
 
 .calendar-navigation {
   height: 48px;
@@ -25,19 +29,23 @@ $border: 1px solid #aaa;
   flex-direction: column;
   height: calc(100% - 67px);
 
-  .day-names:nth-child(1) {
+  .day-row:nth-child(1) {
     border-right: $border;
   }
-  .day-names {
+  .day-row {
     @include flexbox;
     border-bottom: $border;
     border-top: $border;
     border-left: $border;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
 
     .day {
       width: 100%;
       justify-content: center;
       display: inherit;
+      font-size: 12px;
       @include flexbox;
     }
   }
@@ -56,8 +64,8 @@ $border: 1px solid #aaa;
   @include flexAmount(1 1 0%);
   justify-content: center;
   border: none; // reset button border
-  border-left: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
+  border-left: $border;
+  border-bottom: $border;
 
   &.calendar-cell:focus {
     outline: 0;

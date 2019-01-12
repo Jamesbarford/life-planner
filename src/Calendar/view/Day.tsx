@@ -3,16 +3,22 @@ import { Moment } from "moment";
 import { dayNames, paddingRight } from "../../helpers/dateHelper";
 import { CalendarShared } from "../types";
 import { classNames } from "../../helpers/util";
+import moment = require("moment");
 
-export const DayNames: React.FunctionComponent = () => (
-  <div className="row day-names">
-    {dayNames.map(day => (
-      <span key={day} className="day">
-        {day.slice(0, 3)}
-      </span>
-    ))}
-  </div>
-);
+export const DayNames: React.FunctionComponent = () => {
+  const weekdays = moment.weekdaysShort();
+  const upperCaseWeekdays = weekdays.map(day => day.toUpperCase());
+
+  return (
+    <div className="day-row">
+      {upperCaseWeekdays.map(day => (
+        <span key={day} className="day">
+          {day}
+        </span>
+      ))}
+    </div>
+  );
+};
 
 interface DayProps extends CalendarShared {
   day: Moment;

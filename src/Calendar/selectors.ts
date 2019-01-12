@@ -107,9 +107,3 @@ export function selectMomentFromList(
 ): List<Moment> {
   return momentDictionary.get(hash);
 }
-
-export function createNewView(state: ApplicationState) {
-  // generate hash map for a week
-  // change view state
-  // change moment list state
-}
