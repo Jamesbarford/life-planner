@@ -10,18 +10,21 @@ import { CalendarState } from "./reducer";
 export const getDate = (state: ApplicationState): Moment => state.calendar.date;
 export const getCalendarState = (state: ApplicationState) => state.calendar;
 
-export function createHashFromMonth(month: number) {
+export function createHashFromMonth(month: number): string {
   const date = moment().month(month);
   const formattedDate = date.format("DD MM YYYY");
   const hash = removeWhiteSpace(formattedDate);
   return hash;
 }
 
-export function createMomentList(t: TimePointType, state: CalendarState) {
+export function createMomentList(
+  t: TimePointType,
+  state: CalendarState
+): Map<string, List<Moment>> {
   const hash = createHashFromMonth(state.date.month());
   if (state.momentList.get(hash)) return state.momentList;
-  const map = createDateHashMap(state, t);
-  return map;
+  const hashMap = createDateHashMap(state, t);
+  return hashMap;
 }
 
 export function createDateHashMap(
@@ -30,8 +33,8 @@ export function createDateHashMap(
 ): Map<string, List<Moment>> {
   const hash = createHashFromMonth(state.date.month());
   const newList = List(calculate(state.date, t)(state.date, t));
-  const map = Map({ [hash]: newList });
-  return map;
+  const hashMap = Map({ [hash]: newList });
+  return hashMap;
 }
 
 export function selectMomentFromList(

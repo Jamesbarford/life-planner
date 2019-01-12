@@ -105,35 +105,35 @@ class Calendar extends React.Component<CalendarProps> {
 
 interface MapStateToProps {
   date: Moment;
-  selectedDay: Moment;
-  currentMonth: number;
   view: TimePointType;
   momentList: MomentDictionary;
+  selectedDay: Moment;
+  currentMonth: number;
 }
 
 interface MapDispatchToProps {
   next: (unitOfTime: number, timePoint: TimePointType) => void;
+  selectDay: (date: Moment) => void;
   previous: (unitOfTime: number, timePoint: TimePointType) => void;
   changeView: (newView: TimePoint) => void;
-  selectDay: (date: Moment) => void;
   calculateMomentArray: (t: TimePointType) => void;
 }
 
 export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
   (state: ApplicationState) => ({
     date: state.calendar.date,
-    selectedDay: state.calendar.selectedDay,
-    currentMonth: state.calendar.currentMonth,
     view: state.calendar.view,
-    momentList: state.calendar.momentList
+    momentList: state.calendar.momentList,
+    selectedDay: state.calendar.selectedDay,
+    currentMonth: state.calendar.currentMonth
   }),
   dispatch => ({
     next: (unitOfTime, timePoint) =>
       dispatch(new CalendarNext(unitOfTime, timePoint)),
+    selectDay: date => dispatch(new SelectDay(date)),
     previous: (unitOfTime, timePoint) =>
       dispatch(new CalendarPrevious(unitOfTime, timePoint)),
     changeView: newView => dispatch(new ChangeView(newView)),
-    selectDay: date => dispatch(new SelectDay(date)),
     calculateMomentArray: t => dispatch(new CalculateMomentArray(t))
   })
 )(Calendar);
