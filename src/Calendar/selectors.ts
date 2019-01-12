@@ -20,7 +20,7 @@ export function createHashFromMonth(month: number): string {
 export function createMomentList(
   t: TimePointType,
   state: CalendarState
-): Map<string, List<Moment>> {
+): MomentDictionary {
   const hash = createHashFromMonth(state.date.month());
   if (state.momentList.get(hash)) return state.momentList;
   const hashMap = createDateHashMap(state, t);
@@ -30,7 +30,7 @@ export function createMomentList(
 export function createDateHashMap(
   state: CalendarState,
   t: TimePointType
-): Map<string, List<Moment>> {
+): MomentDictionary {
   const hash = createHashFromMonth(state.date.month());
   const newList = List(calculate(state.date, t)(state.date, t));
   const hashMap = Map({ [hash]: newList });
