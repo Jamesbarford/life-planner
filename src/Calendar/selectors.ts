@@ -1,8 +1,11 @@
-import * as moment from "moment";
 import { Moment } from "moment";
 import { List, Map } from "immutable";
+
+// HELPERS
 import { TimePointType, calculate, getHashIndex } from "../helpers/dateHelper";
 import { removeWhiteSpace } from "../helpers/util";
+
+// TYPES
 import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
 import { CalendarState } from "./reducer";
@@ -12,12 +15,12 @@ export const getCalendarState = (state: ApplicationState) => state.calendar;
 
 /**
  *
- * @param month numerical month
+ * @param date moment
  * @param t timepoint i.e month
  * @returns a date hash
  * @example
- * createHash(1, TimePoint.month);
- * => "month-12022019"
+ * createHash(date, TimePoint.month);
+ * => "month-2019-02-12T00:00:00.000Z"
  */
 export function createHash(date: Moment, t: TimePointType): string {
   const formattedDate = date.startOf("day").toISOString();
@@ -34,8 +37,8 @@ export function createHash(date: Moment, t: TimePointType): string {
  * hash exists in the `Map` it will get that `List` else it will compute a new
  * `List` and add it to the `Map`
  *
- * @param t timepoint i.e month
  * @param state calendar state
+ * @param t timepoint i.e month
  * @returns a `Map` with a `datehash` as it's key containing a `List` of `moments`
  * @example
  * createMomentList(TimePoint.month, state);
@@ -48,8 +51,8 @@ export function createHash(date: Moment, t: TimePointType): string {
  * }
  */
 export function createMomentList(
-  t: TimePointType,
-  state: CalendarState
+  state: CalendarState,
+  t: TimePointType
 ): MomentDictionary {
   const hashIndex = getHashIndex(t, state);
   const hash = createHash(hashIndex, t);
@@ -63,8 +66,8 @@ export function createMomentList(
  * Creates a date hash map with a date hash e.g: `"month-12022019"` and the
  * states current date.
  *
- * @param t timepoint i.e month
  * @param state calendar state
+ * @param t timepoint i.e month
  * @returns a `Map` with a `datehash` as it's key containing a `List` of `moments`
  * @example
  * createMomentList(TimePoint.month, state);

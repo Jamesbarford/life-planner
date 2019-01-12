@@ -55,7 +55,7 @@ export function calendarReducer(
     }
 
     case CalendarActions.CalendarChangeView: {
-      const momentList = createMomentList(action.newView, state);
+      const momentList = createMomentList(state, action.newView);
       return {
         ...state,
         view: action.newView,
@@ -70,7 +70,7 @@ export function calendarReducer(
 
     case CalendarActions.CalculateMomentArray:
       const { t } = action;
-      const momentList = createMomentList(t, state);
+      const momentList = createMomentList(state, t);
       return { ...state, momentList: state.momentList.merge(momentList) };
 
     default:

@@ -55,7 +55,7 @@ class Calendar extends React.Component<CalendarProps> {
   select = (date: Moment) => this.props.selectDay(date);
 
   getMomentArray = () => {
-    const { currentMonth, view, momentList, currentWeek, date } = this.props;
+    const { view, momentList, date } = this.props;
     const dateHash = createHash(date, view);
     const timeArr = selectMomentFromList(dateHash, momentList);
     return timeArr;
@@ -70,7 +70,7 @@ class Calendar extends React.Component<CalendarProps> {
       <>
         <div className="calendar-navigation">
           <div className="calendar-navigation__item">
-            {date.format("MMMM YYYY")}
+            <h2>{date.format("MMMM YYYY")}</h2>
           </div>
 
           <div className="calendar-navigation__item">

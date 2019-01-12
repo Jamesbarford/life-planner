@@ -17,7 +17,8 @@ const ToolTipStyle: React.CSSProperties = {
   color: "white",
   fontSize: "12px",
   padding: "3px",
-  borderRadius: "3px"
+  borderRadius: "3px",
+  zIndex: 10
 };
 
 const ToolTipStyleHovered: React.CSSProperties = {
