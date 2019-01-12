@@ -30,3 +30,8 @@ export function isString<T>(string: T): boolean {
 export function classNames(classes: Array<string>) {
   return classes.join(" ").trim();
 }
+
+export function isEmptyObject<T>(obj: T): boolean | T {
+  if (typeof obj !== "object") return obj;
+  return Object.keys(obj).length > 1;
+}

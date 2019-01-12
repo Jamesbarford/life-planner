@@ -32,7 +32,7 @@ export class SelectDay implements ActionBase {
 
 export class CalculateMomentArray implements ActionBase {
   readonly type = CalendarActions.CalculateMomentArray;
-  constructor(public date: Moment, public t?: TimePointType) {}
+  constructor(public t: TimePointType) {}
 }
 
 export type CalendarActionTypes =
