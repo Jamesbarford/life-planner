@@ -95,8 +95,7 @@ export const findIncrementalTimePoint = (timePoint: TimePointType) => {
  */
 export const calculate = (
   date: Moment,
-  timePoint?: TimePointType,
-  next?: any
+  timePoint?: TimePointType
 ): ((d: Moment, t?: TimePointType) => Array<Moment>) => {
   // intializers
   let _done = false;

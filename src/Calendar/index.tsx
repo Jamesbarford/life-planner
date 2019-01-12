@@ -19,6 +19,11 @@ import { MonthView } from "./MonthView";
 import { Select } from "../components/Select";
 import { ApplicationState } from "../App/types";
 import { getDate } from "./selectors";
+import { Icon } from "../components/IconButton";
+import {
+  CircularButton,
+  BackgroundColor
+} from "../components/IconButton/style";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 class Calendar extends React.Component<CalendarProps> {
@@ -56,8 +61,19 @@ class Calendar extends React.Component<CalendarProps> {
             <option value={month}>Month</option>
             <option value={year}>Year</option>
           </Select>
-          <button onClick={() => this.previous()}>previous {view}</button>
-          <button onClick={() => this.next()}>next {view}</button>
+
+          <Icon
+            hoverBackground={BackgroundColor.lightGray}
+            btnStyle={CircularButton}
+            onClick={this.previous}
+            iconName="keyboard_arrow_left"
+          />
+          <Icon
+            hoverBackground={BackgroundColor.lightGray}
+            btnStyle={CircularButton}
+            onClick={this.next}
+            iconName="keyboard_arrow_right"
+          />
         </div>
 
         <MonthView

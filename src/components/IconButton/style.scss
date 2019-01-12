@@ -1,0 +1,15 @@
+.icon-button__wrapper {
+  border: none;
+  @include flexbox;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    transition: 0.2s ease-in-out;
+  }
+
+  &:focus {
+    outline: 0;
+    border: 1px solid black;
+  }
+}
