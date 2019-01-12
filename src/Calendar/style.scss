@@ -68,7 +68,6 @@ html {
 .calendar-cell {
   width: 100%;
   font-size: 12px;
-  font-weight: bold;
   letter-spacing: 0.5px;
   text-align: center;
   position: relative;
@@ -87,16 +86,16 @@ html {
   }
 
   .today {
-    padding-right: 0px;
-    height: 30px;
-    width: 30px;
-    background: #1a73e8;
-    color: white;
-    border-radius: 50%;
-    transition: 0.1s ease-in-out;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 30px;
+    width: 30px;
+    background: #1a73e8;
+    font-weight: bold;
+    color: white;
+    border-radius: 50%;
+    transition: 0.1s ease-in-out;
   }
 
   .calendar-cell__inner {
