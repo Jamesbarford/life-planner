@@ -113,7 +113,7 @@ export const calculate = (
       const incrementor = findIncrementalTimePoint(t);
       const mutableDate = date
         .clone()
-        .startOf(TimePoint.month)
+        .startOf(t)
         .add(-1, incrementor)
         .day("Saturday");
 

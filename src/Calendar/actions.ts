@@ -1,6 +1,6 @@
 import { Moment } from "moment";
 import { ActionBase } from "../types/global";
-import { TimePoint, TimePointType } from "../helpers/dateHelper";
+import { TimePointType } from "../helpers/dateHelper";
 
 export enum CalendarActions {
   CalendarNext = "Calendar.Next",
@@ -22,7 +22,7 @@ export class CalendarPrevious implements ActionBase {
 
 export class ChangeView implements ActionBase {
   readonly type = CalendarActions.CalendarChangeView;
-  constructor(public newView: TimePoint) {}
+  constructor(public newView: TimePointType) {}
 }
 
 export class SelectDay implements ActionBase {

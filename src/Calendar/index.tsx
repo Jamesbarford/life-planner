@@ -4,30 +4,32 @@ import { Moment } from "moment";
 
 // HELPERS
 import { TimePoint, TimePointType } from "../helpers/dateHelper";
+import { createHashFromMonth, selectMomentFromList } from "./selectors";
 
 // ACTIONS
 import {
   CalendarNext,
   CalendarPrevious,
+  CalculateMomentArray,
   ChangeView,
-  SelectDay,
-  CalculateMomentArray
+  SelectDay
 } from "./actions";
 
 // COMPONENTS
-import { MonthView } from "./MonthView";
-import { Select } from "../components/Select";
-import { ApplicationState } from "../App/types";
-import { selectMomentFromList, createHashFromMonth } from "./selectors";
+import { DayNames } from "./view/Day";
 import { Icon } from "../components/IconButton";
 import {
   CircularButton,
   BackgroundColor
 } from "../components/IconButton/style";
+import { MonthView } from "./view/MonthView";
+import { Select } from "../components/Select";
 import { ToolTip } from "../components/ToolTip";
+import { Week } from "./view/Week";
+
+// TYPES
+import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
-import { DayNames } from "./Day";
-import { Week } from "./Week";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 class Calendar extends React.Component<CalendarProps> {
@@ -44,17 +46,23 @@ class Calendar extends React.Component<CalendarProps> {
   };
 
   changeView = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const view = e.target.value as TimePoint;
+    const view = e.target.value as TimePointType;
     this.props.changeView(view);
   };
 
   select = (date: Moment) => this.props.selectDay(date);
 
+  getMomentArray = () => {
+    const { currentMonth, view, momentList } = this.props;
+    const dateHash = createHashFromMonth(currentMonth, view);
+    const timeArr = selectMomentFromList(dateHash, momentList);
+    return timeArr;
+  };
+
   render() {
     const { date, selectedDay, view, momentList, currentMonth } = this.props;
     const { day, week, month, year } = TimePoint;
-    const dateHash = createHashFromMonth(currentMonth, view);
-    const timeArr = selectMomentFromList(dateHash, momentList);
+    const timeArr = this.getMomentArray();
 
     return (
       <>
@@ -130,7 +138,7 @@ interface MapDispatchToProps {
   next: (unitOfTime: number, timePoint: TimePointType) => void;
   selectDay: (date: Moment) => void;
   previous: (unitOfTime: number, timePoint: TimePointType) => void;
-  changeView: (newView: TimePoint) => void;
+  changeView: (newView: TimePointType) => void;
   calculateMomentArray: (t: TimePointType) => void;
 }
 

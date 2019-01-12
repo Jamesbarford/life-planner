@@ -1,10 +1,9 @@
 import * as React from "react";
 import { Moment } from "moment";
+import { List } from "immutable";
 
 // COMPONENTS
 import { Week } from "./Week";
-import { DayNames } from "./Day";
-import { List } from "immutable";
 
 interface MonthViewProps {
   weeks: List<Moment>;

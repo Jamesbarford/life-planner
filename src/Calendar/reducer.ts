@@ -51,12 +51,14 @@ export function calendarReducer(
       };
     }
 
-    case CalendarActions.CalendarChangeView:
+    case CalendarActions.CalendarChangeView: {
+      const momentList = createMomentList(action.newView, state);
       return {
         ...state,
-        view: action.newView
+        view: action.newView,
+        moment: state.momentList.merge(momentList)
       };
-
+    }
     case CalendarActions.CalendarSelectDay:
       return {
         ...state,

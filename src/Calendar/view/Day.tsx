@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Moment } from "moment";
-import { dayNames, paddingRight } from "../helpers/dateHelper";
-import { CalendarShared } from "./types";
-import { classNames } from "../helpers/util";
+import { dayNames, paddingRight } from "../../helpers/dateHelper";
+import { CalendarShared } from "../types";
+import { classNames } from "../../helpers/util";
 
 export const DayNames: React.FunctionComponent = () => (
   <div className="row day-names">
@@ -31,7 +31,9 @@ export class Day extends React.Component<DayProps> {
             `${selected ? "today" : ""}`
           ])}
         >
-          <span style={{ paddingRight: 2 }}>{day.format("D")}</span>
+          <span style={{ paddingRight: paddingRight(day) }}>
+            {day.format("D")}
+          </span>
         </div>
       </button>
     );

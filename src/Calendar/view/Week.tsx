@@ -1,13 +1,15 @@
 import * as React from "react";
 import { Moment } from "moment";
-import { dayNames } from "../helpers/dateHelper";
 import { cloneDeep } from "lodash";
+
+// HELPERS
+import { dayNames } from "../../helpers/dateHelper";
 
 // COMPONENTS
 import { Day } from "./Day";
 
 // TYPES
-import { CalendarShared } from "./types";
+import { CalendarShared } from "../types";
 
 interface WeekProps extends CalendarShared {
   week: Moment;
