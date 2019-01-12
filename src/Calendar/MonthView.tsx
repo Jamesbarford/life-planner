@@ -4,9 +4,10 @@ import { Moment } from "moment";
 // COMPONENTS
 import { Week } from "./Week";
 import { DayNames } from "./Day";
+import { List } from "immutable";
 
 interface MonthViewProps {
-  weeks: Array<Moment>;
+  weeks: List<Moment>;
   selectedDay: Moment;
   select: (d: Moment) => void;
 }

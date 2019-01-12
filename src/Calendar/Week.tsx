@@ -32,13 +32,8 @@ export class Week extends React.Component<WeekProps> {
 
     return (
       <div className="calendar-row">
-        {days.map(day => (
-          <Day
-            select={select}
-            selectedDay={selectedDay}
-            key={day.toISOString()}
-            day={day}
-          />
+        {days.map((day, i) => (
+          <Day select={select} selectedDay={selectedDay} key={i} day={day} />
         ))}
       </div>
     );

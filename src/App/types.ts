@@ -1,5 +1,6 @@
 import { Moment } from "moment";
 import { TimePointType } from "../helpers/dateHelper";
+import { MomentDictionary } from "../Calendar/types";
 
 export interface ApplicationState {
   calendar: {
@@ -7,6 +8,6 @@ export interface ApplicationState {
     selectedDay: Moment;
     view: TimePointType;
     currentMonth: number;
-    momentArr: Array<Moment>;
+    momentList: MomentDictionary;
   };
 }

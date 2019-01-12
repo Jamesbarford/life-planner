@@ -31,9 +31,7 @@ export class Day extends React.Component<DayProps> {
             `${selected ? "today" : ""}`
           ])}
         >
-          <span style={{ paddingRight: paddingRight(day) }}>
-            {day.format("D")}
-          </span>
+          <span style={{ paddingRight: 2 }}>{day.format("D")}</span>
         </div>
       </button>
     );

@@ -18,13 +18,14 @@ import {
 import { MonthView } from "./MonthView";
 import { Select } from "../components/Select";
 import { ApplicationState } from "../App/types";
-import { getDate } from "./selectors";
+import { selectMomentList } from "./selectors";
 import { Icon } from "../components/IconButton";
 import {
   CircularButton,
   BackgroundColor
 } from "../components/IconButton/style";
 import { ToolTip } from "../components/ToolTip";
+import { MomentDictionary } from "./types";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 class Calendar extends React.Component<CalendarProps> {
@@ -48,8 +49,9 @@ class Calendar extends React.Component<CalendarProps> {
   select = (date: Moment) => this.props.selectDay(date);
 
   render() {
-    const { date, selectedDay, view, momentArr } = this.props;
+    const { date, selectedDay, view, momentList } = this.props;
     const { day, week, month, year } = TimePoint;
+    const timeArr = selectMomentList(momentList);
 
     return (
       <>
@@ -91,7 +93,7 @@ class Calendar extends React.Component<CalendarProps> {
         </div>
 
         <MonthView
-          weeks={momentArr}
+          weeks={timeArr}
           selectedDay={selectedDay}
           select={this.select}
         />
@@ -105,7 +107,7 @@ interface MapStateToProps {
   selectedDay: Moment;
   currentMonth: number;
   view: TimePointType;
-  momentArr: Array<Moment>;
+  momentList: MomentDictionary;
 }
 
 interface MapDispatchToProps {
@@ -122,7 +124,7 @@ export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
     selectedDay: state.calendar.selectedDay,
     currentMonth: state.calendar.currentMonth,
     view: state.calendar.view,
-    momentArr: state.calendar.momentArr
+    momentList: state.calendar.momentList
   }),
   dispatch => ({
     next: (unitOfTime, timePoint) =>

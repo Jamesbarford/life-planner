@@ -24,7 +24,7 @@ const ToolTipStyleHovered: React.CSSProperties = {
   ...ToolTipStyle,
   visibility: "visible",
   transform: "scale(1,1)",
-  transitionDuration: "100ms",
+  transitionDuration: "200ms",
   transitionTimingFunction: "ease",
   transitionProperty: "all"
 };
