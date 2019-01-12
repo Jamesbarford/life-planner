@@ -23,9 +23,8 @@ const ToolTipStyle: React.CSSProperties = {
 const ToolTipStyleHovered: React.CSSProperties = {
   ...ToolTipStyle,
   visibility: "visible",
-  position: "absolute",
   transform: "scale(1,1)",
-  transitionDuration: "200ms",
+  transitionDuration: "100ms",
   transitionTimingFunction: "ease",
   transitionProperty: "all"
 };
@@ -43,7 +42,7 @@ export class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
       const clientRect = this.wrapperRef.getBoundingClientRect();
       const style = {
         ...ToolTipStyleHovered,
-        top: `${clientRect.height - 10}px`
+        marginTop: `${clientRect.height}px`
       };
       this.setState({ style });
     }

@@ -54,30 +54,40 @@ class Calendar extends React.Component<CalendarProps> {
     return (
       <>
         <div className="calendar-navigation">
-          <div>{date.format("MMMM YYYY")}</div>
+          <div className="calendar-navigation__item">
+            {date.format("MMMM YYYY")}
+          </div>
 
-          <Select onChange={this.changeView} defaultValue={month}>
-            <option value={day}>Day</option>
-            <option value={week}>Week</option>
-            <option value={month}>Month</option>
-            <option value={year}>Year</option>
-          </Select>
-          <ToolTip helper={`previous ${view}`}>
-            <Icon
-              hoverBackground={BackgroundColor.lightGray}
-              btnStyle={CircularButton}
-              onClick={this.previous}
-              iconName="keyboard_arrow_left"
-            />
-          </ToolTip>
-          <ToolTip helper={`next ${view}`}>
-            <Icon
-              hoverBackground={BackgroundColor.lightGray}
-              btnStyle={CircularButton}
-              onClick={this.next}
-              iconName="keyboard_arrow_right"
-            />
-          </ToolTip>
+          <div className="calendar-navigation__item">
+            <ToolTip helper="select timepoint">
+              <Select onChange={this.changeView} defaultValue={month}>
+                <option value={day}>Day</option>
+                <option value={week}>Week</option>
+                <option value={month}>Month</option>
+                <option value={year}>Year</option>
+              </Select>
+            </ToolTip>
+          </div>
+          <div className="calendar-navigation__item">
+            <ToolTip helper={`previous ${view}`}>
+              <Icon
+                hoverBackground={BackgroundColor.lightGray}
+                btnStyle={CircularButton}
+                onClick={this.previous}
+                iconName="keyboard_arrow_left"
+              />
+            </ToolTip>
+          </div>
+          <div className="calendar-navigation__item">
+            <ToolTip helper={`next ${view}`}>
+              <Icon
+                hoverBackground={BackgroundColor.lightGray}
+                btnStyle={CircularButton}
+                onClick={this.next}
+                iconName="keyboard_arrow_right"
+              />
+            </ToolTip>
+          </div>
         </div>
 
         <MonthView
