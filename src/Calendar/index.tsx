@@ -1,53 +1,37 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { Moment, unitOfTime } from "moment";
+import { Moment } from "moment";
 
 // HELPERS
-import { TimePoint, calculate, TimePointType } from "../helpers/dateHelper";
+import { TimePoint, TimePointType } from "../helpers/dateHelper";
 
 // ACTIONS
 import {
   CalendarNext,
   CalendarPrevious,
   ChangeView,
-  SelectDay
+  SelectDay,
+  CalculateMomentArray
 } from "./actions";
 
 // COMPONENTS
 import { MonthView } from "./MonthView";
 import { Select } from "../components/Select";
-
-interface CalendarState {
-  weeks: Array<Moment>;
-}
+import { ApplicationState } from "../App/types";
+import { getDate } from "./selectors";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
-
-class Calendar extends React.Component<CalendarProps, CalendarState> {
-  private cache = (date: Moment) => calculate(date);
-
-  state = { weeks: [] as Array<Moment> };
-
-  componentDidMount() {
-    this.calculateWeeks();
-  }
-
+class Calendar extends React.Component<CalendarProps> {
   next = () => {
-    const { next, view } = this.props;
+    const { next, view, calculateMomentArray } = this.props;
     next(1, view);
-    this.calculateWeeks();
+    calculateMomentArray(this.props.date, view);
   };
 
   previous = () => {
-    const { previous, view } = this.props;
+    const { previous, view, calculateMomentArray } = this.props;
     previous(1, view);
-    this.calculateWeeks();
-  };
-
-  calculateWeeks = () => {
-    const { date } = this.props;
-    const weeks = this.cache(date)(date);
-    this.setState({ weeks });
+    calculateMomentArray(this.props.date, view);
   };
 
   changeView = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -58,9 +42,8 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
   select = (date: Moment) => this.props.selectDay(date);
 
   render() {
-    const { weeks } = this.state;
-    const { date, selectedDay, view } = this.props;
-    const { day, week, month } = TimePoint;
+    const { date, selectedDay, view, momentArr } = this.props;
+    const { day, week, month, year } = TimePoint;
 
     return (
       <>
@@ -71,13 +54,14 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
             <option value={day}>Day</option>
             <option value={week}>Week</option>
             <option value={month}>Month</option>
+            <option value={year}>Year</option>
           </Select>
           <button onClick={() => this.previous()}>previous {view}</button>
           <button onClick={() => this.next()}>next {view}</button>
         </div>
 
         <MonthView
-          weeks={weeks}
+          weeks={momentArr}
           selectedDay={selectedDay}
           select={this.select}
         />
@@ -91,6 +75,7 @@ interface MapStateToProps {
   selectedDay: Moment;
   currentMonth: number;
   view: TimePointType;
+  momentArr: Array<Moment>;
 }
 
 interface MapDispatchToProps {
@@ -98,14 +83,16 @@ interface MapDispatchToProps {
   previous: (unitOfTime: number, timePoint: TimePointType) => void;
   changeView: (newView: TimePoint) => void;
   selectDay: (date: Moment) => void;
+  calculateMomentArray: (date: Moment, t?: TimePointType) => void;
 }
 
 export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
-  ({ calendar }: { calendar: MapStateToProps }) => ({
-    date: calendar.date,
-    selectedDay: calendar.selectedDay,
-    currentMonth: calendar.currentMonth,
-    view: calendar.view
+  (state: ApplicationState) => ({
+    date: state.calendar.date,
+    selectedDay: state.calendar.selectedDay,
+    currentMonth: state.calendar.currentMonth,
+    view: state.calendar.view,
+    momentArr: state.calendar.momentArr
   }),
   dispatch => ({
     next: (unitOfTime, timePoint) =>
@@ -113,6 +100,8 @@ export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
     previous: (unitOfTime, timePoint) =>
       dispatch(new CalendarPrevious(unitOfTime, timePoint)),
     changeView: newView => dispatch(new ChangeView(newView)),
-    selectDay: date => dispatch(new SelectDay(date))
+    selectDay: date => dispatch(new SelectDay(date)),
+    calculateMomentArray: (date, t) =>
+      dispatch(new CalculateMomentArray(date, t))
   })
 )(Calendar);

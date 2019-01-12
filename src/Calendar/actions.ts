@@ -5,8 +5,9 @@ import { TimePoint, TimePointType } from "../helpers/dateHelper";
 export enum CalendarActions {
   CalendarNext = "Calendar.Next",
   CalendarPrevious = "Calendar.Previous",
-  CalendarChangeView = "CalendarChangeView",
-  CalendarSelectDay = "CalendarSelectDay"
+  CalendarChangeView = "Calendar.ChangeView",
+  CalendarSelectDay = "Calendar.SelectDay",
+  CalculateMomentArray = "Calendar.CalculateMomentArray"
 }
 
 export class CalendarNext implements ActionBase {
@@ -29,8 +30,14 @@ export class SelectDay implements ActionBase {
   constructor(public selectedDay: Moment) {}
 }
 
+export class CalculateMomentArray implements ActionBase {
+  readonly type = CalendarActions.CalculateMomentArray;
+  constructor(public date: Moment, public t?: TimePointType) {}
+}
+
 export type CalendarActionTypes =
   | CalendarNext
   | CalendarPrevious
   | ChangeView
-  | SelectDay;
+  | SelectDay
+  | CalculateMomentArray;

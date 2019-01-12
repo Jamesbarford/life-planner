@@ -26,7 +26,9 @@ const stripClassActions = <State, Action>(store: Store<State>) => {
     next(isPlainObject(action) ? action : Object.assign({}, action));
 };
 
-const logger = createLogger();
+const logger = createLogger({
+  collapsed: () => true
+});
 
 export const store = createStore(
   allReducers,

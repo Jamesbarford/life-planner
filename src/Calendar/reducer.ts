@@ -1,14 +1,19 @@
 import { Moment } from "moment";
 import * as moment from "moment";
-import { TimePoint, TimePointType } from "../helpers/dateHelper";
+import { TimePoint, TimePointType, calculate } from "../helpers/dateHelper";
 import { CalendarActions, CalendarActionTypes } from "./actions";
 
+const newDate = moment().startOf(TimePoint.day);
 export class CalendarState {
   constructor(
-    public date: Moment = moment().startOf(TimePoint.day),
-    public selectedDay: Moment = moment().startOf(TimePoint.day),
+    public date: Moment = newDate,
+    public selectedDay: Moment = newDate,
     public currentMonth: number = moment().month(),
-    public view: TimePointType = TimePoint.month
+    public view: TimePointType = TimePoint.month,
+    public momentArr: Array<Moment> = calculate(newDate)(
+      newDate,
+      TimePoint.month
+    )
   ) {}
 }
 
@@ -40,6 +45,11 @@ export function calendarReducer(
         ...state,
         selectedDay: action.selectedDay
       };
+
+    case CalendarActions.CalculateMomentArray:
+      const { date, t } = action;
+      const momentArr = calculate(date, t)(date, t);
+      return { ...state, momentArr };
 
     default:
       return state;

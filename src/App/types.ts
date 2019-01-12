@@ -1,11 +1,12 @@
-import { TimePoint } from "../helpers/dateHelper";
 import { Moment } from "moment";
+import { TimePointType } from "../helpers/dateHelper";
 
 export interface ApplicationState {
   calendar: {
     date: Moment;
     selectedDay: Moment;
-    view: TimePoint;
+    view: TimePointType;
     currentMonth: number;
+    momentArr: Array<Moment>;
   };
 }

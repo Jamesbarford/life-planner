@@ -1,5 +1,5 @@
 import { Moment, unitOfTime } from "moment";
-import { cloneDeep } from "lodash";
+import { cloneDeep, isEqual } from "lodash";
 import { removeWhiteSpace } from "./util";
 import { StringIndexSignature } from "../types/global";
 
@@ -67,12 +67,15 @@ export type TimePointType =
   | "milliseconds"
   | "ms";
 
-interface WeekCache extends StringIndexSignature<Array<Moment>> {}
+export interface WeekCache extends StringIndexSignature<Array<Moment>> {}
 
-const findIncrementalTimePoint = (timePoint: TimePointType) => {
+export const findIncrementalTimePoint = (timePoint: TimePointType) => {
   switch (timePoint) {
     case TimePoint.year:
       return TimePoint.month;
+
+    case TimePoint.month:
+      return TimePoint.week;
 
     case TimePoint.week:
       return TimePoint.day;
@@ -91,7 +94,9 @@ const findIncrementalTimePoint = (timePoint: TimePointType) => {
  * re-compute
  */
 export const calculate = (
-  date: Moment
+  date: Moment,
+  timePoint?: TimePointType,
+  next?: any
 ): ((d: Moment, t?: TimePointType) => Array<Moment>) => {
   // intializers
   let _done = false;
@@ -101,23 +106,21 @@ export const calculate = (
   const weeks: Array<Moment> = [];
 
   return (d, t) => {
-    const formatDate = d.format("DD MM YYYY");
+    const formatDate = date.format("DD MM YYYY");
     const key = removeWhiteSpace(formatDate);
-
     // don't execute loop if we have that month in the cache
     if (key in cache) return cache[key];
     else {
       const incrementor = findIncrementalTimePoint(t);
       const mutableDate = date
         .clone()
-        .startOf(t || TimePoint.month)
-        .add(t ? 0 : -1, incrementor)
-        .day("Sunday");
+        .startOf(TimePoint.month)
+        .add(-1, incrementor)
+        .day("Saturday");
 
       while (!_done) {
-        mutableDate.add(1, incrementor);
         weeks.push(cloneDeep(mutableDate));
-
+        mutableDate.add(1, incrementor);
         _done = weeks.length === 5;
       }
       cache[key] = weeks;
