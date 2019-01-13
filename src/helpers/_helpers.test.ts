@@ -1,7 +1,7 @@
 import * as moment from "moment";
 import { isMoment } from "moment";
 import { removeWhiteSpace, isString } from "./util";
-import { calculate } from "./dateHelper";
+import { calculate, TimePoint } from "./dateHelper";
 
 describe("Util functions", () => {
   it("should remove whitespace", () => {
@@ -24,7 +24,7 @@ describe("Util functions", () => {
 describe("Date helpers", () => {
   it("should return an array of moments", () => {
     const date = moment();
-    const arr = calculate(date)(date);
+    const arr = calculate(date, TimePoint.month, 1);
     expect(isMoment(arr));
   });
 });

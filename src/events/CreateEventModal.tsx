@@ -34,10 +34,7 @@ type CreateEventProps = MapStateToProps & MapDispatchToProps & OwnProps;
 class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
   state = {
     title: "",
-    timeArr: calculate(this.props.selectedDay, TimePoint.day)(
-      this.props.selectedDay,
-      TimePoint.day
-    ),
+    timeArr: calculate(this.props.selectedDay, TimePoint.hour, 30, 48),
     selectedTime: 0
   };
 
@@ -80,7 +77,9 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
             defaultValue={selectedDay.format("LT")}
           >
             {timeArr.map(time => (
-              <option value={time.hour()}>{time.format("LT")}</option>
+              <option key={time.format("LT")} value={time.hour()}>
+                {time.format("LT")}
+              </option>
             ))}
           </Select>
           <Button

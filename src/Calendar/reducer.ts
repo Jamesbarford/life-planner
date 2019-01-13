@@ -20,9 +20,7 @@ import { MomentDictionary } from "./types";
 
 const newDate = moment().startOf(TimePoint.day);
 const hash = createHash(newDate, TimePoint.month);
-const newList = List(
-  calculate(newDate, TimePoint.month)(newDate, TimePoint.month)
-);
+const newList = List(calculate(newDate, TimePoint.month, 1));
 const map = Map({ [hash]: newList });
 
 export class CalendarState {

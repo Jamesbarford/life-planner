@@ -152,10 +152,12 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
             </div>
           )}
         </div>
-        <CreateEventModalConnected
-          modalOpen={modalOpen}
-          close={() => this.setState({ modalOpen: false })}
-        />
+        {modalOpen && (
+          <CreateEventModalConnected
+            modalOpen={modalOpen}
+            close={() => this.setState({ modalOpen: false })}
+          />
+        )}
       </>
     );
   }

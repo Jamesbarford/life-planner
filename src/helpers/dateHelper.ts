@@ -76,6 +76,9 @@ export const findIncrementalTimePoint = (timePoint: TimePointType) => {
     case TimePoint.day:
       return TimePoint.hour;
 
+    case TimePoint.hour:
+      return TimePoint.minutes;
+
     default:
       return TimePoint.week;
   }
@@ -105,7 +108,7 @@ function getIndex(t: TimePointType) {
       return 1;
 
     case TimePoint.day:
-      return 25;
+      return 24;
 
     default:
       return 5;
@@ -124,46 +127,45 @@ export function getHashIndex(t: TimePointType, state: CalendarState) {
 }
 
 /**
- * Memoized date storage
- * this contains a while loop so better to cache the array of moments than
- * re-compute
+ * Creates an Array of moments given:
+ * @param date a moment
+ * @param timePoint i.e month
+ * @param unitOfTime amount of time to add
+ * @param numberOfMoments the amount of moments to be in the array
  */
 export const calculate = (
   date: Moment,
-  timePoint?: TimePointType
-): ((d: Moment, t?: TimePointType) => Array<Moment>) => {
+  timePoint: TimePointType,
+  unitOfTime: number,
+  numberOfMoments?: number
+): Array<Moment> => {
   // intializers
   let _done = false;
   const index = getIndex(timePoint);
-
-  // state of function
-  const cache: WeekCache = {};
   const momentArr: Array<Moment> = [];
+  const arrayLenth = numberOfMoments || index;
 
-  return (d, t) => {
-    const formatDate = date.format("DD MM YYYY");
-    const key = removeWhiteSpace(formatDate);
-    // don't execute loop if we have that month in the cache
-    if (key in cache) return cache[key];
-    else {
-      const isDay = timePoint === TimePoint.day;
-      const duration = isDay ? 0 : -1;
-      const incrementor = findIncrementalTimePoint(t);
-      const mutableDate = date
-        .clone()
-        .startOf(t)
-        .add(duration, incrementor)
-        .day(isDay ? "" : "Saturday");
+  const isDay = timePoint === TimePoint.day;
+  const isHours = timePoint === TimePoint.hour;
 
-      while (!_done) {
-        momentArr.push(cloneDeep(mutableDate));
-        mutableDate.add(1, incrementor);
-        _done = momentArr.length === index;
-      }
-      cache[key] = momentArr;
-      return momentArr;
-    }
-  };
+  const duration = isDay ? 1 : isHours ? 0 : -1;
+
+  console.log({ [timePoint]: duration });
+
+  const incrementor = findIncrementalTimePoint(timePoint);
+
+  const mutableDate = date
+    .clone()
+    .startOf(timePoint)
+    .add(duration, incrementor)
+    .day(isDay ? "" : "Saturday");
+
+  while (!_done) {
+    momentArr.push(cloneDeep(mutableDate));
+    mutableDate.add(unitOfTime, incrementor);
+    _done = momentArr.length === arrayLenth;
+  }
+  return momentArr;
 };
 
 /**

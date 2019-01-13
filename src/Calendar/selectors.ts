@@ -74,7 +74,7 @@ export function createDateHashMap(
 ): MomentDictionary {
   const hashIndex = getHashIndex(timePoint, state);
   const hash = createHash(hashIndex, timePoint);
-  const newList = List(calculate(state.date, timePoint)(state.date, timePoint));
+  const newList = List(calculate(state.date, timePoint, 1));
   const hashMap = Map({ [hash]: newList });
   return hashMap;
 }
