@@ -38,6 +38,7 @@
 @-webkit-keyframes rippleAnimation {
   100% {
     @include scale(2);
+    // set to one to make colour persist.
     opacity: 0;
   }
 }

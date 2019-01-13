@@ -12,8 +12,9 @@ interface IconProps {
 export class Icon extends React.Component<IconProps> {
   state = { backgroundColor: "" };
 
-  mouseEnter = () =>
+  mouseEnter = () => {
     this.setState({ backgroundColor: this.props.hoverBackground });
+  };
 
   mouseLeave = () => this.setState({ backgroundColor: "" });
 

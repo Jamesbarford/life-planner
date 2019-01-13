@@ -1,19 +1,8 @@
-import { Moment, unitOfTime } from "moment";
-import { cloneDeep, isEqual } from "lodash";
+import { Moment } from "moment";
+import { cloneDeep } from "lodash";
 import { removeWhiteSpace } from "./util";
 import { StringIndexSignature } from "../types/global";
-import moment = require("moment");
 import { CalendarState } from "../Calendar/reducer";
-
-export const dayNames = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday"
-];
 
 export enum TimePoint {
   d = "d",
@@ -125,7 +114,7 @@ export const calculate = (
 ): ((d: Moment, t?: TimePointType) => Array<Moment>) => {
   // intializers
   let _done = false;
-  let _index = getIndex(timePoint);
+  const index = getIndex(timePoint);
 
   // state of function
   const cache: WeekCache = {};
@@ -149,8 +138,7 @@ export const calculate = (
       while (!_done) {
         momentArr.push(cloneDeep(mutableDate));
         mutableDate.add(1, incrementor);
-        // count++ > 2 && monthIndex !== date.month()
-        _done = momentArr.length === _index;
+        _done = momentArr.length === index;
       }
       cache[key] = momentArr;
       return momentArr;

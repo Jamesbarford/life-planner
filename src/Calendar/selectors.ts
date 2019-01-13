@@ -16,16 +16,16 @@ export const getCalendarState = (state: ApplicationState) => state.calendar;
 /**
  *
  * @param date moment
- * @param t timepoint i.e month
+ * @param timePoint timepoint i.e month
  * @returns a date hash
  * @example
  * createHash(date, TimePoint.month);
  * => "month-2019-02-12T00:00:00.000Z"
  */
-export function createHash(date: Moment, t: TimePointType): string {
+export function createHash(date: Moment, timePoint: TimePointType): string {
   const formattedDate = date.startOf("day").toISOString();
   const hash = removeWhiteSpace(formattedDate);
-  return `${t}-${hash}`;
+  return `${timePoint}-${hash}`;
 }
 
 /**
@@ -38,7 +38,7 @@ export function createHash(date: Moment, t: TimePointType): string {
  * `List` and add it to the `Map`
  *
  * @param state calendar state
- * @param t timepoint i.e month
+ * @param timePoint timepoint i.e month
  * @returns a `Map` with a `datehash` as it's key containing a `List` of `moments`
  * @example
  * createMomentList(TimePoint.month, state);
@@ -52,12 +52,12 @@ export function createHash(date: Moment, t: TimePointType): string {
  */
 export function createMomentList(
   state: CalendarState,
-  t: TimePointType
+  timePoint: TimePointType
 ): MomentDictionary {
-  const hashIndex = getHashIndex(t, state);
-  const hash = createHash(hashIndex, t);
+  const hashIndex = getHashIndex(timePoint, state);
+  const hash = createHash(hashIndex, timePoint);
   if (state.momentList.get(hash)) return state.momentList;
-  const hashMap = createDateHashMap(state, t);
+  const hashMap = createDateHashMap(state, timePoint);
   return hashMap;
 }
 
@@ -67,7 +67,7 @@ export function createMomentList(
  * states current date.
  *
  * @param state calendar state
- * @param t timepoint i.e month
+ * @param timePoint timepoint i.e month
  * @returns a `Map` with a `datehash` as it's key containing a `List` of `moments`
  * @example
  * createMomentList(TimePoint.month, state);
@@ -81,11 +81,11 @@ export function createMomentList(
  */
 export function createDateHashMap(
   state: CalendarState,
-  t: TimePointType
+  timePoint: TimePointType
 ): MomentDictionary {
-  const hashIndex = getHashIndex(t, state);
-  const hash = createHash(hashIndex, t);
-  const newList = List(calculate(state.date, t)(state.date, t));
+  const hashIndex = getHashIndex(timePoint, state);
+  const hash = createHash(hashIndex, timePoint);
+  const newList = List(calculate(state.date, timePoint)(state.date, timePoint));
   const hashMap = Map({ [hash]: newList });
   return hashMap;
 }

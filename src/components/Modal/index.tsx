@@ -10,7 +10,7 @@ interface ModalProps {
 
 export class Modal extends React.Component<ModalProps> {
   render() {
-    const { open, children } = this.props;
+    const { open, children, close } = this.props;
     return (
       open && (
         <>
@@ -18,7 +18,7 @@ export class Modal extends React.Component<ModalProps> {
             <div className="modal-inner">
               <div className="modal-close">
                 <Icon
-                  onClick={this.props.close}
+                  onClick={close}
                   btnStyle={CircularButton}
                   hoverBackground={BackgroundColor.lightGray}
                   iconName="close"

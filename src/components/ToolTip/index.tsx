@@ -33,10 +33,7 @@ const ToolTipStyleHovered: React.CSSProperties = {
 export class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
   private wrapperRef: HTMLDivElement;
 
-  state = {
-    isHovering: false,
-    style: ToolTipStyle
-  };
+  state = { isHovering: false, style: ToolTipStyle };
 
   mouseEnter = () => {
     if (this.wrapperRef !== null) {

@@ -40,9 +40,7 @@ interface CalendarState {
 }
 
 class Calendar extends React.Component<CalendarProps, CalendarState> {
-  state = {
-    modalOpen: false
-  };
+  state = { modalOpen: false };
 
   next = () => {
     const { next, view, calculateMomentArray } = this.props;
@@ -77,6 +75,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
 
   render() {
     const { date, selectedDay, view } = this.props;
+    const { modalOpen } = this.state;
     const { day, week, month, year } = TimePoint;
     const timeArr = this.getMomentArray();
 
@@ -120,25 +119,25 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
         </div>
         <div className="calendar-wrapper">
           <DayNames />
-          {view === TimePoint.month && (
+          {view === month && (
             <MonthView
               weeks={timeArr}
               selectedDay={selectedDay}
               select={this.select}
             />
           )}
-          {view === TimePoint.week &&
+          {view === week &&
             timeArr.map(day => (
               <Week
                 key={day.toString()}
                 week={day}
-                selectedDay={this.props.selectedDay}
+                selectedDay={selectedDay}
                 select={this.select}
               />
             ))}
         </div>
         <Modal
-          open={this.state.modalOpen}
+          open={modalOpen}
           close={() => this.setState({ modalOpen: false })}
         >
           <CreateEvent />

@@ -1,11 +1,14 @@
 import * as React from "react";
+import * as moment from "moment";
 import { Moment } from "moment";
-import { dayNames, paddingRight } from "../../helpers/dateHelper";
-import { CalendarShared } from "../types";
-import { classNames } from "../../helpers/util";
-import moment = require("moment");
 
-export const DayNames: React.FunctionComponent = () => {
+// HELPERS
+import { classNames } from "../../helpers/util";
+
+// TYPES
+import { CalendarShared } from "../types";
+
+export const DayNames: React.FunctionComponent = (): JSX.Element => {
   const weekdays = moment.weekdaysShort();
   const upperCaseWeekdays = weekdays.map(day => day.toUpperCase());
 
@@ -24,19 +27,17 @@ interface DayProps extends CalendarShared {
   day: Moment;
 }
 
-export class Day extends React.Component<DayProps> {
-  render() {
-    const { select, selectedDay, day } = this.props;
-    const selected = selectedDay.toISOString() === day.toISOString();
-
-    return (
-      <button className="calendar-cell" onClick={() => select(day)}>
-        <div className={classNames(["calendar-cell__inner"])}>
-          <span className={`${selected ? "today" : ""}`}>
-            {day.format("D")}
-          </span>
-        </div>
-      </button>
-    );
-  }
-}
+export const Day: React.FunctionComponent<DayProps> = ({
+  select,
+  selectedDay,
+  day
+}): JSX.Element => {
+  const selected = selectedDay.toISOString() === day.toISOString();
+  return (
+    <button className="calendar-cell" onClick={() => select(day)}>
+      <div className={classNames(["calendar-cell__inner"])}>
+        <span className={`${selected ? "today" : ""}`}>{day.format("D")}</span>
+      </div>
+    </button>
+  );
+};

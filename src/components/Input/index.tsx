@@ -19,7 +19,7 @@ export const Input: React.FunctionComponent<InputProps> = ({
   inputType,
   placeholder,
   style
-}) => (
+}): JSX.Element => (
   <input
     className="custom-input"
     placeholder={placeholder}

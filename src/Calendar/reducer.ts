@@ -1,15 +1,21 @@
 import { Moment } from "moment";
 import * as moment from "moment";
 import { List, Map } from "immutable";
+
+// HELPERS
 import {
   TimePoint,
   TimePointType,
   calculate,
   alterTime
 } from "../helpers/dateHelper";
-import { CalendarActions, CalendarActionTypes } from "./actions";
-import { MomentDictionary } from "./types";
 import { createMomentList, createHash } from "./selectors";
+
+// ACTIONS
+import { CalendarActions, CalendarActionTypes } from "./actions";
+
+// TYPES
+import { MomentDictionary } from "./types";
 
 const newDate = moment().startOf(TimePoint.day);
 const hash = createHash(newDate, TimePoint.month);
@@ -69,8 +75,8 @@ export function calendarReducer(
       };
 
     case CalendarActions.CalculateMomentArray:
-      const { t } = action;
-      const momentList = createMomentList(state, t);
+      const { timePoint } = action;
+      const momentList = createMomentList(state, timePoint);
       return { ...state, momentList: state.momentList.merge(momentList) };
 
     default:
