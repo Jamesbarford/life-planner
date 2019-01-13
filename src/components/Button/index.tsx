@@ -51,8 +51,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
     const x = clientX - left - halfOfRipple;
     const y = clientY - top - halfOfRipple;
 
-    const position = { left: x, right: y, top: y, bottom: x };
-    return position;
+    return { left: x, right: y, top: y, bottom: x };
   };
 
   rippleStyle = (size: number, position: React.CSSProperties) => {

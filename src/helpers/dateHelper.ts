@@ -150,8 +150,6 @@ export const calculate = (
 
   const duration = isDay ? 1 : isHours ? 0 : -1;
 
-  console.log({ [timePoint]: duration });
-
   const incrementor = findIncrementalTimePoint(timePoint);
 
   const mutableDate = date

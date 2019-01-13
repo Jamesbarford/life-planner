@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as uuid from "uuid";
+import * as moment from "moment";
 import { connect } from "react-redux";
 import { Moment } from "moment";
 
@@ -20,8 +21,7 @@ import { ApplicationState } from "../App/types";
 
 interface CreateEventState {
   title: string;
-  timeArr: Array<Moment>;
-  selectedTime: number;
+  date: Moment;
 }
 
 interface OwnProps {
@@ -32,11 +32,11 @@ interface OwnProps {
 type CreateEventProps = MapStateToProps & MapDispatchToProps & OwnProps;
 
 class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
-  state = {
-    title: "",
-    timeArr: calculate(this.props.selectedDay, TimePoint.hour, 30, 48),
-    selectedTime: 0
-  };
+  // These never change so setting as constants
+  private timeArr = calculate(this.props.selectedDay, TimePoint.hour, 30, 48);
+  private id = uuid();
+
+  state = { title: "", date: moment(this.props.selectedDay) };
 
   changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: e.target.value });
@@ -44,25 +44,23 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
 
   createEvent = (e: React.FormEvent) => {
     e.preventDefault();
-    const date = this.props.selectedDay.clone();
-    const eventDate = date.hour(this.state.selectedTime);
-    const event = {
-      id: uuid(),
-      title: this.state.title,
-      date: eventDate
-    };
-    this.props.createEvent(event);
-    this.props.close();
+
+    const { createEvent, close } = this.props;
+    const { title, date } = this.state;
+
+    const event = { id: this.id, title, date };
+
+    createEvent(event);
+    close();
   };
 
   selectChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const time = parseInt(e.target.value);
-    this.setState({ selectedTime: time });
+    const date = moment(e.target.value);
+    this.setState({ date });
   };
 
   render() {
     const { selectedDay, modalOpen, close } = this.props;
-    const { timeArr } = this.state;
 
     return (
       <Modal open={modalOpen} close={close}>
@@ -76,8 +74,8 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
             onChange={this.selectChangeHandler}
             defaultValue={selectedDay.format("LT")}
           >
-            {timeArr.map(time => (
-              <option key={time.format("LT")} value={time.hour()}>
+            {this.timeArr.map(time => (
+              <option key={time.format("LT")} value={time.toISOString()}>
                 {time.format("LT")}
               </option>
             ))}
