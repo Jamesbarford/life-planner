@@ -1,7 +1,7 @@
 import { Moment } from "moment";
 import { Map } from "immutable";
 
-interface EventBase {
+export interface EventBase {
   id: string;
   title: string;
   description?: string;
