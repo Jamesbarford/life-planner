@@ -87,6 +87,9 @@ function getIndex(t: TimePointType) {
     case TimePoint.week:
       return 1;
 
+    case TimePoint.day:
+      return 25;
+
     default:
       return 5;
   }
@@ -99,7 +102,7 @@ export function getHashIndex(t: TimePointType, state: CalendarState) {
     case TimePoint.month:
       return state.date.month(state.currentMonth);
     case TimePoint.day:
-      return state.date.dayOfYear(1);
+      return state.date.dayOfYear(state.dayOfYear);
   }
 }
 
@@ -126,12 +129,14 @@ export const calculate = (
     // don't execute loop if we have that month in the cache
     if (key in cache) return cache[key];
     else {
+      const isDay = timePoint === TimePoint.day;
+      const duration = isDay ? 0 : -1;
       const incrementor = findIncrementalTimePoint(t);
       const mutableDate = date
         .clone()
         .startOf(t)
-        .add(-1, incrementor)
-        .day("Saturday");
+        .add(duration, incrementor)
+        .day(isDay ? "" : "Saturday");
 
       while (!_done) {
         momentArr.push(cloneDeep(mutableDate));

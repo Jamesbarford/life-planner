@@ -30,6 +30,7 @@ export class CalendarState {
     public selectedDay: Moment = newDate.clone(),
     public currentMonth: number = moment().month(),
     public currentWeek: number = moment().week(),
+    public dayOfYear: number = newDate.dayOfYear(),
     public view: TimePointType = TimePoint.month,
     public momentList: MomentDictionary = map
   ) {}
@@ -45,6 +46,7 @@ export function calendarReducer(
       return {
         ...state,
         date,
+        dayOfYear: date.dayOfYear(),
         currentMonth: date.month(),
         currentWeek: date.week()
       };
@@ -55,6 +57,7 @@ export function calendarReducer(
       return {
         ...state,
         date,
+        dayOfYear: date.dayOfYear(),
         currentMonth: date.month(),
         currentWeek: date.week()
       };
@@ -71,6 +74,7 @@ export function calendarReducer(
     case CalendarActions.CalendarSelectDay:
       return {
         ...state,
+        dayOfYear: action.selectedDay.dayOfYear(),
         selectedDay: action.selectedDay
       };
 

@@ -9,6 +9,7 @@ export interface ApplicationState {
     view: TimePointType;
     currentMonth: number;
     currentWeek: number;
+    dayOfYear: number;
     momentList: MomentDictionary;
   };
 }
