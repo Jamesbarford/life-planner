@@ -75,7 +75,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
   };
 
   render() {
-    const { date, selectedDay, view, today } = this.props;
+    const { date, selectedDay, view } = this.props;
     const { modalOpen } = this.state;
     const { day, week, month, year } = TimePoint;
     const timeArr = this.getMomentArray();
@@ -152,12 +152,10 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
             </div>
           )}
         </div>
-        <Modal
-          open={modalOpen}
+        <CreateEventModalConnected
+          modalOpen={modalOpen}
           close={() => this.setState({ modalOpen: false })}
-        >
-          <CreateEventModalConnected />
-        </Modal>
+        />
       </>
     );
   }

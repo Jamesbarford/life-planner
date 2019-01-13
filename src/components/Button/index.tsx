@@ -5,7 +5,7 @@ interface ButtonProps {
   text: string;
   type?: string;
   buttonStyle: ButtonStyle;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 interface ButtonState {
@@ -56,15 +56,8 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
   };
 
   rippleStyle = (size: number, position: React.CSSProperties) => {
-    clearTimeout();
-
     const animateStyle = { ...position, width: size, height: size };
-
     this.setState({ animate: true, animateStyle });
-    return setTimeout(
-      () => this.setState({ animate: false, animateStyle: {} }),
-      400
-    );
   };
 
   render() {
