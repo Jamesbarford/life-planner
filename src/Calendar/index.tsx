@@ -83,11 +83,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
       <>
         <div className="calendar-navigation">
           <div className="calendar-navigation__item">
-            <h2>{date.format("MMMM YYYY")}</h2>
-          </div>
-
-          <div className="calendar-navigation__item">
-            <ToolTip helper="select timepoint">
+            <ToolTip helper="select view">
               <Select onChange={this.changeView} defaultValue={month}>
                 <option value={day}>Day</option>
                 <option value={week}>Week</option>
@@ -95,6 +91,9 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
                 <option value={year}>Year</option>
               </Select>
             </ToolTip>
+          </div>
+          <div className="calendar-navigation__item">
+            <h2>{date.format("MMMM YYYY")}</h2>
           </div>
           <div className="calendar-navigation__item">
             <ToolTip helper={`previous ${view}`}>
