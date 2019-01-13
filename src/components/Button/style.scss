@@ -1,0 +1,50 @@
+@import "../../style/variables.scss";
+
+.custom-button__success {
+  background-color: $blue;
+  padding: 0 24px;
+  color: white;
+}
+
+.custom-button {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  line-height: 36px;
+  outline: 0;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  letter-spacing: 0.25px;
+  border-radius: 4px;
+  @include translate3d(0, 0, 0);
+
+  .ripple {
+    width: 0;
+    height: 0;
+    opacity: 0.7;
+    position: absolute;
+    border-radius: 150%;
+    background: white;
+    @include scale(0);
+    cursor: inherit;
+    display: inline-block;
+    pointer-events: none;
+    -webkit-animation: rippleAnimation 0.4s ease-in-out;
+    animation: rippleAnimation 0.4s ease-in-out;
+  }
+}
+
+@-webkit-keyframes rippleAnimation {
+  100% {
+    @include scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes rippleAnimation {
+  100% {
+    @include scale(2);
+    opacity: 0;
+  }
+}

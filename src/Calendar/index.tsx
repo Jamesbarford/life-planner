@@ -18,6 +18,7 @@ import {
 // COMPONENTS
 import { DayNames } from "./view/Day";
 import { Icon } from "../components/IconButton";
+import { Modal } from "../components/Modal";
 import {
   CircularButton,
   BackgroundColor
@@ -30,9 +31,19 @@ import { Week } from "./view/Week";
 // TYPES
 import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
+import { CreateEvent } from "./view/CreateEvent";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
-class Calendar extends React.Component<CalendarProps> {
+
+interface CalendarState {
+  modalOpen: boolean;
+}
+
+class Calendar extends React.Component<CalendarProps, CalendarState> {
+  state = {
+    modalOpen: false
+  };
+
   next = () => {
     const { next, view, calculateMomentArray } = this.props;
     next(1, view);
@@ -52,7 +63,10 @@ class Calendar extends React.Component<CalendarProps> {
     changeView(view);
   };
 
-  select = (date: Moment) => this.props.selectDay(date);
+  select = (date: Moment) => {
+    this.props.selectDay(date);
+    this.setState({ modalOpen: true });
+  };
 
   getMomentArray = () => {
     const { view, momentList, date } = this.props;
@@ -123,6 +137,12 @@ class Calendar extends React.Component<CalendarProps> {
               />
             ))}
         </div>
+        <Modal
+          open={this.state.modalOpen}
+          close={() => this.setState({ modalOpen: false })}
+        >
+          <CreateEvent />
+        </Modal>
       </>
     );
   }
