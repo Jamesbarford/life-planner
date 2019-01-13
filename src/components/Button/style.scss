@@ -1,9 +1,32 @@
 @import "../../style/variables.scss";
 
+%custom-button__padding {
+  padding: 0 24px;
+}
+
 .custom-button__success {
   background-color: $blue;
-  padding: 0 24px;
+  @extend %custom-button__padding;
   color: white;
+  transition: 0.4s;
+
+  &:focus {
+    background-color: #6ba1e9;
+    transition: 0.4s;
+  }
+}
+
+.custom-button__light {
+  background-color: transparent;
+  @extend %custom-button__padding;
+  color: #333;
+  transition: 0.4s;
+
+  &:focus {
+    background-color: #333;
+    color: white;
+    transition: 0.4s;
+  }
 }
 
 .custom-button {
@@ -25,13 +48,20 @@
     opacity: 0.7;
     position: absolute;
     border-radius: 150%;
-    background: white;
     @include scale(0);
     cursor: inherit;
     display: inline-block;
     pointer-events: none;
     -webkit-animation: rippleAnimation 0.4s ease-in-out;
     animation: rippleAnimation 0.4s ease-in-out;
+
+    &.success {
+      background: white;
+    }
+
+    &.light {
+      background: #333;
+    }
   }
 }
 

@@ -35,7 +35,7 @@ export const store = createStore(
   applyMiddleware(stripClassActions, logger)
 );
 
-const App: React.FunctionComponent = () => (
+const App: React.FunctionComponent = (): JSX.Element => (
   <Provider store={store}>
     <CalendarConnected />
   </Provider>

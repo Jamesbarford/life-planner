@@ -25,6 +25,11 @@ export class CreateEvent extends React.Component<{}, CreateEventState> {
         />
         <Button
           onClick={() => {}}
+          buttonStyle={ButtonStyle.light}
+          text="More options"
+        />
+        <Button
+          onClick={() => {}}
           buttonStyle={ButtonStyle.success}
           text="Save"
         />

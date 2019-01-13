@@ -133,8 +133,6 @@ export const calculate = (
         .add(-1, incrementor)
         .day("Saturday");
 
-      const end = mutableDate.clone().endOf(t);
-
       while (!_done) {
         momentArr.push(cloneDeep(mutableDate));
         mutableDate.add(1, incrementor);

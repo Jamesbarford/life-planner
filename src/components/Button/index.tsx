@@ -17,7 +17,8 @@ interface ButtonState {
 export enum ButtonStyle {
   success = "success",
   confirm = "success",
-  warning = "warning"
+  warning = "warning",
+  light = "light"
 }
 
 export enum ButtonType {
@@ -31,7 +32,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
 
   state = { isClicked: false, animate: false, animateStyle: {} };
 
-  handleClick = (e: React.MouseEvent) => {
+  handleMouseDown = (e: React.MouseEvent) => {
     const { offsetWidth, offsetHeight } = this.buttonRef;
     const size = offsetWidth >= offsetHeight ? offsetWidth : offsetHeight;
     const position = this.calculatePosition(e, this.buttonRef, size);
@@ -73,17 +74,20 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
     return (
       <button
         ref={ref => (this.buttonRef = ref)}
-        onClick={e => {
-          this.handleClick(e);
-          return onClick();
-        }}
+        onMouseDown={this.handleMouseDown}
+        onClick={onClick}
         className={classNames([
           `custom-button__${buttonStyle}`,
           "custom-button"
         ])}
         type={type || ButtonType.button}
       >
-        {animate && <div style={animateStyle} className="ripple" />}
+        {animate && (
+          <div
+            style={animateStyle}
+            className={classNames(["ripple", `${buttonStyle}`])}
+          />
+        )}
         {text}
       </button>
     );
