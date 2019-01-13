@@ -28,42 +28,36 @@ export enum ButtonType {
 
 export class Button extends React.Component<ButtonProps, ButtonState> {
   private buttonRef: HTMLButtonElement;
-  private btnAnimate = "btn-animate";
 
   state = { isClicked: false, animate: false, animateStyle: {} };
 
-  handleClick = (event: React.MouseEvent) => {
+  handleClick = (e: React.MouseEvent) => {
     const { offsetWidth, offsetHeight } = this.buttonRef;
-    const rippleSize = offsetWidth >= offsetHeight ? offsetWidth : offsetHeight;
-    const ripplePosition = this.calculatePosition(
-      event,
-      this.buttonRef,
-      rippleSize
-    );
-    return this.rippleStyle(rippleSize, ripplePosition);
+    const size = offsetWidth >= offsetHeight ? offsetWidth : offsetHeight;
+    const position = this.calculatePosition(e, this.buttonRef, size);
+    return this.rippleStyle(size, position);
   };
 
   calculatePosition = (
-    event: React.MouseEvent,
+    e: React.MouseEvent,
     parent: HTMLButtonElement,
     rippleSize: number
   ) => {
-    const bounds = parent.getBoundingClientRect();
-    const x = event.clientX - bounds.left - rippleSize / 2;
-    const y = event.clientY - bounds.top - rippleSize / 2;
-    const position = { left: x, right: y, top: y, bottom: x };
+    const { left, top } = parent.getBoundingClientRect();
+    const { clientX, clientY } = e;
+    const halfOfRipple = rippleSize / 2;
 
+    const x = clientX - left - halfOfRipple;
+    const y = clientY - top - halfOfRipple;
+
+    const position = { left: x, right: y, top: y, bottom: x };
     return position;
   };
 
   rippleStyle = (size: number, position: React.CSSProperties) => {
     clearTimeout();
 
-    const animateStyle = {
-      ...position,
-      width: size,
-      height: size
-    };
+    const animateStyle = { ...position, width: size, height: size };
 
     this.setState({ animate: true, animateStyle });
     return setTimeout(
