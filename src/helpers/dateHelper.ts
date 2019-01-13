@@ -183,4 +183,4 @@ export const alterTime = (
   date: Moment,
   incrementor: number,
   t: TimePointType
-) => date.add(incrementor, t);
+) => date.add(incrementor, t).clone();

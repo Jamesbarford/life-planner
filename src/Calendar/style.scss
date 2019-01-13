@@ -95,19 +95,17 @@ $border: 1px solid #dadce0;
 .calendar-row {
   @include flexbox;
   @include flexAmount(1 1 0%);
-  position: relative;
 }
 
 .calendar-cell {
   width: 100%;
   font-size: 12px;
   letter-spacing: 0.5px;
-  text-align: center;
   position: relative;
   background: white;
   border: none;
   padding: 0;
-  height: inherit;
+  display: block;
   border-left: $border;
   border-bottom: $border;
 
@@ -147,11 +145,10 @@ $border: 1px solid #dadce0;
 
   .calendar-cell__inner {
     width: 100%;
-    padding-top: 5px;
     @include flexbox;
     justify-content: center;
-    align-items: flex-start;
-    height: 100%;
+    align-items: self-start;
+    height: inherit;
 
     .cell-date {
       height: 30px;
@@ -159,6 +156,8 @@ $border: 1px solid #dadce0;
       @include flexbox;
       justify-content: center;
       align-items: center;
+      position: absolute;
+      top: 5px;
     }
   }
 }

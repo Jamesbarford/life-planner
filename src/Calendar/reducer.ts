@@ -27,6 +27,7 @@ const map = Map({ [hash]: newList });
 export class CalendarState {
   constructor(
     public date: Moment = newDate,
+    public today: Moment = Object.freeze(newDate),
     public selectedDay: Moment = newDate.clone(),
     public currentMonth: number = moment().month(),
     public currentWeek: number = moment().week(),

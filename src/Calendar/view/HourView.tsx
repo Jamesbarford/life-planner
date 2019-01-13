@@ -16,7 +16,6 @@ export class HourView extends React.Component<HourViewProps> {
           <div className="hour-header__inner">
             <span>{selectedDay.format("ddd").toUpperCase()}</span>
             <span className="today" style={{ height: "46px", width: "46px" }}>
-              {" "}
               {selectedDay.format("Do")}
             </span>
           </div>

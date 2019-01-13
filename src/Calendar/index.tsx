@@ -27,12 +27,12 @@ import { MonthView } from "./view/MonthView";
 import { Select } from "../components/Select";
 import { ToolTip } from "../components/ToolTip";
 import { Week } from "./view/Week";
+import { HourView } from "./view/HourView";
+import { CreateEvent } from "./view/CreateEvent";
 
 // TYPES
 import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
-import { CreateEvent } from "./view/CreateEvent";
-import { HourView } from "./view/hour";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 
@@ -94,7 +94,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
             </ToolTip>
           </div>
           <div className="calendar-navigation__item">
-            <h2>{date.format("MMMM YYYY")}</h2>
+            <h2>{date.format("ddd Do MMMM YYYY")}</h2>
           </div>
           <div className="calendar-navigation__item">
             <ToolTip helper={`previous ${view}`}>
@@ -146,7 +146,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
               <hr className="vertical-line" />
               <HourView
                 hours={timeArr}
-                selectedDay={selectedDay}
+                selectedDay={date}
                 select={this.select}
               />
             </div>
