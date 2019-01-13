@@ -37,11 +37,8 @@ export class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
 
   mouseEnter = () => {
     if (this.wrapperRef !== null) {
-      const clientRect = this.wrapperRef.getBoundingClientRect();
-      const style = {
-        ...ToolTipStyleHovered,
-        marginTop: `${clientRect.height}px`
-      };
+      const { height } = this.wrapperRef.getBoundingClientRect();
+      const style = { ...ToolTipStyleHovered, marginTop: `${height}px` };
       this.setState({ style });
     }
   };
