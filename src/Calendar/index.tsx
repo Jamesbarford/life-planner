@@ -32,6 +32,7 @@ import { Week } from "./view/Week";
 import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
 import { CreateEvent } from "./view/CreateEvent";
+import { HourView } from "./view/hour";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 
@@ -134,6 +135,13 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
                 select={this.select}
               />
             ))}
+          {view === day && (
+            <HourView
+              hours={timeArr}
+              selectedDay={selectedDay}
+              select={this.select}
+            />
+          )}
         </div>
         <Modal
           open={modalOpen}

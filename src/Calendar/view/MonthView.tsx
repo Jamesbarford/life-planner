@@ -5,10 +5,11 @@ import { List } from "immutable";
 // COMPONENTS
 import { Week } from "./Week";
 
-interface MonthViewProps {
+// TYPES
+import { CalendarShared } from "../types";
+
+interface MonthViewProps extends CalendarShared {
   weeks: List<Moment>;
-  selectedDay: Moment;
-  select: (d: Moment) => void;
 }
 
 interface MonthViewState {}
