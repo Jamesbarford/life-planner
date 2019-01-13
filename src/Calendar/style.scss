@@ -19,6 +19,45 @@ $border: 1px solid #dadce0;
   }
 }
 
+%small-header {
+  font-weight: 600;
+  // font-size: 12px;
+}
+
+.hour-header {
+  height: 70px;
+  width: 100%;
+  @include flexbox;
+  @extend %small-header;
+  color: $blue;
+
+  .hour-header__inner {
+    padding-left: 95px;
+    @include flexbox;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.calendar-hour__view-wrapper {
+  overflow: scroll;
+
+  .vertical-line {
+    height: 100%;
+    width: 1px;
+    background: #dadce0;
+    margin: 0;
+    margin-left: 85px;
+    @include flexbox;
+    justify-content: left;
+    position: absolute;
+    z-index: 4;
+    border: none;
+    padding: 0;
+  }
+}
+
 .calendar-wrapper {
   width: 100%;
   @include flexAmount(1 1 0%);
@@ -67,9 +106,36 @@ $border: 1px solid #dadce0;
   position: relative;
   background: white;
   border: none;
+  padding: 0;
   height: inherit;
-  border-left: 1px solid #dadce0;
-  border-bottom: 1px solid #dadce0;
+  border-left: $border;
+  border-bottom: $border;
+
+  &.hour {
+    border: none;
+  }
+
+  .calendar-cell__hour {
+    height: 40px;
+    @include flexbox;
+
+    .cell-hour {
+      width: 68px;
+      height: 20px;
+    }
+
+    .hour-line {
+      box-sizing: content-box;
+      height: 1px;
+      overflow: visible;
+      color: #dadce0;
+      z-index: 3;
+      background: #dadce0;
+      display: flow-root;
+      width: 100%;
+      border: none;
+    }
+  }
 
   &.calendar-cell:focus {
     outline: 0;
@@ -79,30 +145,35 @@ $border: 1px solid #dadce0;
     transition: 0.4s ease-in-out;
   }
 
-  .today {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    width: 30px;
-    background: $blue;
-    font-weight: bold;
-    color: white;
-    border-radius: 50%;
-    transition: 0.1s ease-in-out;
-  }
-
   .calendar-cell__inner {
-    top: 0;
-    width: 88%;
-    position: absolute;
-    margin: 0 auto;
-    margin-top: 5px;
-    height: 30px;
-    display: flex;
+    width: 100%;
+    padding-top: 5px;
+    @include flexbox;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    height: 100%;
+
+    .cell-date {
+      height: 30px;
+      width: 30px;
+      @include flexbox;
+      justify-content: center;
+      align-items: center;
+    }
   }
+}
+
+.today {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  background: $blue;
+  font-weight: bold;
+  color: white;
+  border-radius: 50%;
+  transition: 0.1s ease-in-out;
 }
 
 .calendar-cell:last-child {

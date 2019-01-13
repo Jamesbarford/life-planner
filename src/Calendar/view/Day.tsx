@@ -36,7 +36,11 @@ export const Day: React.FunctionComponent<DayProps> = ({
   return (
     <button className="calendar-cell" onClick={() => select(day)}>
       <div className={classNames(["calendar-cell__inner"])}>
-        <span className={`${selected ? "today" : ""}`}>{day.format("D")}</span>
+        <span
+          className={classNames([`${selected ? "today" : ""}`, "cell-date"])}
+        >
+          {day.format("D")}
+        </span>
       </div>
     </button>
   );

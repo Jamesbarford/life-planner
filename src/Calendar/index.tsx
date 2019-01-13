@@ -118,29 +118,38 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
           </div>
         </div>
         <div className="calendar-wrapper">
-          <DayNames />
           {view === month && (
-            <MonthView
-              weeks={timeArr}
-              selectedDay={selectedDay}
-              select={this.select}
-            />
-          )}
-          {view === week &&
-            timeArr.map(day => (
-              <Week
-                key={day.toString()}
-                week={day}
+            <>
+              <DayNames />
+              <MonthView
+                weeks={timeArr}
                 selectedDay={selectedDay}
                 select={this.select}
               />
-            ))}
+            </>
+          )}
+          {view === week && (
+            <>
+              <DayNames />
+              {timeArr.map(day => (
+                <Week
+                  key={day.toString()}
+                  week={day}
+                  selectedDay={selectedDay}
+                  select={this.select}
+                />
+              ))}
+            </>
+          )}
           {view === day && (
-            <HourView
-              hours={timeArr}
-              selectedDay={selectedDay}
-              select={this.select}
-            />
+            <div className="calendar-hour__view-wrapper">
+              <hr className="vertical-line" />
+              <HourView
+                hours={timeArr}
+                selectedDay={selectedDay}
+                select={this.select}
+              />
+            </div>
           )}
         </div>
         <Modal

@@ -9,17 +9,31 @@ interface HourViewProps extends CalendarShared {
 
 export class HourView extends React.Component<HourViewProps> {
   render() {
-    const { hours, select } = this.props;
-    return hours.map(hour => (
-      <button
-        key={hour.toISOString()}
-        className="calendar-cell"
-        onClick={() => select(hour)}
-      >
-        <div className="calendar-cell__inner">
-          <span>{hour.format("HH")}</span>
+    const { hours, select, selectedDay } = this.props;
+    return (
+      <>
+        <div className="hour-header">
+          <div className="hour-header__inner">
+            <span>{selectedDay.format("ddd").toUpperCase()}</span>
+            <span className="today" style={{ height: "46px", width: "46px" }}>
+              {" "}
+              {selectedDay.format("Do")}
+            </span>
+          </div>
         </div>
-      </button>
-    ));
+        {hours.map(hour => (
+          <button
+            key={hour.toISOString()}
+            className="calendar-cell hour"
+            onClick={() => select(hour)}
+          >
+            <div className="calendar-cell__hour">
+              <span className="cell-hour">{hour.format("H a")}</span>
+              <hr className="hour-line" />
+            </div>
+          </button>
+        ))}
+      </>
+    );
   }
 }
