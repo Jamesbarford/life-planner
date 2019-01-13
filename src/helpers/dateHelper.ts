@@ -3,6 +3,8 @@ import { cloneDeep } from "lodash";
 import { removeWhiteSpace } from "./util";
 import { StringIndexSignature } from "../types/global";
 import { CalendarState } from "../Calendar/reducer";
+import { MomentDictionary } from "../Calendar/types";
+import { List } from "immutable";
 
 export enum TimePoint {
   d = "d",
@@ -79,6 +81,21 @@ export const findIncrementalTimePoint = (timePoint: TimePointType) => {
   }
 };
 
+/**
+ *
+ * @param date moment
+ * @param timePoint timepoint i.e month
+ * @returns a date hash
+ * @example
+ * createHash(date, TimePoint.month);
+ * => "month-2019-02-12T00:00:00.000Z"
+ */
+export function createHash(date: Moment, timePoint: TimePointType): string {
+  const formattedDate = date.startOf("day").toISOString();
+  const hash = removeWhiteSpace(formattedDate);
+  return `${timePoint}-${hash}`;
+}
+
 function getIndex(t: TimePointType) {
   switch (t) {
     case TimePoint.month:
@@ -150,27 +167,6 @@ export const calculate = (
 };
 
 /**
- * This is due to some numbers not centering in the circle:
- * - `10`, `12`, `13`, `18` & `19`
- * @param day Moment - the day to determine if padding is needed
- * @returns either "2px" or "0px"
- *
- */
-export function paddingRight(day: Moment): string {
-  switch (parseInt(day.format("D"))) {
-    case 10:
-    case 12:
-    case 13:
-    case 18:
-    case 19:
-      return "2px";
-
-    default:
-      return "0px";
-  }
-}
-
-/**
  *
  * @param date the date of which the time will alter
  * @param incrementor how far to increment the time
@@ -184,3 +180,24 @@ export const alterTime = (
   incrementor: number,
   t: TimePointType
 ) => date.add(incrementor, t).clone();
+
+/**
+ *
+ * @param hash a date hash i.e `"month-12022019"`
+ * @param momentDictionary a date hash map
+ * @returns a `List` of moments
+ * @example
+ * selectMomentFromList(hash, momentDictionary);
+ * => List[5]
+ * 0: Moment
+ * 1: Moment
+ * 2: Moment
+ * 3: Moment
+ * 4: Moment
+ */
+export function selectMomentFromList(
+  hash: string,
+  momentDictionary: MomentDictionary
+): List<Moment> {
+  return momentDictionary.get(hash);
+}

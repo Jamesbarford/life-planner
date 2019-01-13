@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { Moment } from "moment";
 
 // HELPERS
-import { TimePoint, TimePointType } from "../helpers/dateHelper";
-import { createHash, selectMomentFromList } from "./selectors";
+import { TimePoint, TimePointType, createHash } from "../helpers/dateHelper";
+import { selectMomentFromList } from "./selectors";
 
 // ACTIONS
 import {
@@ -28,7 +28,7 @@ import { Select } from "../components/Select";
 import { ToolTip } from "../components/ToolTip";
 import { Week } from "./view/Week";
 import { HourView } from "./view/HourView";
-import { CreateEvent } from "./view/CreateEvent";
+import { CreateEventModalConnected } from "../events/CreateEventModal";
 
 // TYPES
 import { ApplicationState } from "../App/types";
@@ -75,7 +75,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
   };
 
   render() {
-    const { date, selectedDay, view } = this.props;
+    const { date, selectedDay, view, today } = this.props;
     const { modalOpen } = this.state;
     const { day, week, month, year } = TimePoint;
     const timeArr = this.getMomentArray();
@@ -156,7 +156,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
           open={modalOpen}
           close={() => this.setState({ modalOpen: false })}
         >
-          <CreateEvent />
+          <CreateEventModalConnected />
         </Modal>
       </>
     );
@@ -165,6 +165,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
 
 interface MapStateToProps {
   date: Moment;
+  today: Moment;
   view: TimePointType;
   momentList: MomentDictionary;
   selectedDay: Moment;
@@ -183,6 +184,7 @@ interface MapDispatchToProps {
 export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
   (state: ApplicationState) => ({
     date: state.calendar.date,
+    today: state.calendar.today,
     view: state.calendar.view,
     momentList: state.calendar.momentList,
     selectedDay: state.calendar.selectedDay,

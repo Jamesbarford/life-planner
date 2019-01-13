@@ -9,6 +9,7 @@ import { combineReducers } from "redux";
 
 // REDUCERS
 import { calendarReducer } from "../Calendar/reducer";
+import { eventsReducer } from "../events/reducer";
 
 // INITIAL COMPONENT RENDER
 import { CalendarConnected } from "../Calendar";
@@ -18,7 +19,8 @@ import "normalize.css";
 import "./style.scss";
 
 export const allReducers = combineReducers({
-  calendar: calendarReducer
+  calendar: calendarReducer,
+  events: eventsReducer
 });
 
 const stripClassActions = <State, Action>(store: Store<State>) => {

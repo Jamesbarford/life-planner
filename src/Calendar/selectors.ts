@@ -2,8 +2,12 @@ import { Moment } from "moment";
 import { List, Map } from "immutable";
 
 // HELPERS
-import { TimePointType, calculate, getHashIndex } from "../helpers/dateHelper";
-import { removeWhiteSpace } from "../helpers/util";
+import {
+  TimePointType,
+  calculate,
+  getHashIndex,
+  createHash
+} from "../helpers/dateHelper";
 
 // TYPES
 import { ApplicationState } from "../App/types";
@@ -12,21 +16,6 @@ import { CalendarState } from "./reducer";
 
 export const getDate = (state: ApplicationState): Moment => state.calendar.date;
 export const getCalendarState = (state: ApplicationState) => state.calendar;
-
-/**
- *
- * @param date moment
- * @param timePoint timepoint i.e month
- * @returns a date hash
- * @example
- * createHash(date, TimePoint.month);
- * => "month-2019-02-12T00:00:00.000Z"
- */
-export function createHash(date: Moment, timePoint: TimePointType): string {
-  const formattedDate = date.startOf("day").toISOString();
-  const hash = removeWhiteSpace(formattedDate);
-  return `${timePoint}-${hash}`;
-}
 
 /**
  *
