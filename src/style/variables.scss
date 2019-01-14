@@ -1,3 +1,11 @@
+// COLOURS
+$blue: #1a73e8;
+$lightBlue: #039be5;
+$paleBlue: #6ba1e9;
+
+// BORDERS
+$borderRadius: 4px;
+
 @mixin flexbox {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -34,9 +42,6 @@
   -o-animation: fade-animation 1s ease-in-out; /* Opera 12+ */
   animation: fade-animation 1s ease-in-out; /* IE 10+, Fx 29+ */
 }
-
-$blue: #1a73e8;
-$lightBlue: #6ba1e9;
 
 @mixin scale($var) {
   -webkit-transform: scale($var);

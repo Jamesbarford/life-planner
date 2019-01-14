@@ -12,6 +12,7 @@ import { Entry } from "../../components/Entry";
 import { CalendarShared } from "../types";
 import { ApplicationState } from "../../App/types";
 import { EventMap } from "../../events/types";
+import { matchDayToHash } from "../../events/selectors";
 
 export const DayNames: React.FunctionComponent = (): JSX.Element => {
   const weekdays = moment.weekdaysShort();
@@ -39,18 +40,23 @@ export const Day: React.FunctionComponent<DayProps> = ({
   events
 }): JSX.Element => {
   const selected = selectedDay.toISOString() === day.toISOString();
+  const event = events.filter(
+    (v, k) => matchDayToHash(k) === day.toISOString()
+  );
+  const eventList = event.toList();
+
   return (
     <button className="calendar-cell" onClick={() => select(day)}>
       <div className={classNames(["calendar-cell__inner"])}>
         <span
           className={classNames([`${selected ? "today" : ""}`, "cell-date"])}
         >
-          {events.get(day.toISOString()) && (
-            <Entry event={events.get(day.toISOString())} />
-          )}
           {day.format("D")}
         </span>
       </div>
+      {eventList.map(v => (
+        <Entry key={v.id} event={v} />
+      ))}
     </button>
   );
 };

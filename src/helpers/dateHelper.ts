@@ -140,7 +140,7 @@ export const calculate = (
   numberOfMoments?: number
 ): Array<Moment> => {
   // intializers
-  console.log("clac date", date);
+
   let _done = false;
   const index = getIndex(timePoint);
   const momentArr: Array<Moment> = [];

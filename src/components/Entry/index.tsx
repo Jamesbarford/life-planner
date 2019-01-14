@@ -10,6 +10,6 @@ const EntryStyle = {
   width: "100%"
 };
 
-export const Entry: React.FunctionComponent<EntryProps> = ({ event }) => (
-  <span>{event.title}</span>
-);
+export const Entry: React.FunctionComponent<EntryProps> = ({ event }) => {
+  return <span className="entry">{event.title}</span>;
+};

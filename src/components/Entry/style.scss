@@ -1,0 +1,10 @@
+.entry {
+  padding: 2px;
+  border-radius: $borderRadius;
+  font-weight: bold;
+  color: white;
+  background: $lightBlue;
+  @include flexbox;
+  align-items: center;
+  justify-content: center;
+}
