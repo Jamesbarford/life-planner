@@ -12,7 +12,7 @@ import { Entry } from "../../components/Entry";
 import { CalendarShared } from "../types";
 import { ApplicationState } from "../../App/types";
 import { EventMap } from "../../events/types";
-import { matchDayToHash, selectEventsToList } from "../../events/selectors";
+import { selectEventsToList } from "../../events/selectors";
 
 export const DayNames: React.FunctionComponent = (): JSX.Element => {
   const weekdays = moment.weekdaysShort();
