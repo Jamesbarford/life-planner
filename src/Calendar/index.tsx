@@ -18,7 +18,6 @@ import {
 // COMPONENTS
 import { DayNames } from "./view/Day";
 import { Icon } from "../components/IconButton";
-import { Modal } from "../components/Modal";
 import {
   CircularButton,
   BackgroundColor

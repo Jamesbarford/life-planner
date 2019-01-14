@@ -6,7 +6,6 @@ import { Moment } from "moment";
 
 // ACTIONS
 import { CreateEventAction } from "./actions";
-import { getCalendarState } from "../Calendar/selectors";
 import { calculate, TimePoint } from "../helpers/dateHelper";
 
 // COMPONENTS
@@ -17,7 +16,6 @@ import { Select } from "../components/Select";
 
 // TYPES
 import { Event } from "./types";
-import { ApplicationState } from "../App/types";
 
 interface CreateEventState {
   id: string;

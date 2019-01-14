@@ -41,21 +41,21 @@ export const Day: React.FunctionComponent<DayProps> = ({
 }): JSX.Element => {
   const selected = selectedDay.toISOString() === day.toISOString();
   const event = events.filter(
-    (v, k) => matchDayToHash(k) === day.toISOString()
+    (_, k) => matchDayToHash(k) === day.toISOString()
   );
   const eventList = event.toList();
 
   return (
     <button className="calendar-cell" onClick={() => select(day)}>
-      <div className={classNames(["calendar-cell__inner"])}>
+      <div className="calendar-cell__inner">
         <span
           className={classNames([`${selected ? "today" : ""}`, "cell-date"])}
         >
           {day.format("D")}
         </span>
       </div>
-      {eventList.map(v => (
-        <Entry key={v.id} event={v} />
+      {eventList.map(e => (
+        <Entry key={e.id} event={e} />
       ))}
     </button>
   );

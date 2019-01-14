@@ -1,5 +1,4 @@
 import * as moment from "moment";
-import { Moment } from "moment";
 import { EventsState } from "./reducer";
 import { TimePoint } from "../helpers/dateHelper";
 

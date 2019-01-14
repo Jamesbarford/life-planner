@@ -79,8 +79,7 @@ export function calendarReducer(
       };
 
     case CalendarActions.CalculateMomentArray:
-      const { timePoint } = action;
-      const momentList = createMomentList(state, timePoint);
+      const momentList = createMomentList(state, action.timePoint);
       return { ...state, momentList: state.momentList.merge(momentList) };
 
     default:

@@ -8,28 +8,26 @@ interface ModalProps {
   close: () => void;
 }
 
-export class Modal extends React.Component<ModalProps> {
-  render() {
-    const { open, children, close } = this.props;
-    return (
-      open && (
-        <>
-          <div className="modal-wrapper">
-            <div className="modal-inner">
-              <div className="modal-close">
-                <Icon
-                  onClick={close}
-                  btnStyle={CircularButton}
-                  hoverBackground={BackgroundColor.lightGray}
-                  iconName="close"
-                />
-              </div>
-              {children}
-            </div>
+export const Modal: React.FunctionComponent<ModalProps> = ({
+  open,
+  children,
+  close
+}): JSX.Element =>
+  open && (
+    <>
+      <div className="modal-wrapper">
+        <div className="modal-inner">
+          <div className="modal-close">
+            <Icon
+              onClick={close}
+              btnStyle={CircularButton}
+              hoverBackground={BackgroundColor.lightGray}
+              iconName="close"
+            />
           </div>
-          <div className="modal-overlay" />
-        </>
-      )
-    );
-  }
-}
+          {children}
+        </div>
+      </div>
+      <div className="modal-overlay" />
+    </>
+  );

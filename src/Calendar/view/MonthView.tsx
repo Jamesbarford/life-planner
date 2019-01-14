@@ -12,19 +12,19 @@ interface MonthViewProps extends CalendarShared {
   weeks: List<Moment>;
 }
 
-interface MonthViewState {}
-
-export class MonthView extends React.Component<MonthViewProps, MonthViewState> {
-  render() {
-    const { weeks, selectedDay, select } = this.props;
-
-    return weeks.map(week => (
+export const MonthView: React.FunctionComponent<MonthViewProps> = ({
+  weeks,
+  selectedDay,
+  select
+}): JSX.Element => (
+  <>
+    {weeks.map(week => (
       <Week
         key={week.toString()}
         week={week}
         selectedDay={selectedDay}
         select={select}
       />
-    ));
-  }
-}
+    ))}
+  </>
+);

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { Store } from "redux";
-import { createStore, applyMiddleware } from "redux";
+import { Action } from "redux";
+import { createStore, applyMiddleware, Middleware } from "redux";
 import { createLogger } from "redux-logger";
 import { isPlainObject } from "lodash";
 import { combineReducers } from "redux";
@@ -23,9 +23,14 @@ export const allReducers = combineReducers({
   entries: eventsReducer
 });
 
-const stripClassActions = <State, Action>(store: Store<State>) => {
-  return (next: (a: Action) => void) => (action: Action) =>
-    next(isPlainObject(action) ? action : Object.assign({}, action));
+type NextAction = (a: Action) => void;
+
+const actionIsObject = (next: NextAction, action: Action) => {
+  return next(isPlainObject(action) ? action : Object.assign({}, action));
+};
+
+const classToObject: Middleware = () => (next: NextAction) => {
+  return (action: Action) => actionIsObject(next, action);
 };
 
 const logger = createLogger({
@@ -34,7 +39,7 @@ const logger = createLogger({
 
 export const store = createStore(
   allReducers,
-  applyMiddleware(stripClassActions, logger)
+  applyMiddleware(classToObject, logger)
 );
 
 const App: React.FunctionComponent = (): JSX.Element => (
