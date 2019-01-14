@@ -46,8 +46,8 @@ export class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
   mouseLeave = () => this.setState({ style: ToolTipStyle });
 
   render() {
-    const { style } = this.state;
     const { helper, children } = this.props;
+    const { style } = this.state;
 
     return (
       <div
