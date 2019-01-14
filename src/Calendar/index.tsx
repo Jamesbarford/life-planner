@@ -182,14 +182,14 @@ interface MapDispatchToProps {
 }
 
 export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
-  (state: ApplicationState) => ({
-    date: state.calendar.date,
-    today: state.calendar.today,
-    view: state.calendar.view,
-    momentList: state.calendar.momentList,
-    selectedDay: state.calendar.selectedDay,
-    currentMonth: state.calendar.currentMonth,
-    currentWeek: state.calendar.currentWeek
+  ({ calendar }: ApplicationState) => ({
+    date: calendar.date,
+    today: calendar.today,
+    view: calendar.view,
+    momentList: calendar.momentList,
+    selectedDay: calendar.selectedDay,
+    currentMonth: calendar.currentMonth,
+    currentWeek: calendar.currentWeek
   }),
   dispatch => ({
     next: (unitOfTime, timePoint) =>
