@@ -77,7 +77,7 @@ export const findIncrementalTimePoint = (timePoint: TimePointType) => {
       return TimePoint.hour;
 
     case TimePoint.hour:
-      return TimePoint.minutes;
+      return TimePoint.minute;
 
     default:
       return TimePoint.week;
@@ -140,6 +140,7 @@ export const calculate = (
   numberOfMoments?: number
 ): Array<Moment> => {
   // intializers
+  console.log("clac date", date);
   let _done = false;
   const index = getIndex(timePoint);
   const momentArr: Array<Moment> = [];
@@ -148,7 +149,7 @@ export const calculate = (
   const isDay = timePoint === TimePoint.day;
   const isHours = timePoint === TimePoint.hour;
 
-  const duration = isDay ? 1 : isHours ? 0 : -1;
+  const duration = isDay ? 1 : isHours ? 30 : -1;
 
   const incrementor = findIncrementalTimePoint(timePoint);
 
@@ -156,7 +157,7 @@ export const calculate = (
     .clone()
     .startOf(timePoint)
     .add(duration, incrementor)
-    .day(isDay ? "" : "Saturday");
+    .day(isDay || isHours ? "" : "Saturday");
 
   while (!_done) {
     momentArr.push(cloneDeep(mutableDate));

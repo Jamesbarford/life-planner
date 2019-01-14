@@ -20,23 +20,33 @@ import { Event } from "./types";
 import { ApplicationState } from "../App/types";
 
 interface CreateEventState {
-  title: string;
+  id: string;
   date: Moment;
+  title: string;
+  timeArr: Array<Moment>;
 }
 
 interface OwnProps {
   modalOpen: boolean;
   close: () => void;
+  selectedDay: Moment;
 }
 
-type CreateEventProps = MapStateToProps & MapDispatchToProps & OwnProps;
+type CreateEventProps = MapDispatchToProps & OwnProps;
 
 class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
-  // These never change so setting as constants
-  private timeArr = calculate(this.props.selectedDay, TimePoint.hour, 30, 48);
-  private id = uuid();
+  state = {
+    id: "",
+    date: moment(this.props.selectedDay),
+    title: "",
+    timeArr: [] as Array<Moment>
+  };
 
-  state = { title: "", date: moment(this.props.selectedDay) };
+  componentDidMount() {
+    const timeArr = calculate(this.props.selectedDay, TimePoint.hour, 30, 48);
+    const id = uuid();
+    this.setState({ id, timeArr });
+  }
 
   changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: e.target.value });
@@ -46,11 +56,9 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
     e.preventDefault();
 
     const { createEvent, close } = this.props;
-    const { title, date } = this.state;
+    const { title, date, id } = this.state;
 
-    const event = { id: this.id, title, date };
-
-    createEvent(event);
+    createEvent({ id, title, date });
     close();
   };
 
@@ -61,6 +69,7 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
 
   render() {
     const { selectedDay, modalOpen, close } = this.props;
+    const { timeArr } = this.state;
 
     return (
       <Modal open={modalOpen} close={close}>
@@ -74,7 +83,7 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
             onChange={this.selectChangeHandler}
             defaultValue={selectedDay.format("LT")}
           >
-            {this.timeArr.map(time => (
+            {timeArr.map(time => (
               <option key={time.format("LT")} value={time.toISOString()}>
                 {time.format("LT")}
               </option>
@@ -96,21 +105,12 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
   }
 }
 
-interface MapStateToProps {
-  selectedDay: Moment;
-}
-
 interface MapDispatchToProps {
   createEvent: (event: Event) => void;
 }
 
-export const CreateEventModalConnected = connect<
-  MapStateToProps,
-  MapDispatchToProps
->(
-  (state: ApplicationState) => ({
-    selectedDay: getCalendarState(state).selectedDay
-  }),
+export const CreateEventModalConnected = connect<{}, MapDispatchToProps>(
+  null,
   dispatch => ({
     createEvent: event => dispatch(new CreateEventAction(event))
   })

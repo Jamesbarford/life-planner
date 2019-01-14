@@ -1,6 +1,8 @@
 import { Moment } from "moment";
+import { Map } from "immutable";
 import { TimePointType } from "../helpers/dateHelper";
 import { MomentDictionary } from "../Calendar/types";
+import { Category, Event } from "../events/types";
 
 export interface ApplicationState {
   calendar: {
@@ -12,5 +14,9 @@ export interface ApplicationState {
     currentWeek: number;
     dayOfYear: number;
     momentList: MomentDictionary;
+  };
+  entries: {
+    events: Map<string, Event>;
+    category: Map<string, Category>;
   };
 }

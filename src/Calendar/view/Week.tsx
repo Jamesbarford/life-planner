@@ -4,7 +4,7 @@ import { Moment } from "moment";
 import { cloneDeep } from "lodash";
 
 // COMPONENTS
-import { Day } from "./Day";
+import { DayConnected } from "./Day";
 
 // TYPES
 import { CalendarShared } from "../types";
@@ -33,8 +33,13 @@ export class Week extends React.Component<WeekProps> {
 
     return (
       <div className="calendar-row">
-        {days.map((day, i) => (
-          <Day select={select} selectedDay={selectedDay} key={i} day={day} />
+        {days.map(day => (
+          <DayConnected
+            select={select}
+            selectedDay={selectedDay}
+            key={day.toISOString()}
+            day={day}
+          />
         ))}
       </div>
     );

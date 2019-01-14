@@ -154,6 +154,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
         </div>
         {modalOpen && (
           <CreateEventModalConnected
+            selectedDay={selectedDay}
             modalOpen={modalOpen}
             close={() => this.setState({ modalOpen: false })}
           />

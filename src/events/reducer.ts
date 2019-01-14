@@ -4,7 +4,6 @@ import { EventMap, ExpenditureMap, CategoryMap } from "./types";
 
 export class EventsState {
   constructor(
-    public finance: ExpenditureMap = Map(),
     public events: EventMap = Map(),
     public category: CategoryMap = Map()
   ) {}

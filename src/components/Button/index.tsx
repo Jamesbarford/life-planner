@@ -4,6 +4,7 @@ import { classNames } from "../../helpers/util";
 interface ButtonProps {
   text: string;
   type?: string;
+  style?: React.CSSProperties;
   buttonStyle: ButtonStyle;
   onClick?: () => void;
 }
@@ -60,7 +61,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
   };
 
   render() {
-    const { buttonStyle, text, onClick, type } = this.props;
+    const { buttonStyle, onClick, text, type, style } = this.props;
     const { animate, animateStyle } = this.state;
 
     return (
@@ -68,6 +69,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
         ref={ref => (this.buttonRef = ref)}
         onMouseDown={this.handleMouseDown}
         onClick={onClick}
+        style={style}
         className={classNames([
           `custom-button__${buttonStyle}`,
           "custom-button"

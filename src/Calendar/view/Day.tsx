@@ -1,12 +1,17 @@
 import * as React from "react";
 import * as moment from "moment";
 import { Moment } from "moment";
+import { connect } from "react-redux";
 
 // HELPERS
 import { classNames } from "../../helpers/util";
 
+import { Entry } from "../../components/Entry";
+
 // TYPES
 import { CalendarShared } from "../types";
+import { ApplicationState } from "../../App/types";
+import { EventMap } from "../../events/types";
 
 export const DayNames: React.FunctionComponent = (): JSX.Element => {
   const weekdays = moment.weekdaysShort();
@@ -23,14 +28,15 @@ export const DayNames: React.FunctionComponent = (): JSX.Element => {
   );
 };
 
-interface DayProps extends CalendarShared {
+interface DayProps extends CalendarShared, MapStateToProps {
   day: Moment;
 }
 
 export const Day: React.FunctionComponent<DayProps> = ({
   select,
   selectedDay,
-  day
+  day,
+  events
 }): JSX.Element => {
   const selected = selectedDay.toISOString() === day.toISOString();
   return (
@@ -39,9 +45,20 @@ export const Day: React.FunctionComponent<DayProps> = ({
         <span
           className={classNames([`${selected ? "today" : ""}`, "cell-date"])}
         >
+          {events.get(day.toISOString()) && (
+            <Entry event={events.get(day.toISOString())} />
+          )}
           {day.format("D")}
         </span>
       </div>
     </button>
   );
 };
+
+interface MapStateToProps {
+  events: EventMap;
+}
+
+export const DayConnected = connect<MapStateToProps>(
+  ({ entries: { events } }: ApplicationState) => ({ events })
+)(Day);

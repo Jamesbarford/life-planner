@@ -20,7 +20,7 @@ import "./style.scss";
 
 export const allReducers = combineReducers({
   calendar: calendarReducer,
-  events: eventsReducer
+  entries: eventsReducer
 });
 
 const stripClassActions = <State, Action>(store: Store<State>) => {
