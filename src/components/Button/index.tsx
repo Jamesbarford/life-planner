@@ -5,6 +5,7 @@ interface ButtonProps {
   text: string;
   type?: string;
   style?: React.CSSProperties;
+  autoFocus?: boolean;
   buttonStyle: ButtonStyle;
   onClick?: () => void;
 }
@@ -63,7 +64,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
   resetRipple = () => this.setState({ animate: false, animateStyle: {} });
 
   render() {
-    const { buttonStyle, onClick, text, type, style } = this.props;
+    const { buttonStyle, onClick, text, type, style, autoFocus } = this.props;
     const { animate, animateStyle } = this.state;
 
     return (
@@ -71,6 +72,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
         ref={ref => (this.buttonRef = ref)}
         onMouseDown={this.handleMouseDown}
         onBlur={this.resetRipple}
+        autoFocus={autoFocus || false}
         onClick={onClick}
         style={style}
         className={classNames([

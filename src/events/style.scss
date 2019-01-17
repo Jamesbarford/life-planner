@@ -1,0 +1,12 @@
+@import "../style/variables.scss";
+
+.event-modal {
+  height: 100%;
+  width: 100%;
+  @include flexbox;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 35px 20px 0 35px;
+}

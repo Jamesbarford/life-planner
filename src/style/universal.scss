@@ -1,6 +1,30 @@
+@import "./variables.scss";
+
 html {
   font-family: "Open Sans", sans-serif;
   color: #333;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.horizonal-wrapper {
+  @include flexbox;
+  align-items: center;
+  width: 100%;
+
+  &.justify-center {
+    justify-content: center;
+  }
+
+  &.justify-end {
+    justify-content: flex-end;
+  }
+}
+
+.max-element-width {
+  max-width: 300px;
+}
+
+.reset-width {
+  width: 100%;
 }

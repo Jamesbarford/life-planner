@@ -1,0 +1,26 @@
+.focus-line {
+  margin-top: -1px;
+  margin-bottom: 10px;
+  @include flexbox;
+  height: 2px;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+
+  &.focused {
+    background-color: $blue;
+    z-index: 3;
+    @include animation(width-grow, 0.3s);
+  }
+}
+
+@keyframes width-grow {
+  0% {
+    width: 0px;
+    margin-left: 50%;
+  }
+  100% {
+    width: 100%;
+    margin-left: 0%;
+  }
+}

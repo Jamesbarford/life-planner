@@ -1,4 +1,5 @@
 import * as React from "react";
+import { WithFocusLine } from "../FocusLine";
 
 interface SelectProps {
   defaultValue: string;
@@ -13,12 +14,18 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   style,
   children
 }): JSX.Element => (
-  <select
-    style={style}
-    className="custom-select-input"
-    defaultValue={defaultValue}
-    onChange={onChange}
-  >
-    {children}
-  </select>
+  <WithFocusLine>
+    {injectedProps => (
+      <select
+        onFocus={injectedProps.handleFocus}
+        onBlur={injectedProps.handleBlur}
+        style={style}
+        className="custom-select-input"
+        defaultValue={defaultValue}
+        onChange={onChange}
+      >
+        {children}
+      </select>
+    )}
+  </WithFocusLine>
 );

@@ -1,15 +1,13 @@
 import * as React from "react";
 import { classNames } from "../../helpers/util";
+import { WithFocusLine } from "../FocusLine";
 
 interface InputProps {
   inputType: InputType;
   placeholder?: string;
   style?: React.CSSProperties;
+  autoFocus?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-interface InputState {
-  focused: boolean;
 }
 
 export enum InputType {
@@ -18,38 +16,28 @@ export enum InputType {
   email = "email",
   number = "number"
 }
-export class Input extends React.Component<InputProps, InputState> {
-  state = { focused: false };
-
-  handleFocus = () => this.setState({ focused: true });
-
-  handleBlur = () => this.setState({ focused: false });
-
+export class Input extends React.Component<InputProps> {
   render() {
-    const { onChange, inputType, placeholder, style } = this.props;
-    const { focused } = this.state;
+    const { onChange, inputType, placeholder, style, autoFocus } = this.props;
 
     return (
-      <>
-        <input
-          className={classNames([
-            "custom-input",
-            `${focused ? "focused" : ""}`
-          ])}
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
-          placeholder={placeholder}
-          style={style}
-          onChange={onChange}
-          type={inputType}
-        />
-        <div
-          className={classNames([
-            "custom-input-border",
-            `${focused ? "focused" : ""}`
-          ])}
-        />
-      </>
+      <WithFocusLine>
+        {injectedProps => (
+          <input
+            className={classNames([
+              "custom-input",
+              `${injectedProps.focused ? "focused" : ""}`
+            ])}
+            onFocus={injectedProps.handleFocus}
+            onBlur={injectedProps.handleBlur}
+            autoFocus={autoFocus || false}
+            placeholder={placeholder}
+            style={style}
+            onChange={onChange}
+            type={inputType}
+          />
+        )}
+      </WithFocusLine>
     );
   }
 }

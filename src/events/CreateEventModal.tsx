@@ -81,8 +81,9 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
 
     return (
       <Modal open={modalOpen} close={close}>
-        <form onSubmit={this.createEvent}>
+        <form className="event-modal" onSubmit={this.createEvent}>
           <Input
+            autoFocus={true}
             onChange={this.changeHandler}
             inputType={InputType.text}
             placeholder="Event title"
@@ -97,16 +98,18 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
               </option>
             ))}
           </Select>
-          <Button
-            onClick={() => {}}
-            buttonStyle={ButtonStyle.light}
-            text="More options"
-          />
-          <Button
-            type={ButtonType.submit}
-            buttonStyle={ButtonStyle.success}
-            text="Save"
-          />
+          <div className="horizonal-wrapper justify-end">
+            <Button
+              onClick={() => {}}
+              buttonStyle={ButtonStyle.light}
+              text="More options"
+            />
+            <Button
+              type={ButtonType.submit}
+              buttonStyle={ButtonStyle.success}
+              text="Save"
+            />
+          </div>
         </form>
         {error.get("message") !== "" && (
           <EventError error={error.get("message")} />
@@ -116,9 +119,9 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
   }
 }
 
-const EventError: React.FunctionComponent<{ error: string }> = ({ error }) => (
-  <div className="error-dialog"> {error} </div>
-);
+const EventError: React.FunctionComponent<{ error: string }> = ({
+  error
+}): JSX.Element => <div className="error-dialog">{error}</div>;
 
 interface MapDispatchToProps {
   createEvent: (event: Event) => void;
