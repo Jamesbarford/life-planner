@@ -23,6 +23,8 @@ export class Input extends React.Component<InputProps, InputState> {
 
   handleFocus = () => this.setState({ focused: true });
 
+  handleBlur = () => this.setState({ focused: false });
+
   render() {
     const { onChange, inputType, placeholder, style } = this.props;
     const { focused } = this.state;
@@ -30,8 +32,12 @@ export class Input extends React.Component<InputProps, InputState> {
     return (
       <>
         <input
-          className="custom-input"
+          className={classNames([
+            "custom-input",
+            `${focused ? "focused" : ""}`
+          ])}
           onFocus={this.handleFocus}
+          onBlur={this.handleBlur}
           placeholder={placeholder}
           style={style}
           onChange={onChange}

@@ -10,32 +10,36 @@
   border: none;
   display: block;
   font-size: 24px;
-  height: 24px;
+  height: 28px;
   line-height: 24px;
   margin: 0;
   min-width: 0%;
   outline: none;
   padding: 0;
   z-index: 0;
+  width: 100%;
   padding-bottom: 5px;
+  border-bottom: 2px solid #aaaaaa4d;
+  padding-bottom: 7px;
 }
 
 .custom-input-border {
+  margin-top: -2px;
   margin-bottom: 10px;
-  background-color: #aaa;
-  width: 100%;
-  height: 2px;
   @include flexbox;
+  height: 2px;
   justify-content: center;
   align-items: center;
+  transition: 0.3s;
 
   &.focused {
     background-color: $blue;
-    @include animation(size, 0.4s);
+    z-index: 3;
+    @include animation(width-grow, 0.4s);
   }
 }
 
-@keyframes size {
+@keyframes width-grow {
   0% {
     width: 0px;
     margin-left: 50%;
