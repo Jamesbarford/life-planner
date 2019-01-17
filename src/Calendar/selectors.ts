@@ -85,7 +85,7 @@ export function createDateHashMap(
  * @param momentDictionary a date hash map
  * @returns a `List` of moments
  * @example
- * selectMomentFromList(hash, momentDictionary);
+ * selectMomentFromMap(hash, momentDictionary);
  * => List[5]
  * 0: Moment
  * 1: Moment
@@ -93,7 +93,7 @@ export function createDateHashMap(
  * 3: Moment
  * 4: Moment
  */
-export function selectMomentFromList(
+export function selectMomentFromMap(
   hash: string,
   momentDictionary: MomentDictionary
 ): List<Moment> {

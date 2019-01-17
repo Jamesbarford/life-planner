@@ -4,7 +4,7 @@ import { Moment } from "moment";
 
 // HELPERS
 import { TimePoint, TimePointType, createHash } from "../helpers/dateHelper";
-import { selectMomentFromList } from "./selectors";
+import { selectMomentFromMap } from "./selectors";
 
 // ACTIONS
 import {
@@ -69,7 +69,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
   getMomentArray = () => {
     const { view, momentList, date } = this.props;
     const dateHash = createHash(date, view);
-    const timeArr = selectMomentFromList(dateHash, momentList);
+    const timeArr = selectMomentFromMap(dateHash, momentList);
     return timeArr;
   };
 
