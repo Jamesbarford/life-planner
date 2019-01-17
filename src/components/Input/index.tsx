@@ -16,6 +16,7 @@ export enum InputType {
   email = "email",
   number = "number"
 }
+
 export class Input extends React.Component<InputProps> {
   render() {
     const { onChange, inputType, placeholder, style, autoFocus } = this.props;

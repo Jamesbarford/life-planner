@@ -3,15 +3,15 @@ import { classNames } from "../../helpers/util";
 
 interface ButtonProps {
   text: string;
-  type?: string;
+  type?: ButtonType;
   style?: React.CSSProperties;
   autoFocus?: boolean;
+  persistFocus?: boolean;
   buttonStyle: ButtonStyle;
   onClick?: () => void;
 }
 
 interface ButtonState {
-  isClicked: boolean;
   animate: boolean;
   animateStyle: React.CSSProperties;
 }
@@ -32,7 +32,7 @@ export enum ButtonType {
 export class Button extends React.Component<ButtonProps, ButtonState> {
   private buttonRef: HTMLButtonElement;
 
-  state = { isClicked: false, animate: false, animateStyle: {} };
+  state = { animate: false, animateStyle: {} };
 
   handleMouseDown = (e: React.MouseEvent) => {
     const { offsetWidth, offsetHeight } = this.buttonRef;
@@ -57,8 +57,10 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
   };
 
   rippleStyle = (size: number, position: React.CSSProperties) => {
+    const { persistFocus } = this.props;
     const animateStyle = { ...position, width: size, height: size };
     this.setState({ animate: true, animateStyle });
+    if (!persistFocus) return setTimeout(() => this.resetRipple(), 400);
   };
 
   resetRipple = () => this.setState({ animate: false, animateStyle: {} });
@@ -77,7 +79,8 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
         style={style}
         className={classNames([
           `custom-button__${buttonStyle}`,
-          "custom-button"
+          "custom-button",
+          `${animate ? "focus" : ""}`
         ])}
         type={type || ButtonType.button}
       >
