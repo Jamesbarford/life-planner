@@ -17,28 +17,28 @@ export enum InputType {
   number = "number"
 }
 
-export class Input extends React.Component<InputProps> {
-  render() {
-    const { onChange, inputType, placeholder, style, autoFocus } = this.props;
-
-    return (
-      <WithFocusLine>
-        {injectedProps => (
-          <input
-            className={classNames([
-              "custom-input",
-              `${injectedProps.focused ? "focused" : ""}`
-            ])}
-            onFocus={injectedProps.handleFocus}
-            onBlur={injectedProps.handleBlur}
-            onChange={onChange}
-            autoFocus={autoFocus || false}
-            placeholder={placeholder}
-            style={style}
-            type={inputType}
-          />
-        )}
-      </WithFocusLine>
-    );
-  }
-}
+export const Input: React.FunctionComponent<InputProps> = ({
+  onChange,
+  inputType,
+  placeholder,
+  style,
+  autoFocus
+}): JSX.Element => (
+  <WithFocusLine>
+    {injectedProps => (
+      <input
+        className={classNames([
+          "custom-input",
+          `${injectedProps.focused ? "focused" : ""}`
+        ])}
+        onFocus={injectedProps.handleFocus}
+        onBlur={injectedProps.handleBlur}
+        onChange={onChange}
+        autoFocus={autoFocus || false}
+        placeholder={placeholder}
+        style={style}
+        type={inputType}
+      />
+    )}
+  </WithFocusLine>
+);
