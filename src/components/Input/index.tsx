@@ -31,10 +31,10 @@ export class Input extends React.Component<InputProps> {
             ])}
             onFocus={injectedProps.handleFocus}
             onBlur={injectedProps.handleBlur}
+            onChange={onChange}
             autoFocus={autoFocus || false}
             placeholder={placeholder}
             style={style}
-            onChange={onChange}
             type={inputType}
           />
         )}
