@@ -50,8 +50,7 @@
     cursor: inherit;
     display: inline-block;
     pointer-events: none;
-    -webkit-animation: rippleAnimation 0.4s ease-in-out;
-    animation: rippleAnimation 0.4s ease-in-out;
+    @include animation(rippleAnimation, 0.4s);
 
     &.success {
       background: white;

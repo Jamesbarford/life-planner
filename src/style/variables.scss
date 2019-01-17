@@ -36,11 +36,11 @@ $borderRadius: 4px;
   }
 }
 
-@mixin fade {
-  -webkit-animation: fade-animation 1s ease-in-out; /* Safari 4+ */
-  -moz-animation: fade-animation 1s ease-in-out; /* Fx 5+ */
-  -o-animation: fade-animation 1s ease-in-out; /* Opera 12+ */
-  animation: fade-animation 1s ease-in-out; /* IE 10+, Fx 29+ */
+@mixin animation($var, $time) {
+  -webkit-animation: $var $time ease-in-out; /* Safari 4+ */
+  -moz-animation: $var $time ease-in-out; /* Fx 5+ */
+  -o-animation: $var $time ease-in-out; /* Opera 12+ */
+  animation: $var $time ease-in-out; /* IE 10+, Fx 29+ */
 }
 
 @mixin scale($var) {

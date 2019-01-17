@@ -60,6 +60,8 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
     this.setState({ animate: true, animateStyle });
   };
 
+  resetRipple = () => this.setState({ animate: false, animateStyle: {} });
+
   render() {
     const { buttonStyle, onClick, text, type, style } = this.props;
     const { animate, animateStyle } = this.state;
@@ -68,6 +70,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
       <button
         ref={ref => (this.buttonRef = ref)}
         onMouseDown={this.handleMouseDown}
+        onBlur={this.resetRipple}
         onClick={onClick}
         style={style}
         className={classNames([
