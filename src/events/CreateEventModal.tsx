@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as uuid from "uuid";
 import * as moment from "moment";
+import { Map } from "immutable";
 import { connect } from "react-redux";
 import { Moment } from "moment";
 
@@ -22,6 +23,7 @@ interface CreateEventState {
   date: Moment;
   title: string;
   timeArr: Array<Moment>;
+  error: Map<string, string>;
 }
 
 interface OwnProps {
@@ -37,7 +39,8 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
     id: "",
     date: moment(this.props.selectedDay),
     title: "",
-    timeArr: [] as Array<Moment>
+    timeArr: [] as Array<Moment>,
+    error: Map({ message: "" })
   };
 
   componentDidMount() {
@@ -48,13 +51,20 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
 
   changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: e.target.value });
+    this.setState({ error: Map() });
   };
 
   createEvent = (e: React.FormEvent) => {
     e.preventDefault();
 
     const { createEvent, close } = this.props;
-    const { title, date, id } = this.state;
+    const { title, date, id, error } = this.state;
+
+    if (!title) {
+      return this.setState({
+        error: error.merge({ message: "Event must have a title" })
+      });
+    }
 
     createEvent({ id, title, date });
     close();
@@ -67,7 +77,7 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
 
   render() {
     const { selectedDay, modalOpen, close } = this.props;
-    const { timeArr } = this.state;
+    const { timeArr, error } = this.state;
 
     return (
       <Modal open={modalOpen} close={close}>
@@ -98,10 +108,17 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
             text="Save"
           />
         </form>
+        {error.get("message") !== "" && (
+          <EventError error={error.get("message")} />
+        )}
       </Modal>
     );
   }
 }
+
+const EventError: React.FunctionComponent<{ error: string }> = ({ error }) => (
+  <div className="error-dialog"> {error} </div>
+);
 
 interface MapDispatchToProps {
   createEvent: (event: Event) => void;

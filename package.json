@@ -1,12 +1,11 @@
 {
   "name": "life-planner",
-  "sideEffects": false,
   "version": "1.0.0",
   "description": "Interactive calendar with money calculator",
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production webpack",
-    "start": "NODE_ENV=development webpack-dev-server --open",
+    "start": "NODE_ENV=development webpack-dev-server",
     "build:analyse": "NODE_ENV=analyse webpack",
     "prettierSrc": "prettier --write **/src/**/*.{ts,tsx,js,jsx,json,css,scss}",
     "test": "jest --verbose",
