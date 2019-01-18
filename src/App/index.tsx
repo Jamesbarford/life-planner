@@ -1,11 +1,15 @@
 import * as React from "react";
 import { render } from "react-dom";
+import {
+  Action,
+  applyMiddleware,
+  combineReducers,
+  createStore,
+  Middleware
+} from "redux";
 import { Provider } from "react-redux";
-import { Action } from "redux";
-import { createStore, applyMiddleware, Middleware } from "redux";
 import { createLogger } from "redux-logger";
 import { isPlainObject } from "lodash";
-import { combineReducers } from "redux";
 
 // REDUCERS
 import { calendarReducer } from "../Calendar/reducer";

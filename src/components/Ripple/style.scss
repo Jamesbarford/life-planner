@@ -1,0 +1,43 @@
+.ripple-wrapper {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 36px;
+
+  .ripple {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    opacity: 0.7;
+    position: absolute;
+    border-radius: 150%;
+    @include scale(0);
+    cursor: inherit;
+    pointer-events: none;
+    transition: 0.4s;
+    @include animation(rippleAnimation, 0.4s);
+
+    &.success {
+      background: white;
+    }
+
+    &.light {
+      background: #333;
+    }
+  }
+}
+
+@-webkit-keyframes rippleAnimation {
+  100% {
+    @include scale(1.8);
+    // set to one to make colour persist.
+    opacity: 0;
+  }
+}
+
+@keyframes rippleAnimation {
+  100% {
+    @include scale(1.8);
+    opacity: 0.1;
+  }
+}

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { WithRipple } from "../Ripple";
 import { classNames } from "../../helpers/util";
 
 interface ButtonProps {
@@ -9,11 +10,6 @@ interface ButtonProps {
   persistFocus?: boolean;
   buttonStyle: ButtonStyle;
   onClick?: () => void;
-}
-
-interface ButtonState {
-  animate: boolean;
-  animateStyle: React.CSSProperties;
 }
 
 export enum ButtonStyle {
@@ -29,69 +25,33 @@ export enum ButtonType {
   reset = "reset"
 }
 
-export class Button extends React.Component<ButtonProps, ButtonState> {
-  private buttonRef: HTMLButtonElement;
-
-  state = { animate: false, animateStyle: {} };
-
-  handleMouseDown = (e: React.MouseEvent) => {
-    const { offsetWidth, offsetHeight } = this.buttonRef;
-    const size = offsetWidth >= offsetHeight ? offsetWidth : offsetHeight;
-    const position = this.calculatePosition(e, this.buttonRef, size);
-    return this.rippleStyle(size, position);
-  };
-
-  calculatePosition = (
-    e: React.MouseEvent,
-    parent: HTMLButtonElement,
-    rippleSize: number
-  ) => {
-    const { left, top } = parent.getBoundingClientRect();
-    const { clientX, clientY } = e;
-    const halfOfRipple = rippleSize / 2;
-
-    const x = clientX - left - halfOfRipple;
-    const y = clientY - top - halfOfRipple;
-
-    return { left: x, right: y, top: y, bottom: x };
-  };
-
-  rippleStyle = (size: number, position: React.CSSProperties) => {
-    const { persistFocus } = this.props;
-    const animateStyle = { ...position, width: size, height: size };
-    this.setState({ animate: true, animateStyle });
-    if (!persistFocus) return setTimeout(() => this.resetRipple(), 400);
-  };
-
-  resetRipple = () => this.setState({ animate: false, animateStyle: {} });
-
-  render() {
-    const { buttonStyle, onClick, text, type, style, autoFocus } = this.props;
-    const { animate, animateStyle } = this.state;
-
-    return (
+export const Button: React.FunctionComponent<ButtonProps> = ({
+  buttonStyle,
+  onClick,
+  text,
+  type,
+  style,
+  autoFocus,
+  persistFocus
+}): JSX.Element => (
+  <WithRipple rippleStyle={buttonStyle} persistFocus={persistFocus}>
+    {injectedProps => (
       <button
-        ref={ref => (this.buttonRef = ref)}
-        onMouseDown={this.handleMouseDown}
-        onBlur={this.resetRipple}
+        onMouseDown={injectedProps.handleMouseDown}
+        onMouseUp={injectedProps.handleMouseUp}
+        onBlur={injectedProps.resetRipple}
         autoFocus={autoFocus || false}
         onClick={onClick}
         style={style}
         className={classNames([
           `custom-button__${buttonStyle}`,
           "custom-button",
-          `${animate ? "focus" : ""}`
+          `${injectedProps.animate ? "focus" : ""}`
         ])}
         type={type || ButtonType.button}
       >
-        {animate && (
-          <div
-            style={animateStyle}
-            className={classNames(["ripple", `${buttonStyle}`])}
-          />
-        )}
         {text}
       </button>
-    );
-  }
-}
+    )}
+  </WithRipple>
+);

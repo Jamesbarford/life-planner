@@ -16,18 +16,18 @@ import {
 } from "./actions";
 
 // COMPONENTS
-import { DayNames } from "./view/Day";
-import { Icon } from "../components/IconButton";
+import { CreateEventModalConnected } from "../events/CreateEventModal";
 import {
   CircularButton,
   BackgroundColor
 } from "../components/IconButton/style";
+import { DayNames } from "./view/Day";
+import { HourView } from "./view/HourView";
+import { Icon } from "../components/IconButton";
 import { MonthView } from "./view/MonthView";
 import { Select } from "../components/Select";
 import { ToolTip } from "../components/ToolTip";
 import { Week } from "./view/Week";
-import { HourView } from "./view/HourView";
-import { CreateEventModalConnected } from "../events/CreateEventModal";
 
 // TYPES
 import { ApplicationState } from "../App/types";
