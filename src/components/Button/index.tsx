@@ -4,12 +4,18 @@ import { classNames } from "../../helpers/util";
 
 interface ButtonProps {
   text: string;
+  padding: ButtonPadding;
+  buttonStyle: ButtonStyle;
   type?: ButtonType;
   style?: React.CSSProperties;
   autoFocus?: boolean;
   persistFocus?: boolean;
-  buttonStyle: ButtonStyle;
   onClick?: () => void;
+}
+
+export enum ButtonPadding {
+  small = "small-padding",
+  normal = "normal-padding"
 }
 
 export enum ButtonStyle {
@@ -32,26 +38,30 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
   type,
   style,
   autoFocus,
+  padding,
   persistFocus
 }): JSX.Element => (
-  <WithRipple rippleStyle={buttonStyle} persistFocus={persistFocus}>
-    {injectedProps => (
-      <button
-        onMouseDown={injectedProps.handleMouseDown}
-        onMouseUp={injectedProps.handleMouseUp}
-        onBlur={injectedProps.resetRipple}
-        autoFocus={autoFocus || false}
-        onClick={onClick}
-        style={style}
-        className={classNames([
-          `custom-button__${buttonStyle}`,
-          "custom-button",
-          `${injectedProps.animate ? "focus" : ""}`
-        ])}
-        type={type || ButtonType.button}
-      >
-        {text}
-      </button>
-    )}
-  </WithRipple>
+  <div className="custom-button__wrapper">
+    <WithRipple rippleStyle={buttonStyle} persistFocus={persistFocus}>
+      {injectedProps => (
+        <button
+          onMouseDown={injectedProps.handleMouseDown}
+          onMouseUp={injectedProps.handleMouseUp}
+          onBlur={injectedProps.resetRipple}
+          autoFocus={autoFocus || false}
+          onClick={onClick}
+          style={style}
+          className={classNames([
+            `custom-button__${buttonStyle}`,
+            "custom-button",
+            `${injectedProps.animate ? "focus" : ""}`,
+            `${padding}`
+          ])}
+          type={type || ButtonType.button}
+        >
+          {text}
+        </button>
+      )}
+    </WithRipple>
+  </div>
 );

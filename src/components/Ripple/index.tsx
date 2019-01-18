@@ -66,7 +66,7 @@ export class WithRipple extends React.Component<
     const { animate, animateStyle } = this.state;
 
     return (
-      <span ref={ref => (this.rippleRef = ref)} className="ripple-wrapper">
+      <div ref={ref => (this.rippleRef = ref)} className="ripple-wrapper">
         {children({
           animate,
           animateStyle,
@@ -75,12 +75,12 @@ export class WithRipple extends React.Component<
           handleMouseUp: this.handleMouseUp
         })}
         {animate && (
-          <div
+          <span
             style={animateStyle}
             className={classNames(["ripple", `${rippleStyle}`])}
           />
         )}
-      </span>
+      </div>
     );
   }
 }

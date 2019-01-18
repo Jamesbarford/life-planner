@@ -10,7 +10,12 @@ import { CreateEventAction } from "./actions";
 import { calculate, TimePoint } from "../helpers/dateHelper";
 
 // COMPONENTS
-import { Button, ButtonStyle, ButtonType } from "../components/Button";
+import {
+  Button,
+  ButtonStyle,
+  ButtonType,
+  ButtonPadding
+} from "../components/Button";
 import { Input, InputType } from "../components/Input";
 import { Modal } from "../components/Modal";
 import { Select } from "../components/Select";
@@ -100,11 +105,13 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
           </Select>
           <div className="horizonal-wrapper justify-end">
             <Button
+              padding={ButtonPadding.small}
               onClick={() => {}}
               buttonStyle={ButtonStyle.light}
               text="More options"
             />
             <Button
+              padding={ButtonPadding.normal}
               type={ButtonType.submit}
               buttonStyle={ButtonStyle.success}
               text="Save"

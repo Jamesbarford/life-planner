@@ -1,10 +1,9 @@
-%custom-button__padding {
-  padding: 0 24px;
+.custom-button__wrapper {
+  margin-left: 10px;
 }
 
 .custom-button__success {
   background-color: $blue;
-  @extend %custom-button__padding;
   color: white;
   transition: 0.4s;
 
@@ -16,7 +15,6 @@
 
 .custom-button__light {
   background-color: #ebebeb;
-  @extend %custom-button__padding;
   color: #333;
   transition: 0.4s;
 
@@ -38,4 +36,12 @@
   border-radius: $borderRadius;
   transition: 0.4s;
   @include translate3d(0, 0, 0);
+
+  &.small-padding {
+    padding: 0 8px;
+  }
+
+  &.normal-padding {
+    padding: 0 24px;
+  }
 }
