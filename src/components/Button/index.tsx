@@ -52,7 +52,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
   persistFocus
 }): JSX.Element => (
   <div className="custom-button__wrapper">
-    <WithRipple rippleStyle={buttonStyle} persistFocus={persistFocus}>
+    <WithRipple rippleStyle={buttonStyle} persistFocus={persistFocus || false}>
       {injectedProps => (
         <button
           onMouseDown={injectedProps.handleMouseDown}
