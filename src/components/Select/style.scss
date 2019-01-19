@@ -20,3 +20,48 @@
   border-bottom-style: solid;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50px' height='50px'><polyline points='46.139,15.518 25.166,36.49 4.193,15.519'/></svg>");
 }
+
+.selecter-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.selecter-list {
+  position: absolute;
+  overflow: scroll;
+  background: white;
+  @include box-shadow;
+  list-style: none;
+  margin: 0;
+  z-index: 5;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  padding: 10px 0;
+  font-size: 14px;
+  margin-left: 10px;
+  width: 200px;
+}
+
+.selecter-list__item {
+  font-size: 14px;
+
+  .selecter-list__button {
+    @include flexbox;
+    box-sizing: content-box;
+    line-height: 36px;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    padding-left: 22px;
+
+    &:hover {
+      background-color: #3333334b;
+      border-radius: 0px;
+    }
+
+    &:focus {
+      background-color: #3333334b;
+    }
+  }
+}

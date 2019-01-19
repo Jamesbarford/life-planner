@@ -25,13 +25,15 @@ import { DayNames } from "./view/Day";
 import { HourView } from "./view/HourView";
 import { Icon } from "../components/IconButton";
 import { MonthView } from "./view/MonthView";
-import { Select } from "../components/Select";
+import { CustomSelect } from "../components/Select";
 import { ToolTip } from "../components/ToolTip";
 import { Week } from "./view/Week";
 
 // TYPES
 import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
+import { WithRipple } from "../components/Ripple";
+import { ButtonStyle } from "../components/Button";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 
@@ -54,11 +56,10 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
     calculateMomentArray(view);
   };
 
-  changeView = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const view = e.target.value as TimePointType;
+  changeView = (timePoint: TimePointType) => {
     const { calculateMomentArray, changeView } = this.props;
-    calculateMomentArray(view);
-    changeView(view);
+    calculateMomentArray(timePoint);
+    changeView(timePoint);
   };
 
   select = (date: Moment) => {
@@ -83,14 +84,84 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
       <>
         <div className="calendar-navigation">
           <div className="calendar-navigation__item">
-            <ToolTip helper="select view">
-              <Select onChange={this.changeView} defaultValue={month}>
-                <option value={day}>Day</option>
-                <option value={week}>Week</option>
-                <option value={month}>Month</option>
-                <option value={year}>Year</option>
-              </Select>
-            </ToolTip>
+            <CustomSelect helperText="Select View" text={view}>
+              {injectedProps => (
+                <>
+                  <li className="selecter-list__item" value={day}>
+                    <WithRipple rippleStyle={ButtonStyle.light}>
+                      {rippleProps => (
+                        <button
+                          className="selecter-list__button"
+                          onMouseUp={rippleProps.handleMouseUp}
+                          onMouseDown={rippleProps.handleMouseDown}
+                          onClick={() => {
+                            this.changeView(day);
+                            injectedProps.closeList();
+                          }}
+                          value={day}
+                        >
+                          Day
+                        </button>
+                      )}
+                    </WithRipple>
+                  </li>
+                  <li className="selecter-list__item" value={week}>
+                    <WithRipple rippleStyle={ButtonStyle.light}>
+                      {rippleProps => (
+                        <button
+                          className="selecter-list__button"
+                          onMouseUp={rippleProps.handleMouseUp}
+                          onMouseDown={rippleProps.handleMouseDown}
+                          onClick={() => {
+                            this.changeView(week);
+                            injectedProps.closeList();
+                          }}
+                          value={week}
+                        >
+                          Week
+                        </button>
+                      )}
+                    </WithRipple>
+                  </li>
+                  <li className="selecter-list__item" value={month}>
+                    <WithRipple rippleStyle={ButtonStyle.light}>
+                      {rippleProps => (
+                        <button
+                          className="selecter-list__button"
+                          onMouseUp={rippleProps.handleMouseUp}
+                          onMouseDown={rippleProps.handleMouseDown}
+                          onClick={() => {
+                            this.changeView(month);
+                            injectedProps.closeList();
+                          }}
+                          value={month}
+                        >
+                          Month
+                        </button>
+                      )}
+                    </WithRipple>
+                  </li>
+                  <li className="selecter-list__item" value={year}>
+                    <WithRipple rippleStyle={ButtonStyle.light}>
+                      {rippleProps => (
+                        <button
+                          className="selecter-list__button"
+                          onMouseUp={rippleProps.handleMouseUp}
+                          onMouseDown={rippleProps.handleMouseDown}
+                          onClick={() => {
+                            this.changeView(year);
+                            injectedProps.closeList();
+                          }}
+                          value={year}
+                        >
+                          Year
+                        </button>
+                      )}
+                    </WithRipple>
+                  </li>
+                </>
+              )}
+            </CustomSelect>
           </div>
           <div className="calendar-navigation__item">
             <h2>{date.format("ddd Do MMMM YYYY")}</h2>

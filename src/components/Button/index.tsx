@@ -30,7 +30,17 @@ export enum ButtonType {
   button = "button",
   reset = "reset"
 }
-
+/**
+ * __Button__
+ * @param text string;
+ * @param padding ButtonPadding;
+ * @param buttonStyle ButtonStyle;
+ * @param type? ButtonType;
+ * @param style? React.CSSProperties;
+ * @param autoFocus? boolean;
+ * @param persistFocus? boolean;
+ * @param onClick? () => void;
+ */
 export const Button: React.FunctionComponent<ButtonProps> = ({
   buttonStyle,
   onClick,

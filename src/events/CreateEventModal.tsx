@@ -18,10 +18,11 @@ import {
 } from "../components/Button";
 import { Input, InputType } from "../components/Input";
 import { Modal } from "../components/Modal";
-import { Select } from "../components/Select";
+import { CustomSelect } from "../components/Select";
 
 // TYPES
 import { Event } from "./types";
+import { WithRipple } from "../components/Ripple";
 
 interface CreateEventState {
   id: string;
@@ -75,14 +76,11 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
     close();
   };
 
-  selectChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const date = moment(e.target.value);
-    this.setState({ date });
-  };
+  selectChangeHandler = (date: Moment) => this.setState({ date });
 
   render() {
-    const { selectedDay, modalOpen, close } = this.props;
-    const { timeArr, error } = this.state;
+    const { modalOpen, close } = this.props;
+    const { timeArr, error, date } = this.state;
 
     return (
       <Modal open={modalOpen} close={close}>
@@ -93,16 +91,34 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
             inputType={InputType.text}
             placeholder="Event title"
           />
-          <Select
-            onChange={this.selectChangeHandler}
-            defaultValue={selectedDay.format("LT")}
-          >
-            {timeArr.map(time => (
-              <option key={time.format("LT")} value={time.toISOString()}>
-                {time.format("LT")}
-              </option>
-            ))}
-          </Select>
+          <CustomSelect helperText="Select Time" text={date.format("LT")}>
+            {injectedProps =>
+              timeArr.map(time => (
+                <li
+                  key={time.format("LT")}
+                  className="selecter-list__item"
+                  value={time.toISOString()}
+                >
+                  <WithRipple rippleStyle={ButtonStyle.light}>
+                    {rippleProps => (
+                      <button
+                        className="selecter-list__button"
+                        onMouseUp={rippleProps.handleMouseUp}
+                        onMouseDown={rippleProps.handleMouseDown}
+                        type="button"
+                        onClick={() => {
+                          this.selectChangeHandler(time);
+                          injectedProps.closeList();
+                        }}
+                      >
+                        {time.format("LT")}
+                      </button>
+                    )}
+                  </WithRipple>
+                </li>
+              ))
+            }
+          </CustomSelect>
           <div className="horizonal-wrapper justify-end">
             <Button
               padding={ButtonPadding.small}

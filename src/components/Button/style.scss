@@ -35,6 +35,7 @@
   letter-spacing: 0.25px;
   border-radius: $borderRadius;
   transition: 0.4s;
+  min-width: 90px;
   @include translate3d(0, 0, 0);
 
   &.small-padding {
