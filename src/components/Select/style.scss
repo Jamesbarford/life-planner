@@ -56,12 +56,12 @@
     padding-left: 22px;
 
     &:hover {
-      background-color: #3333334b;
+      background-color: $translucentDarkGray;
       border-radius: 0px;
     }
 
     &:focus {
-      background-color: #3333334b;
+      background-color: $translucentDarkGray;
     }
   }
 }

@@ -11,16 +11,26 @@
     transition: 0.4s;
     background-color: $translucentBlue;
   }
+
+  &:focus {
+    transition: 0.4s;
+    background-color: $translucentBlue;
+  }
 }
 
 .custom-button__light {
   background-color: #ebebeb;
-  color: #333;
+  color: $darkGray;
   transition: 0.4s;
 
   &.focus {
     transition: 0.4s;
-    background-color: #3333334b;
+    background-color: $translucentDarkGray;
+  }
+
+  &:focus {
+    transition: 0.4s;
+    background-color: $translucentDarkGray;
   }
 }
 
