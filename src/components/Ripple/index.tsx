@@ -19,7 +19,19 @@ interface InjectedWithRippleProps extends WithRippleState {
   handleMouseUp: () => void;
   resetRipple: () => void;
 }
-
+/**
+ * __Ripple__
+ * @param persistFocus? boolean;
+ * @param className? string;
+ * @param rippleStyle ButtonStyle;
+ * @param children `(props: InjectedWithRippleProps) => React.ReactNode;`
+ *
+ * __InjectedWithRippleProps:__
+ * @param handleMouseDown `(e: React.MouseEvent) => void;`
+ * @param handleMouseUp `() => void;`
+ * @param resetRipple `() => void;`
+ *
+ */
 export class WithRipple extends React.Component<
   WithRippleProps,
   WithRippleState

@@ -30,6 +30,7 @@ export enum ButtonType {
   button = "button",
   reset = "reset"
 }
+
 /**
  * __Button__
  * @param text string;

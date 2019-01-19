@@ -9,6 +9,15 @@ interface IconProps {
   onClick: () => void;
 }
 
+/**
+ *
+ * __Icon__
+ * @param iconName string;
+ * @param hoverBackground BackgroundColor;
+ * @param btnStyle? React.CSSProperties;
+ * @param iconStyle? React.CSSProperties;
+ * @param onClick () => void;
+ */
 export class Icon extends React.Component<IconProps> {
   state = { backgroundColor: "" };
 

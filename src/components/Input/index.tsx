@@ -10,6 +10,13 @@ interface InputProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
+/**
+ * @example
+ * text = "text",
+ * password = "password",
+ * email = "email",
+ * number = "number"
+ */
 export enum InputType {
   text = "text",
   password = "password",
@@ -17,6 +24,21 @@ export enum InputType {
   number = "number"
 }
 
+/**
+ * __INPUT__
+ * @param inputType InputType;
+ * @param placeholder? string;
+ * @param style? React.CSSProperties;
+ * @param autoFocus? boolean;
+ * @param onChange `(e: React.ChangeEvent<HTMLInputElement>) => void;`
+ *
+ * __InputType__
+ * @example
+ * text = "text",
+ * password = "password",
+ * email = "email",
+ * number = "number"
+ */
 export const Input: React.FunctionComponent<InputProps> = ({
   onChange,
   inputType,

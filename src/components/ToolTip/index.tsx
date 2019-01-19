@@ -30,6 +30,11 @@ const ToolTipStyleHovered: React.CSSProperties = {
   transitionProperty: "all"
 };
 
+/**
+ * __ToolTip__
+ * @param helper string
+ * @param children `React.ReactNode`
+ */
 export class ToolTip extends React.Component<ToolTipProps, ToolTipState> {
   private wrapperRef: HTMLDivElement;
 

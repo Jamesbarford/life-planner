@@ -14,7 +14,15 @@ interface WithFocusLineProps {
 interface WithFocusLineState {
   focused: boolean;
 }
-
+/**
+ * __WithFocusLine__
+ * @param children `(props: InjectedWithFocusLineProps) => React.ReactNode;`
+ *
+ * __InjectedProps__
+ * @param focused boolean;
+ * @param handleFocus () => void;
+ * @param handleBlur () => void;
+ */
 export class WithFocusLine extends React.Component<
   WithFocusLineProps,
   WithFocusLineState

@@ -8,6 +8,12 @@ interface ModalProps {
   close: () => void;
 }
 
+/**
+ * __Modal__
+ * @param open boolean;
+ * @param children React.ReactNode;
+ * @param close () => void;
+ */
 export const Modal: React.FunctionComponent<ModalProps> = ({
   open,
   children,

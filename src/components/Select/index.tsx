@@ -15,7 +15,12 @@ interface CustomSelectProps {
   helperText: string;
   children: (props: CustomSelectListInjectedProps) => React.ReactNode;
 }
-
+/**
+ * __CustomSelect__
+ * @param text string;
+ * @param helperText string;
+ * @param children `(props: closeList: () => void) => React.ReactNode;`
+ */
 export class CustomSelect extends React.Component<
   CustomSelectProps,
   CustomSelectState
