@@ -84,6 +84,9 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
 
     return (
       <Modal open={modalOpen} close={close}>
+        {error.get("message") !== "" && (
+          <EventError error={error.get("message")} />
+        )}
         <form className="event-modal" onSubmit={this.createEvent}>
           <Input
             autoFocus={true}
@@ -134,9 +137,6 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
             />
           </div>
         </form>
-        {error.get("message") !== "" && (
-          <EventError error={error.get("message")} />
-        )}
       </Modal>
     );
   }
