@@ -23,6 +23,7 @@ import { CustomSelect } from "../components/Select";
 // TYPES
 import { Event } from "./types";
 import { WithRipple } from "../components/Ripple";
+import { currencyFormatter, CurrencySymbols } from "../helpers/currencyHelper";
 
 interface CreateEventState {
   id: string;
@@ -30,6 +31,7 @@ interface CreateEventState {
   title: string;
   timeArr: Array<Moment>;
   error: Map<string, string>;
+  amount: string;
 }
 
 interface OwnProps {
@@ -46,7 +48,8 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
     date: moment(this.props.selectedDay),
     title: "",
     timeArr: [] as Array<Moment>,
-    error: Map({ message: "" })
+    error: Map({ message: "" }),
+    amount: "0"
   };
 
   componentDidMount() {
@@ -58,6 +61,15 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
   changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ title: e.target.value });
     this.setState({ error: Map() });
+  };
+
+  amountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length === 0) {
+      return this.setState({ amount: "0" });
+    }
+    const stripLetters = e.target.value.match(/\d+/g).join("");
+    const amount = currencyFormatter("en-GB", stripLetters);
+    this.setState({ amount });
   };
 
   createEvent = (e: React.FormEvent) => {
@@ -80,7 +92,7 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
 
   render() {
     const { modalOpen, close } = this.props;
-    const { timeArr, error, date } = this.state;
+    const { timeArr, error, date, amount } = this.state;
 
     return (
       <Modal open={modalOpen} close={close}>
@@ -94,6 +106,15 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
             inputType={InputType.text}
             placeholder="Event title"
           />
+          <div className="horizonal-wrapper">
+            <h3>{CurrencySymbols.sterling}</h3>
+            <Input
+              onChange={this.amountHandler}
+              inputType={InputType.text}
+              value={amount}
+              placeholder="Amount"
+            />
+          </div>
           <CustomSelect helperText="Select Time" text={date.format("LT")}>
             {injectedProps =>
               timeArr.map(time => (

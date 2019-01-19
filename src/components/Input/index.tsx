@@ -4,6 +4,7 @@ import { WithFocusLine } from "../FocusLine";
 
 interface InputProps {
   inputType: InputType;
+  value?: number | string;
   placeholder?: string;
   style?: React.CSSProperties;
   autoFocus?: boolean;
@@ -44,6 +45,7 @@ export const Input: React.FunctionComponent<InputProps> = ({
   inputType,
   placeholder,
   style,
+  value,
   autoFocus
 }): JSX.Element => (
   <WithFocusLine>
@@ -59,6 +61,7 @@ export const Input: React.FunctionComponent<InputProps> = ({
         autoFocus={autoFocus || false}
         placeholder={placeholder}
         style={style}
+        value={value}
         type={inputType}
       />
     )}

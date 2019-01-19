@@ -51,3 +51,7 @@ export function classNames(classes: Array<string>): string {
 export function isEmptyObject(obj: object): boolean {
   return Object.keys(obj).length > 1;
 }
+
+export function isOfTypeNumber<T>(value: T): boolean {
+  return Number(value) === NaN;
+}
