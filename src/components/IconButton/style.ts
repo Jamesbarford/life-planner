@@ -1,6 +1,6 @@
 export const CircularButton = {
-  height: "30px",
-  width: "30px",
+  height: "40px",
+  width: "40px",
   borderRadius: "50%"
 };
 

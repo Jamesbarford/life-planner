@@ -4,6 +4,7 @@ import { ButtonStyle } from "../Button";
 
 interface WithRippleProps {
   persistFocus?: boolean;
+  className?: string;
   rippleStyle: ButtonStyle;
   children: (props: InjectedWithRippleProps) => React.ReactNode;
 }
@@ -37,7 +38,7 @@ export class WithRipple extends React.Component<
     e: React.MouseEvent,
     parent: HTMLSpanElement,
     rippleSize: number
-  ) => {
+  ): React.CSSProperties => {
     const { left, top } = parent.getBoundingClientRect();
     const { clientX, clientY } = e;
     const halfOfRipple = rippleSize / 2;
@@ -55,18 +56,25 @@ export class WithRipple extends React.Component<
 
   handleMouseUp = () => {
     const { persistFocus } = this.props;
-    if (!persistFocus) return setTimeout(() => this.resetRipple(), 300);
-    return this.resetRipple();
+    if (persistFocus === false)
+      return setTimeout(() => this.resetRipple(), 300);
+    return;
   };
 
   resetRipple = () => this.setState({ animate: false, animateStyle: {} });
 
   render() {
-    const { children, rippleStyle } = this.props;
+    const { children, rippleStyle, className } = this.props;
     const { animate, animateStyle } = this.state;
 
     return (
-      <div ref={ref => (this.rippleRef = ref)} className="ripple-wrapper">
+      <div
+        ref={ref => (this.rippleRef = ref)}
+        className={classNames([
+          "ripple-wrapper",
+          `${className ? className : ""}`
+        ])}
+      >
         {children({
           animate,
           animateStyle,

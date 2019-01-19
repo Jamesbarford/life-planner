@@ -88,7 +88,11 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
               {injectedProps => (
                 <>
                   <li className="selecter-list__item" value={day}>
-                    <WithRipple rippleStyle={ButtonStyle.light}>
+                    <WithRipple
+                      className="reset-width"
+                      persistFocus={true}
+                      rippleStyle={ButtonStyle.light}
+                    >
                       {rippleProps => (
                         <button
                           className="selecter-list__button"
@@ -98,6 +102,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
                             this.changeView(day);
                             injectedProps.closeList();
                           }}
+                          onBlur={rippleProps.resetRipple}
                           value={day}
                         >
                           Day
@@ -106,7 +111,11 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
                     </WithRipple>
                   </li>
                   <li className="selecter-list__item" value={week}>
-                    <WithRipple rippleStyle={ButtonStyle.light}>
+                    <WithRipple
+                      className="reset-width"
+                      persistFocus={true}
+                      rippleStyle={ButtonStyle.light}
+                    >
                       {rippleProps => (
                         <button
                           className="selecter-list__button"
@@ -116,6 +125,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
                             this.changeView(week);
                             injectedProps.closeList();
                           }}
+                          onBlur={rippleProps.resetRipple}
                           value={week}
                         >
                           Week
@@ -124,7 +134,11 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
                     </WithRipple>
                   </li>
                   <li className="selecter-list__item" value={month}>
-                    <WithRipple rippleStyle={ButtonStyle.light}>
+                    <WithRipple
+                      className="reset-width"
+                      persistFocus={true}
+                      rippleStyle={ButtonStyle.light}
+                    >
                       {rippleProps => (
                         <button
                           className="selecter-list__button"
@@ -134,6 +148,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
                             this.changeView(month);
                             injectedProps.closeList();
                           }}
+                          onBlur={rippleProps.resetRipple}
                           value={month}
                         >
                           Month
@@ -142,7 +157,11 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
                     </WithRipple>
                   </li>
                   <li className="selecter-list__item" value={year}>
-                    <WithRipple rippleStyle={ButtonStyle.light}>
+                    <WithRipple
+                      className="reset-width"
+                      persistFocus={true}
+                      rippleStyle={ButtonStyle.light}
+                    >
                       {rippleProps => (
                         <button
                           className="selecter-list__button"
@@ -152,6 +171,7 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
                             this.changeView(year);
                             injectedProps.closeList();
                           }}
+                          onBlur={rippleProps.resetRipple}
                           value={year}
                         >
                           Year

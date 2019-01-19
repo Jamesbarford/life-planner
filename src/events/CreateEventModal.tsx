@@ -102,7 +102,10 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
                   className="selecter-list__item"
                   value={time.toISOString()}
                 >
-                  <WithRipple rippleStyle={ButtonStyle.light}>
+                  <WithRipple
+                    className="reset-width"
+                    rippleStyle={ButtonStyle.light}
+                  >
                     {rippleProps => (
                       <button
                         className="selecter-list__button"

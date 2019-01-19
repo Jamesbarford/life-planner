@@ -36,7 +36,7 @@ export class CustomSelect extends React.Component<
   closeList = () => {
     setTimeout(() => {
       this.setState({ showList: false });
-    }, 300);
+    }, 450);
   };
 
   render() {
@@ -47,6 +47,7 @@ export class CustomSelect extends React.Component<
       <div ref={ref => (this.selectRef = ref)} className="selecter-wrapper">
         <ToolTip helper={helperText}>
           <Button
+            persistFocus={true}
             text={text}
             onClick={this.showList}
             padding={ButtonPadding.small}
