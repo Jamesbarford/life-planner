@@ -28,8 +28,5 @@ export function countDecimalPlaces(value: number) {
   return value.toString().split(".")[1].length || 0;
 }
 
-export function mergeAmount<T, U>(integer: T, fractional: U) {
-  const merge = `${integer}.${fractional}`;
-  console.log(parseFloat(merge));
-  return parseFloat(merge);
-}
+export const mergeAmount = <T, U>(integer: T, fractional: U) =>
+  parseFloat(`${integer}.${fractional}`);
