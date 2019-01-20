@@ -14,6 +14,7 @@ import { isPlainObject } from "lodash";
 // REDUCERS
 import { calendarReducer } from "../Calendar/reducer";
 import { eventsReducer } from "../events/reducer";
+import { budgetReducer } from "../budget/reducer";
 
 // INITIAL COMPONENT RENDER
 import { CalendarConnected } from "../Calendar";
@@ -24,7 +25,8 @@ import "./style.scss";
 
 export const allReducers = combineReducers({
   calendar: calendarReducer,
-  entries: eventsReducer
+  entries: eventsReducer,
+  budget: budgetReducer
 });
 
 type NextAction = (a: Action) => void;

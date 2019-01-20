@@ -1,6 +1,6 @@
 import { Map } from "immutable";
 import { EventActionTypes, EventActions } from "./actions";
-import { EventMap, ExpenditureMap, CategoryMap } from "./types";
+import { EventMap, CategoryMap } from "./types";
 
 export class EventsState {
   constructor(

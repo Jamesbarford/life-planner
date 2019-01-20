@@ -19,4 +19,8 @@ export interface ApplicationState {
     events: Map<string, Event>;
     category: Map<string, Category>;
   };
+  budget: {
+    currentBudget: number;
+    currentBudgetDisplay: string;
+  };
 }

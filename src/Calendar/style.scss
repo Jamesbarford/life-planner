@@ -7,7 +7,6 @@ $border: 1px solid #dadce0;
   padding: 8px;
   @include flexAmount(1 1 0%);
   @include flexbox;
-  flex-wrap: wrap;
   align-items: center;
 
   .calendar-navigation__item {

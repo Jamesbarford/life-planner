@@ -17,23 +17,15 @@ import {
 
 // COMPONENTS
 import { CreateEventModalConnected } from "../events/CreateEventModal";
-import {
-  CircularButton,
-  BackgroundColor
-} from "../components/IconButton/style";
 import { DayNames } from "./view/Day";
 import { HourView } from "./view/HourView";
-import { Icon } from "../components/IconButton";
 import { MonthView } from "./view/MonthView";
-import { CustomSelect } from "../components/Select";
-import { ToolTip } from "../components/ToolTip";
 import { Week } from "./view/Week";
 
 // TYPES
 import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
-import { WithRipple } from "../components/Ripple";
-import { ButtonStyle } from "../components/Button";
+import { CalendarNavigation } from "./CalendarNavigation";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 
@@ -75,138 +67,25 @@ class Calendar extends React.Component<CalendarProps, CalendarState> {
   };
 
   render() {
-    const { date, selectedDay, view } = this.props;
+    const { date, selectedDay, view, currentBudgetDisplay } = this.props;
     const { modalOpen } = this.state;
     const { day, week, month, year } = TimePoint;
     const timeArr = this.getMomentArray();
 
     return (
       <>
-        <div className="calendar-navigation">
-          <div className="calendar-navigation__item">
-            <CustomSelect helperText="Select View" text={view}>
-              {injectedProps => (
-                <>
-                  <li className="selecter-list__item" value={day}>
-                    <WithRipple
-                      className="reset-width"
-                      persistFocus={true}
-                      rippleStyle={ButtonStyle.light}
-                    >
-                      {rippleProps => (
-                        <button
-                          className="selecter-list__button"
-                          onMouseUp={rippleProps.handleMouseUp}
-                          onMouseDown={rippleProps.handleMouseDown}
-                          onClick={() => {
-                            this.changeView(day);
-                            injectedProps.closeList();
-                          }}
-                          onBlur={rippleProps.resetRipple}
-                          value={day}
-                        >
-                          Day
-                        </button>
-                      )}
-                    </WithRipple>
-                  </li>
-                  <li className="selecter-list__item" value={week}>
-                    <WithRipple
-                      className="reset-width"
-                      persistFocus={true}
-                      rippleStyle={ButtonStyle.light}
-                    >
-                      {rippleProps => (
-                        <button
-                          className="selecter-list__button"
-                          onMouseUp={rippleProps.handleMouseUp}
-                          onMouseDown={rippleProps.handleMouseDown}
-                          onClick={() => {
-                            this.changeView(week);
-                            injectedProps.closeList();
-                          }}
-                          onBlur={rippleProps.resetRipple}
-                          value={week}
-                        >
-                          Week
-                        </button>
-                      )}
-                    </WithRipple>
-                  </li>
-                  <li className="selecter-list__item" value={month}>
-                    <WithRipple
-                      className="reset-width"
-                      persistFocus={true}
-                      rippleStyle={ButtonStyle.light}
-                    >
-                      {rippleProps => (
-                        <button
-                          className="selecter-list__button"
-                          onMouseUp={rippleProps.handleMouseUp}
-                          onMouseDown={rippleProps.handleMouseDown}
-                          onClick={() => {
-                            this.changeView(month);
-                            injectedProps.closeList();
-                          }}
-                          onBlur={rippleProps.resetRipple}
-                          value={month}
-                        >
-                          Month
-                        </button>
-                      )}
-                    </WithRipple>
-                  </li>
-                  <li className="selecter-list__item" value={year}>
-                    <WithRipple
-                      className="reset-width"
-                      persistFocus={true}
-                      rippleStyle={ButtonStyle.light}
-                    >
-                      {rippleProps => (
-                        <button
-                          className="selecter-list__button"
-                          onMouseUp={rippleProps.handleMouseUp}
-                          onMouseDown={rippleProps.handleMouseDown}
-                          onClick={() => {
-                            this.changeView(year);
-                            injectedProps.closeList();
-                          }}
-                          onBlur={rippleProps.resetRipple}
-                          value={year}
-                        >
-                          Year
-                        </button>
-                      )}
-                    </WithRipple>
-                  </li>
-                </>
-              )}
-            </CustomSelect>
-          </div>
-          <div className="calendar-navigation__item">
-            <h2>{date.format("ddd Do MMMM YYYY")}</h2>
-          </div>
-          <div className="calendar-navigation__item">
-            <ToolTip helper={`previous ${view}`}>
-              <Icon
-                hoverBackground={BackgroundColor.lightGray}
-                btnStyle={CircularButton}
-                onClick={this.previous}
-                iconName="keyboard_arrow_left"
-              />
-            </ToolTip>
-          </div>
-          <div className="calendar-navigation__item">
-            <ToolTip helper={`next ${view}`}>
-              <Icon
-                hoverBackground={BackgroundColor.lightGray}
-                btnStyle={CircularButton}
-                onClick={this.next}
-                iconName="keyboard_arrow_right"
-              />
-            </ToolTip>
-          </div>
-        </div>
+        <CalendarNavigation
+          day={day}
+          week={week}
+          month={month}
+          year={year}
+          view={view}
+          date={date}
+          currentBudgetDisplay={currentBudgetDisplay}
+          changeView={this.changeView}
+          previous={this.previous}
+          next={this.next}
+        />
         <div className="calendar-wrapper">
           {view === month && (
             <>
@@ -262,6 +141,7 @@ interface MapStateToProps {
   selectedDay: Moment;
   currentMonth: number;
   currentWeek: number;
+  currentBudgetDisplay: string;
 }
 
 interface MapDispatchToProps {
@@ -273,14 +153,15 @@ interface MapDispatchToProps {
 }
 
 export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
-  ({ calendar }: ApplicationState) => ({
+  ({ calendar, budget }: ApplicationState) => ({
     date: calendar.date,
     today: calendar.today,
     view: calendar.view,
     momentList: calendar.momentList,
     selectedDay: calendar.selectedDay,
     currentMonth: calendar.currentMonth,
-    currentWeek: calendar.currentWeek
+    currentWeek: calendar.currentWeek,
+    currentBudgetDisplay: budget.currentBudgetDisplay
   }),
   dispatch => ({
     next: (unitOfTime, timePoint) =>

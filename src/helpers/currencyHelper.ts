@@ -11,11 +11,10 @@ export function currencyFormatter<T extends string>(
   if (amount === "") return amount;
   const formatAmount = amount.replace(/,/g, "");
   const formatAmountToNumber = parseFloat(formatAmount);
-  const numberOfDecimals = countDecimalPlaces(formatAmountToNumber);
   const currencyFormatted = new Intl.NumberFormat(format).format(
     formatAmountToNumber
   );
-  return `${currencyFormatted}${numberOfDecimals === 0 ? ".00" : ""}`;
+  return `${CurrencySymbols.sterling}${currencyFormatted}`;
 }
 
 export function currencyToNumber(amountStr: string): number {
@@ -23,10 +22,5 @@ export function currencyToNumber(amountStr: string): number {
   return parseFloat(formatAmount);
 }
 
-export function countDecimalPlaces(value: number) {
-  if (Math.floor(value) === value) return 0;
-  return value.toString().split(".")[1].length || 0;
-}
-
-export const mergeAmount = <T, U>(integer: T, fractional: U) =>
+export const mergeAmount = <T, U>(integer: T, fractional: U): number =>
   parseFloat(`${integer}.${fractional}`);
