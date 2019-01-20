@@ -23,7 +23,7 @@ import { CustomSelect } from "../components/Select";
 // TYPES
 import { Event } from "./types";
 import { WithRipple } from "../components/Ripple";
-import { currencyFormatter, CurrencySymbols } from "../helpers/currencyHelper";
+import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
 
 interface CreateEventState {
   id: string;
@@ -31,7 +31,10 @@ interface CreateEventState {
   title: string;
   timeArr: Array<Moment>;
   error: Map<string, string>;
-  amount: string;
+  integer: string;
+  fractional: string;
+  inputWidth: string;
+  [key: string]: any;
 }
 
 interface OwnProps {
@@ -43,13 +46,19 @@ interface OwnProps {
 type CreateEventProps = MapDispatchToProps & OwnProps;
 
 class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
+  private integer = "integer";
+  private fractional = "fractional";
+  private integerRef: HTMLInputElement;
+
   state = {
     id: "",
     date: moment(this.props.selectedDay),
     title: "",
     timeArr: [] as Array<Moment>,
     error: Map({ message: "" }),
-    amount: "0"
+    integer: "",
+    fractional: "",
+    inputWidth: "15.5px"
   };
 
   componentDidMount() {
@@ -63,21 +72,30 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
     this.setState({ error: Map() });
   };
 
-  amountHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length === 0) {
-      return this.setState({ amount: "0" });
+  amountHandler = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+    if (e.target.value.length < 1) return this.setState({ [key]: "" });
+    let _amount = e.target.value.match(/\d+/g).join("");
+    if (key === this.fractional) {
+      if (_amount.length >= 2) _amount = _amount.substring(0, 2);
+    } else if (key === this.integer) {
+      this.calculateInputWidth(e.target.value);
     }
-    const stripLetters = e.target.value.match(/\d+/g).join("");
-    const amount = currencyFormatter("en-GB", stripLetters);
-    this.setState({ amount });
+    this.setState({ [key]: _amount });
+  };
+
+  calculateInputWidth = (str?: string) => {
+    const MULTIPLIER = 15.5;
+    const width = str.length * MULTIPLIER + "px";
+    this.setState({ inputWidth: width });
   };
 
   createEvent = (e: React.FormEvent) => {
     e.preventDefault();
 
     const { createEvent, close } = this.props;
-    const { title, date, id, error } = this.state;
+    const { title, date, id, error, integer, fractional } = this.state;
 
+    mergeAmount(integer, fractional);
     if (!title) {
       return this.setState({
         error: error.merge({ message: "Event must have a title" })
@@ -92,7 +110,7 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
 
   render() {
     const { modalOpen, close } = this.props;
-    const { timeArr, error, date, amount } = this.state;
+    const { timeArr, error, date, integer, fractional } = this.state;
 
     return (
       <Modal open={modalOpen} close={close}>
@@ -107,12 +125,22 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
             placeholder="Event title"
           />
           <div className="horizonal-wrapper">
-            <h3>{CurrencySymbols.sterling}</h3>
+            <h3 className="currency-symbol">{CurrencySymbols.sterling}</h3>
             <Input
-              onChange={this.amountHandler}
+              style={{ width: this.state.inputWidth }}
+              setRef={ref => (this.integerRef = ref)}
+              onChange={e => this.amountHandler(e, this.integer)}
               inputType={InputType.text}
-              value={amount}
-              placeholder="Amount"
+              value={integer}
+              placeholder="0"
+            />
+            .
+            <Input
+              style={{ width: "30px" }}
+              onChange={e => this.amountHandler(e, this.fractional)}
+              inputType={InputType.text}
+              value={fractional}
+              placeholder="00"
             />
           </div>
           <CustomSelect helperText="Select Time" text={date.format("LT")}>

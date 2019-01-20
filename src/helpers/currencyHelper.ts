@@ -1,5 +1,3 @@
-import { isOfTypeNumber } from "./util";
-
 export enum CurrencySymbols {
   sterling = "£",
   usd = "$",
@@ -11,22 +9,27 @@ export function currencyFormatter<T extends string>(
   amount: T
 ): string {
   if (amount === "") return amount;
-  if (isOfTypeNumber(amount) === false) {
-    const formatAmount = amount.substring(0, amount.length).replace(/,/g, "");
-    const formatAmountToNumber = parseFloat(formatAmount);
-    const currencyFormatted = new Intl.NumberFormat(format).format(
-      formatAmountToNumber
-    );
-    return currencyFormatted;
-  } else if (isOfTypeNumber(amount) === true) {
-    const currencyFormatted = new Intl.NumberFormat(format).format(
-      Number(amount)
-    );
-    return currencyFormatted;
-  }
+  const formatAmount = amount.replace(/,/g, "");
+  const formatAmountToNumber = parseFloat(formatAmount);
+  const numberOfDecimals = countDecimalPlaces(formatAmountToNumber);
+  const currencyFormatted = new Intl.NumberFormat(format).format(
+    formatAmountToNumber
+  );
+  return `${currencyFormatted}${numberOfDecimals === 0 ? ".00" : ""}`;
 }
 
 export function currencyToNumber(amountStr: string): number {
   const formatAmount = amountStr.replace(/,/g, "");
   return parseFloat(formatAmount);
+}
+
+export function countDecimalPlaces(value: number) {
+  if (Math.floor(value) === value) return 0;
+  return value.toString().split(".")[1].length || 0;
+}
+
+export function mergeAmount<T, U>(integer: T, fractional: U) {
+  const merge = `${integer}.${fractional}`;
+  console.log(parseFloat(merge));
+  return parseFloat(merge);
 }

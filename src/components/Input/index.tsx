@@ -8,7 +8,10 @@ interface InputProps {
   placeholder?: string;
   style?: React.CSSProperties;
   autoFocus?: boolean;
+  pattern?: string;
+  setRef?: React.Ref<HTMLInputElement>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 /**
@@ -46,18 +49,24 @@ export const Input: React.FunctionComponent<InputProps> = ({
   placeholder,
   style,
   value,
-  autoFocus
+  autoFocus,
+  pattern,
+  setRef,
+  onKeyUp
 }): JSX.Element => (
-  <WithFocusLine>
+  <WithFocusLine style={style}>
     {injectedProps => (
       <input
+        ref={setRef}
         className={classNames([
           "custom-input",
           `${injectedProps.focused ? "focused" : ""}`
         ])}
+        onKeyUp={onKeyUp}
         onFocus={injectedProps.handleFocus}
         onBlur={injectedProps.handleBlur}
         onChange={onChange}
+        pattern={pattern || undefined}
         autoFocus={autoFocus || false}
         placeholder={placeholder}
         style={style}
