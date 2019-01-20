@@ -12,6 +12,7 @@ import { Icon } from "../components/IconButton";
 import { ToolTip } from "../components/ToolTip";
 import { ButtonStyle } from "../components/Button";
 
+// Types
 import { TimePointType } from "../helpers/dateHelper";
 
 interface CalendarNavigationProps {
