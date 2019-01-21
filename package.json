@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "Interactive calendar with money calculator",
   "main": "",
-  "scripts": {},
+  "scripts": {
+    "clean": "rm -rf node_modules",
+    "postinstall": "(cd aphrodite && yarn) && (cd hades && yarn)"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -17,10 +20,14 @@
   },
   "author": "James Barford-Evans",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "typescript": "^3.2.4"
+  },
   "devDependencies": {
     "husky": "^1.3.1",
     "lint-staged": "^8.1.0",
-    "prettier": "^1.15.3"
+    "prettier": "^1.15.3",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-eslint-rules": "^5.4.0"
   }
 }

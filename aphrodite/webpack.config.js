@@ -10,7 +10,11 @@ const analyse = process.env.NODE_ENV === "analyse";
 const development = process.env.NODE_ENV === "development";
 const mode = development ? "development" : "production";
 
-console.log({ development, production, analyse });
+console.log({
+  development,
+  production,
+  analyse
+});
 
 const WebpackConfig = {
   entry: "./src/App/index.tsx",
@@ -58,13 +62,29 @@ const WebpackConfig = {
           "postcss-loader?parser=postcss-scss",
           "sass-loader"
         ]
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        enforce: "pre",
+        use: [
+          {
+            loader: "tslint-loader",
+            options: {
+              configFile: "../tslint.json"
+            }
+          }
+        ]
       }
     ]
   },
   plugins: [
-    new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" }),
+    new MiniCssExtractPlugin({
+      filename: "[name].[contenthash].css"
+    }),
     new CleanWebpackPlugin(["dist"]),
-    new HtmlWebpackPlugin({ template: "template.html" })
+    new HtmlWebpackPlugin({
+      template: "template.html"
+    })
   ]
 };
 

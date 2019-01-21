@@ -1,0 +1,37 @@
+{
+  "name": "life-planner",
+  "version": "1.0.0",
+  "description": "Interactive calendar with money calculator",
+  "main": "",
+  "scripts": {
+    "dev": "./node_modules/nodemon/bin/nodemon.js",
+    "start": "TS_NODE_FILES=true ts-node ./server.ts"
+  },
+  "author": "James Barford-Evans",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "bunyan": "^1.8.12",
+    "bunyan-request": "^1.4.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "knex": "^0.16.3",
+    "moment": "^2.23.0",
+    "pg": "^7.8.0",
+    "pg-format": "^1.0.4",
+    "typescript": "^3.2.4",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/bunyan": "^1.8.5",
+    "@types/cors": "^2.8.4",
+    "@types/express": "^4.16.0",
+    "@types/knex": "^0.15.1",
+    "@types/moment": "^2.13.0",
+    "@types/pg": "^7.4.11",
+    "@types/pg-format": "^1.0.0",
+    "@types/uuid": "^3.4.4",
+    "nodemon": "^1.18.9",
+    "ts-node": "^7.0.1"
+  }
+}
