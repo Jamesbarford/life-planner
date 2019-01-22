@@ -8,8 +8,8 @@
     "start": "NODE_ENV=development webpack-dev-server",
     "build:analyse": "NODE_ENV=analyse webpack",
     "prettierSrc": "prettier --write **/src/**/*.{ts,tsx,js,jsx,json,css,scss}",
-    "test": "jest --verbose",
-    "test:watch": "jest --watchAll --verbose"
+    "test": "jest",
+    "test:watch": "jest --watchAll"
   },
   "author": "James Barford-Evans",
   "license": "ISC",
