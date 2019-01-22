@@ -48,7 +48,6 @@ type CreateEventProps = MapDispatchToProps & OwnProps;
 class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
   private integer = "integer";
   private fractional = "fractional";
-  private integerRef: HTMLInputElement;
 
   state = {
     id: "",
@@ -128,7 +127,6 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
             <h3 className="currency-symbol">{CurrencySymbols.sterling}</h3>
             <Input
               style={{ width: this.state.inputWidth }}
-              setRef={ref => (this.integerRef = ref)}
               onChange={e => this.amountHandler(e, this.integer)}
               inputType={InputType.text}
               value={integer}

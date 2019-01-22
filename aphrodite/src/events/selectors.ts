@@ -2,11 +2,10 @@ import * as moment from "moment";
 import { Moment } from "moment";
 import { List } from "immutable";
 import { TimePoint } from "../helpers/dateHelper";
-import { EventsState } from "./reducer";
 import { Event, EventMap } from "./types";
 
-export function selectEvent(hash: string, state: EventsState) {
-  return state.events.get(hash);
+export function selectEvent(hash: string, events: EventMap) {
+  return events.get(hash);
 }
 
 export function matchDayToHash(hash: string): string {
@@ -20,6 +19,9 @@ export function selectEventsToList(
   events: EventMap
 ): List<Event> {
   return events
-    .filter((_, key) => matchDayToHash(key) === dateToMatch.toISOString())
+    .filter(
+      (_, key) =>
+        matchDayToHash(key) === dateToMatch.startOf("day").toISOString()
+    )
     .toList();
 }
