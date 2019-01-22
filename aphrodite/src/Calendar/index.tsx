@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Moment } from "moment";
 
 // HELPERS
-import { TimePoint, TimePointType, createHash } from "../helpers/dateHelper";
+import { TimePoint, TimePointType } from "../helpers/dateHelper";
 import { selectMomentFromMap } from "./selectors";
 
 // ACTIONS
@@ -26,6 +26,7 @@ import { Week } from "./view/Week";
 import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
 import { CalendarNavigation } from "./CalendarNavigation";
+import { createHash } from "./factories";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 
@@ -33,7 +34,7 @@ interface CalendarState {
   modalOpen: boolean;
 }
 
-class Calendar extends React.Component<CalendarProps, CalendarState> {
+export class Calendar extends React.Component<CalendarProps, CalendarState> {
   state = { modalOpen: false };
 
   next = () => {

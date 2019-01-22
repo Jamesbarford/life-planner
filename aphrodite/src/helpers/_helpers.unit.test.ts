@@ -30,6 +30,7 @@ describe("Date helpers", () => {
   it("should return an array of moments", () => {
     const date = moment();
     const arr = calculate(date, TimePoint.month, 1);
+
     expect(isMoment(arr));
   });
 
@@ -44,12 +45,14 @@ describe("Date helpers", () => {
     it("converts a number into currency", () => {
       const number = "2000000";
       const numberToCurrency = currencyFormatter("en-GB", number);
+
       expect(numberToCurrency).toEqual("£2,000,000");
     });
 
     it("converts currency to a number", () => {
       const currency = "£2,000,000";
       const number = currencyToNumber(currency);
+
       expect(number).toEqual(2000000);
     });
 
@@ -57,6 +60,7 @@ describe("Date helpers", () => {
       const num1 = 10000;
       const num2 = 12;
       const merged = mergeAmount(num1, num2);
+
       expect(merged).toEqual(10000.12);
     });
   });

@@ -9,15 +9,12 @@ describe("Event selectors", () => {
     const date = moment()
       .startOf(TimePoint.hour)
       .add(5, TimePoint.hours);
-    const hashMap = createHashEvent(date, {
-      id: "h",
-      title: "super event",
-      date
-    });
-
+    const event = { id: "h", title: "super event", date };
     const hash = date.toISOString();
-    const event = selectEvent(hash, hashMap);
-    expect(event).toEqual({ id: "h", title: "super event", date });
+    const hashMap = createHashEvent(date, event);
+    const selectedEvent = selectEvent(hash, hashMap);
+
+    expect(selectedEvent).toEqual(event);
   });
 
   it("selects list events from hash map", () => {
@@ -25,6 +22,7 @@ describe("Event selectors", () => {
     const event = { id: "h", title: "super event", date };
     const hashMap = createHashEvent(date, event);
     const selectedEvent = selectEventsToList(date, hashMap);
+
     expect(selectedEvent).toEqual(List([event]));
   });
 });

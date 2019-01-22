@@ -7,10 +7,9 @@ import {
   TimePoint,
   TimePointType,
   calculate,
-  alterTime,
-  createHash
+  alterTime
 } from "../helpers/dateHelper";
-import { createMomentList } from "./selectors";
+import { createMomentList, createHash } from "./factories";
 
 // ACTIONS
 import { CalendarActions, CalendarActionTypes } from "./actions";
