@@ -8,9 +8,9 @@
  * => // noWhiteSpace === "string"
  *
  */
-export function removeWhiteSpace(string: string): string {
-  if (!isString(string)) return string;
-  return string.replace(/\s/g, "");
+export function removeWhiteSpace(str: string): string {
+  if (!isString(str)) return str;
+  return str.replace(/\s/g, "");
 }
 
 /**
@@ -23,8 +23,8 @@ export function removeWhiteSpace(string: string): string {
  * isString(str) // true;
  * isString(num) // false;
  */
-export function isString<T>(string: T): boolean {
-  return toString.call(string) === "[object String]";
+export function isString<T>(str: T): boolean {
+  return toString.call(str) === "[object String]";
 }
 
 /**
@@ -52,6 +52,4 @@ export function isEmptyObject(obj: object): boolean {
   return Object.keys(obj).length > 1;
 }
 
-export function isOfTypeNumber<T>(value: T): boolean {
-  return Number(value) === NaN;
-}
+export const isOfTypeNumber = <T>(value: T): boolean => isNaN(Number(value));

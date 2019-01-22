@@ -37,7 +37,7 @@ export class Icon extends React.Component<IconProps> {
         className="icon-button__wrapper"
         onMouseLeave={this.mouseLeave}
         onMouseEnter={this.mouseEnter}
-        style={{ ...btnStyle, backgroundColor: backgroundColor }}
+        style={{ ...btnStyle, backgroundColor }}
       >
         <i style={iconStyle} className="material-icons icon-button">
           {iconName}
