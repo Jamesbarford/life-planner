@@ -68,10 +68,9 @@ export class WithRipple extends React.Component<
 
   handleMouseUp = () => {
     const { persistFocus } = this.props;
-    if (persistFocus === false) {
-      return setTimeout(() => this.resetRipple(), 300);
-    }
-    return;
+    if (persistFocus === true) return;
+
+    return setTimeout(() => this.resetRipple(), 300);
   };
 
   resetRipple = () => this.setState({ animate: false, animateStyle: {} });
