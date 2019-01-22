@@ -3,7 +3,8 @@ module.exports = {
   transform: {
     "^.+\\.(tsx|ts)?$": "ts-jest"
   },
-  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx|ts)?$",
+  testEnvironment: "node",
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec|unit))\\.(tsx|ts)?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   snapshotSerializers: ["enzyme-to-json/serializer"],
   setupTestFrameworkScriptFile: "<rootDir>/src/setupEnzyme.ts"
