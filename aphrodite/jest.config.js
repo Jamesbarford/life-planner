@@ -6,10 +6,8 @@ module.exports = {
   globals: {
     "ts-jest": {
       tsConfig: "<rootDir>/tsconfig.test.json",
-      // This is so ts-jest doesn't try and run the component in the context of the whole app
       isolatedModules: true,
       diagnostics: {
-        // Only run diagnostics on our jest test files
         pathRegex: ".*\\.jest.test\\.tsx?$",
         warnOnly: true
       },
