@@ -15,6 +15,7 @@ const ToolTipStyle: React.CSSProperties = {
   position: "absolute",
   backgroundColor: "#616161e6",
   color: "white",
+  transform: "scale(0)",
   fontSize: "12px",
   padding: "3px",
   borderRadius: "3px",

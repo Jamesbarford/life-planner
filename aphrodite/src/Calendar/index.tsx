@@ -18,7 +18,7 @@ import {
 // COMPONENTS
 import { CreateEventModalConnected } from "../events/CreateEventModal";
 import { DayNames } from "./view/Day";
-import { HourView } from "./view/HourView";
+import { HourViewConnected } from "./view/HourView";
 import { MonthView } from "./view/MonthView";
 import { Week } from "./view/Week";
 
@@ -114,7 +114,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
           {view === day && (
             <div className="calendar-hour__view-wrapper">
               <hr className="vertical-line" />
-              <HourView
+              <HourViewConnected
                 hours={timeArr}
                 selectedDay={date}
                 select={this.select}
