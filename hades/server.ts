@@ -3,20 +3,13 @@ import * as bunyan from "bunyan";
 import * as bunyanRequest from "bunyan-request";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
-import * as pg from "pg";
-import { router } from "./app/routes/events";
-
 import { AddressInfo } from "net";
+import { router } from "./app/routes/events";
+import { pool } from "./db";
 
-const PGDATABASE = "mailgun";
 const app = express();
 
-const dbConfig = {
-  database: PGDATABASE, // name of the database
-  max: 10, // max number of clients in the pool
-  idleTimeoutMillis: 30000 // how long a client is allowed to remain idle before being closed
-};
-const log = bunyan.createLogger({ name: "Mail Gun" });
+const log = bunyan.createLogger({ name: "Life Planner" });
 const requestLogger = bunyanRequest({
   logger: log,
   headerName: "x-request-id"
@@ -34,8 +27,6 @@ const server = app.listen(8000, () => {
 
   log.info(`calendar is listening on http:${host}:${port}`);
 });
-
-const pool = new pg.Pool(dbConfig);
 
 pool.connect((err, client, done) => {
   if (err) {
