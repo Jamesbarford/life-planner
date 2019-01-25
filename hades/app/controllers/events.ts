@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Event } from "../types";
 import { client } from "../../db";
+import { success, failure, badRequest } from "../helpers/responseHandlers";
 
 export async function createEvent(
   req: Request,
@@ -11,10 +12,10 @@ export async function createEvent(
 
   // Validate request
   // ===========================================================================
-  if (id === "") return res.send({ status: 400, body: "invalid event" });
+  if (id === "") return badRequest(res, "Invalid id for event");
 
   try {
-    await client.query(`
+    const request = await client.query(`
       INSERT INTO events(
         id,
         title,
@@ -30,8 +31,17 @@ export async function createEvent(
         '${description}'
       );
     `);
-    return res.send({ status: 200, body: "successful creation" });
+    return success(res, body, "succesfully created event");
   } catch (err) {
-    return res.send({ statusCode: 500, body: "failed to create event" });
+    return failure(res, "failed to create event");
+  }
+}
+
+export async function getEvents(req: Request, res: Response) {
+  try {
+    const request = await client.query(`SELECT * FROM events`);
+    return success<Array<Event>>(res, request.rows, "fetch success");
+  } catch (err) {
+    return failure(res, "failed to fetch events");
   }
 }

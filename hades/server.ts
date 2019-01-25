@@ -9,15 +9,12 @@ import { pool } from "./db";
 
 const app = express();
 
-const log = bunyan.createLogger({ name: "Life Planner" });
-const requestLogger = bunyanRequest({
-  logger: log,
-  headerName: "x-request-id"
-});
+const log = bunyan.createLogger({ name: "Life Planner", level: 0 });
+const logger = bunyanRequest({ logger: log, headerName: "x-request-id" });
 
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
-app.use(requestLogger);
+app.use(logger);
 app.use("/api", router);
 
 const server = app.listen(8000, () => {
