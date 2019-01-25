@@ -4,7 +4,7 @@ export async function getRequest<T>(url: string): Promise<T> {
   return data;
 }
 
-export async function postRequest<T, U>(url: string, data: U) {
+export async function postRequest<U>(url: string, data: U): Promise<U> {
   const postRequest = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -15,7 +15,7 @@ export async function postRequest<T, U>(url: string, data: U) {
       "Content-Type": "application/json"
     }
   });
-  const response: T = await postRequest.json();
+  const response: U = await postRequest.json();
   return response;
 }
 
