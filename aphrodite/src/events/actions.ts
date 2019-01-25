@@ -9,21 +9,15 @@ export enum EventActions {
 }
 
 export class CreateEventAction implements ActionBase {
-  readonly type = EventActions.CreateEvent;
+  public readonly type = EventActions.CreateEvent;
   constructor(public event: Event) {}
-  public createEvent() {
-    return createHashEvent(this.event.date, this.event);
-  }
-  public postEvent() {
-    return postRequest<Event>(`${Api}/events`, this.event);
-  }
+  public createEvent = () => createHashEvent(this.event.date, this.event);
+  public postEvent = () => postRequest<Event>(`${Api}/events`, this.event);
 }
 
 export class GetEvents implements ActionBase {
-  readonly type = EventActions.GetEvents;
-  public getEvents() {
-    return getRequest<Array<Event>>(`${Api}/events`);
-  }
+  public readonly type = EventActions.GetEvents;
+  public getEvents = () => getRequest<Array<Event>>(`${Api}/events`);
 }
 
 export type EventActionTypes = CreateEventAction | GetEvents;
