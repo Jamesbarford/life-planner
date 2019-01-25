@@ -101,7 +101,7 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
       });
     }
 
-    createEvent({ id, title, date });
+    createEvent({ id, title, date, category: "test" });
     close();
   };
 

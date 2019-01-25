@@ -11,17 +11,17 @@ export interface Expenditure extends EventBase {
   date: Moment;
   time: Moment;
   amount: number;
-  category: Category;
+  category: string;
 }
 
-export interface Category extends EventBase {}
+// export interface Category extends EventBase {}
 
 export interface Event extends EventBase {
   date: Moment;
   location?: string;
-  category?: Category;
+  category?: string;
 }
 
 export type EventMap = Map<string, Event>;
 export type ExpenditureMap = Map<string, Expenditure>;
-export type CategoryMap = Map<string, Category>;
+export type CategoryMap = Map<string, string>;

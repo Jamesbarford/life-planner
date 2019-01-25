@@ -10,13 +10,12 @@ interface EntryProps {
  * @param entry is an Event
  *
  * __Event__
- * @example
- * id: string;
- * title: string;
- * description?: string
- * date: Moment;
- * location?: string;
- * category?: Category;
+ * @param id: string;
+ * @param title: string;
+ * @param description?: string
+ * @param date: Moment;
+ * @param location?: string;
+ * @param category?: Category;
  */
 export const Entry: React.FunctionComponent<EntryProps> = ({
   event

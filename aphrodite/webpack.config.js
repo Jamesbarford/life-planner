@@ -44,7 +44,17 @@ const WebpackConfig = {
     extensions: [".js", ".json", ".ts", ".tsx"]
   },
   devServer: {
-    contentBase: "./dist"
+    contentBase: "./dist",
+    compress: true,
+    port: 3000,
+    historyApiFallback: true,
+    proxy: {
+      "/api": {
+        target: "http://[::1]:8000",
+        secure: false,
+        changeOrigin: false
+      }
+    }
   },
   module: {
     rules: [

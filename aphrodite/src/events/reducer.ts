@@ -16,7 +16,12 @@ export function eventsReducer(
   switch (action.type) {
     case EventActions.CreateEvent:
       const event = action.createEvent();
+      action.postEvent();
       return { ...state, events: state.events.merge(event) };
+
+    case EventActions.GetEvents:
+      action.getEvents().then(response => console.log(response));
+      return state;
 
     default:
       return state;

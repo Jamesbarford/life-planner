@@ -14,6 +14,7 @@ import {
   ChangeView,
   SelectDay
 } from "./actions";
+import { GetEvents } from "../events/actions";
 
 // COMPONENTS
 import { CreateEventModalConnected } from "../events/CreateEventModal";
@@ -36,6 +37,10 @@ interface CalendarState {
 
 export class Calendar extends React.Component<CalendarProps, CalendarState> {
   state = { modalOpen: false };
+
+  componentDidMount() {
+    this.props.getEvents();
+  }
 
   next = () => {
     const { next, view, calculateMomentArray } = this.props;
@@ -151,6 +156,7 @@ interface MapDispatchToProps {
   previous: (unitOfTime: number, timePoint: TimePointType) => void;
   changeView: (newView: TimePointType) => void;
   calculateMomentArray: (t: TimePointType) => void;
+  getEvents: () => void;
 }
 
 export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
@@ -171,6 +177,7 @@ export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
     previous: (unitOfTime, timePoint) =>
       dispatch(new CalendarPrevious(unitOfTime, timePoint)),
     changeView: newView => dispatch(new ChangeView(newView)),
-    calculateMomentArray: t => dispatch(new CalculateMomentArray(t))
+    calculateMomentArray: t => dispatch(new CalculateMomentArray(t)),
+    getEvents: () => dispatch(new GetEvents())
   })
 )(Calendar);
