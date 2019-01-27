@@ -13,7 +13,6 @@ export enum EventActions {
 export class CreateEvent implements ActionBase {
   public readonly type = EventActions.CreateEvent;
   constructor(public event: Event) {}
-  public createEvent = () => createHashEvent(this.event.date, this.event);
 }
 
 export class CreateEventResponse implements ActionBase {

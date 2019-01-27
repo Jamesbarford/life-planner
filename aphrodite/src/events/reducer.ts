@@ -16,14 +16,8 @@ export function eventsReducer(
   action: EventActionTypes
 ) {
   switch (action.type) {
-    case EventActions.CreateEvent:
-      const event = action.createEvent();
-      return {
-        ...state,
-        events: state.events.merge(event)
-      };
-
     case EventActions.GetEvents:
+    case EventActions.CreateEvent:
       return state;
 
     case EventActions.GetEventsResponse:
