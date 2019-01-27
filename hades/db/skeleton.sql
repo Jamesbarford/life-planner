@@ -34,32 +34,53 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: budget; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.budget (
+    id character varying(50) NOT NULL,
+    amount numeric(10,2) NOT NULL,
+    month date NOT NULL
+);
+
+
+--
 -- Name: events; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.events (
     id character varying(50) NOT NULL,
     title character varying(200) NOT NULL,
-    date character varying(200) NOT NULL,
+    date date NOT NULL,
     category character varying(200),
-    description text
+    description text,
+    "time" time without time zone
 );
+
+
+--
+-- Data for Name: budget; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.budget (id, amount, month) FROM stdin;
+2019-01	170.00	2019-01-27
+\.
 
 
 --
 -- Data for Name: events; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.events (id, title, date, category, description) FROM stdin;
+COPY public.events (id, title, date, category, description, "time") FROM stdin;
 \.
 
 
 --
--- Name: events events_category_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: budget budget_id_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.events
-    ADD CONSTRAINT events_category_key UNIQUE (category);
+ALTER TABLE ONLY public.budget
+    ADD CONSTRAINT budget_id_key UNIQUE (id);
 
 
 --

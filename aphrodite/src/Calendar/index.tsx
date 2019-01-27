@@ -30,6 +30,7 @@ import { MomentDictionary } from "./types";
 import { CalendarNavigation } from "./CalendarNavigation";
 import { createHash } from "./factories";
 import { GetBudget } from "../budget/actions";
+import { averageSpend } from "../budget/selectors";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 
@@ -108,10 +109,17 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
   };
 
   render() {
-    const { date, selectedDay, view, currentBudgetDisplay } = this.props;
+    const {
+      date,
+      selectedDay,
+      view,
+      currentBudgetDisplay,
+      budget
+    } = this.props;
     const { eventModal, budgetModal } = this.state;
     const { day, week, month, year } = TimePoint;
     const timeArr = this.getMomentArray();
+    const avg = averageSpend(budget, date);
 
     return (
       <>
@@ -191,6 +199,7 @@ interface MapStateToProps {
   currentMonth: number;
   currentWeek: number;
   currentBudgetDisplay: string;
+  budget: number;
 }
 
 interface MapDispatchToProps {
@@ -212,7 +221,8 @@ export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
     selectedDay: calendar.selectedDay,
     currentMonth: calendar.currentMonth,
     currentWeek: calendar.currentWeek,
-    currentBudgetDisplay: budget.currentBudgetDisplay
+    currentBudgetDisplay: budget.currentBudgetDisplay,
+    budget: budget.currentBudget
   }),
   dispatch => ({
     next: (unitOfTime, timePoint) =>

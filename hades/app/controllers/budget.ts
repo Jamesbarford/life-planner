@@ -43,7 +43,6 @@ export async function getBudgetForMonth(
     `);
     return success<Budget>(res, request.rows[0], "fetch success");
   } catch (err) {
-    console.log(err);
     return failure(res, "failed to fetch budget");
   }
 }
