@@ -11,7 +11,7 @@ import {
 import { Budget } from "./types";
 import { Epic } from "../App/middleware";
 
-export const setBudgetEpic: Epic<SetBudget, SetBudgetResponse> = action$ =>
+const setBudgetEpic: Epic<SetBudget, SetBudgetResponse> = action$ =>
   action$
     .ofType(BudgetActions.SetBudget)
     .switchMap(action =>
@@ -20,10 +20,7 @@ export const setBudgetEpic: Epic<SetBudget, SetBudgetResponse> = action$ =>
       )
     );
 
-export const getBudgetForMonthEpic: Epic<
-  GetBudget,
-  GetBudgetResponse
-> = action$ =>
+const getBudgetForMonthEpic: Epic<GetBudget, GetBudgetResponse> = action$ =>
   action$
     .ofType(BudgetActions.GetBudget)
     .switchMap(action =>

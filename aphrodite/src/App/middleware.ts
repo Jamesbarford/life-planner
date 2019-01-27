@@ -24,17 +24,17 @@ const actionIsObject = (next: NextAction, action: Action) => {
   return next(isPlainObject(action) ? action : Object.assign({}, action));
 };
 
-export const classToObject: Middleware = () => (next: NextAction) => {
+const classToObject: Middleware = () => (next: NextAction) => {
   return (action: Action) => actionIsObject(next, action);
 };
 
 // REDUX LOGGER
 // =============================================================================
-export const logger = createLogger({ collapsed: () => true });
+const logger = createLogger({ collapsed: () => true });
 
 // EPICS
 // =============================================================================
-export interface Epic<
+interface Epic<
   I extends Action = any,
   O extends Action = any,
   S = ApplicationState,
@@ -47,10 +47,8 @@ export interface Epic<
   ): Observable<O>;
 }
 
-export const epicMiddleware = createEpicMiddleware<
-  Action,
-  Action,
-  ApplicationState
->();
+const epicMiddleware = createEpicMiddleware<Action, Action, ApplicationState>();
 const allEpics = [eventEpics, budgetEpics];
-export const rootEpic = combineEpics(...allEpics);
+const rootEpic = combineEpics(...allEpics);
+
+export { rootEpic, epicMiddleware, classToObject, logger, Epic };
