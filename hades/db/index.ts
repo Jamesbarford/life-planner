@@ -1,14 +1,11 @@
-import * as Knex from "knex";
+import { Pool, Client } from "pg";
 
-export const knex = Knex({
-  client: "pg",
-  connection: {
-    host: "127.0.0.1",
-    database: "lifelplanner"
-  },
-  pool: {
-    max: 5,
-    min: 0
-  },
-  acquireConnectionTimeout: 30000
-});
+const PGDATABASE = "lifeplanner";
+const dbConfig = { database: PGDATABASE, max: 10, idleTimeoutMillis: 30000 };
+const connect = async (pgClient: Client) => await pgClient.connect();
+const pool = new Pool(dbConfig);
+const client = new Client(dbConfig);
+
+connect(client);
+
+export { pool, client };

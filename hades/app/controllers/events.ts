@@ -1,37 +1,55 @@
-import * as Express from "express";
+import * as moment from "moment";
+import { Request, Response } from "express";
 import { Event } from "../types";
-import { knex } from "../../db";
+import { client } from "../../db";
+import { success, failure, badRequest } from "../helpers/responseHandlers";
 
-export function createEvent(
-  req: Express.Request,
-  res: Express.Response
-): void | Express.Response {
+export async function createEvent(
+  req: Request,
+  res: Response
+): Promise<Response> {
   const body = req.body as Event;
   const { id, title, date, category, description } = body;
 
   // Validate request
   // ===========================================================================
-  if (id === "") return res.send({ status: 400, body: "invalid event" });
+  if (id === "") return badRequest(res, "Invalid id for event");
 
-  knex
-    .raw(
-      `
-    INSERT INTO events(
-      id,
-      title,
-      date,
-      category,
-      description
-    )
-    VALUES(
+  try {
+    await client.query(`
+      INSERT INTO events(
+        id,
+        title,
+        date,
+        category,
+        description,
+        time
+      )
+      VALUES(
         '${id}',
         '${title}',
-        '${date}',
+        '${moment(date).format("YYYY-MM-DD")}',
         '${category}',
         '${description}',
+        '${moment(date).format("HH:mm:SS")}'
       );
-  `
-    )
-    .then(() => res.send({ status: 200, body: "succesfull creation" }))
-    .catch(err => res.send({ status: 500, body: err }));
+    `);
+    return success(res, body, "succesfully created event");
+  } catch (err) {
+    return failure(res, "failed to create event");
+  }
+}
+
+export async function getEvents(req: Request, res: Response) {
+  try {
+    const month = req.params.month;
+    const request = await client.query(`
+      SELECT * FROM events
+      WHERE
+      EXTRACT (MONTH FROM date) = ${month + 1};
+    `);
+    return success<Array<Event>>(res, request.rows, "fetch success");
+  } catch (err) {
+    return failure(res, "failed to fetch events");
+  }
 }

@@ -112,6 +112,10 @@ $border: 1px solid #dadce0;
     border: none;
   }
 
+  &:focus {
+    background: #ccc;
+  }
+
   .calendar-cell__hour {
     height: 40px;
     @include flexbox;

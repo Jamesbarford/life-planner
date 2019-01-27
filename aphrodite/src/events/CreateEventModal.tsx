@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Moment } from "moment";
 
 // ACTIONS
-import { CreateEventAction } from "./actions";
+import { CreateEvent } from "./actions";
 import { calculate, TimePoint } from "../helpers/dateHelper";
 
 // COMPONENTS
@@ -19,10 +19,10 @@ import {
 import { Input, InputType } from "../components/Input";
 import { Modal } from "../components/Modal";
 import { CustomSelect } from "../components/Select";
+import { WithRipple } from "../components/Ripple";
 
 // TYPES
 import { Event } from "./types";
-import { WithRipple } from "../components/Ripple";
 import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
 
 interface CreateEventState {
@@ -45,7 +45,10 @@ interface OwnProps {
 
 type CreateEventProps = MapDispatchToProps & OwnProps;
 
-class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
+class CreateEventModal extends React.Component<
+  CreateEventProps,
+  CreateEventState
+> {
   private integer = "integer";
   private fractional = "fractional";
 
@@ -101,7 +104,7 @@ class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
       });
     }
 
-    createEvent({ id, title, date });
+    createEvent({ id, title, date, category: "test" });
     close();
   };
 
@@ -202,7 +205,5 @@ interface MapDispatchToProps {
 
 export const CreateEventModalConnected = connect<{}, MapDispatchToProps>(
   null,
-  dispatch => ({
-    createEvent: event => dispatch(new CreateEventAction(event))
-  })
-)(CreateEvent);
+  dispatch => ({ createEvent: event => dispatch(new CreateEvent(event)) })
+)(CreateEventModal);

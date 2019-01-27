@@ -2,14 +2,25 @@ import * as React from "react";
 import { List } from "immutable";
 import { Moment } from "moment";
 import { CalendarShared } from "../types";
+import {
+  selectEventsToList,
+  selectEvent,
+  matchDayToHash
+} from "../../events/selectors";
+import { EventMap } from "../../events/types";
+import { connect } from "react-redux";
+import { ApplicationState } from "../../App/types";
+import { Entry } from "../../components/Entry";
 
-interface HourViewProps extends CalendarShared {
+interface HourViewOwnProps extends CalendarShared {
   hours: List<Moment>;
 }
 
-export class HourView extends React.Component<HourViewProps> {
+type HourViewProps = HourViewOwnProps & MapStateToProps;
+
+class HourView extends React.Component<HourViewProps> {
   render() {
-    const { hours, select, selectedDay } = this.props;
+    const { hours, select, selectedDay, events } = this.props;
     return (
       <>
         <div className="hour-header">
@@ -28,6 +39,12 @@ export class HourView extends React.Component<HourViewProps> {
           >
             <div className="calendar-cell__hour">
               <span className="cell-hour">{hour.format("H a")}</span>
+              {selectEvent(hour.toISOString(), events) && (
+                <Entry
+                  key={hour.toISOString()}
+                  event={selectEvent(hour.toISOString(), events)}
+                />
+              )}
               <hr className="hour-line" />
             </div>
           </button>
@@ -36,3 +53,11 @@ export class HourView extends React.Component<HourViewProps> {
     );
   }
 }
+
+interface MapStateToProps {
+  events: EventMap;
+}
+
+export const HourViewConnected = connect<MapStateToProps>(
+  ({ entries: { events } }: ApplicationState) => ({ events })
+)(HourView);

@@ -33,7 +33,7 @@ interface DayProps extends CalendarShared, MapStateToProps {
   day: Moment;
 }
 
-export const Day: React.FunctionComponent<DayProps> = ({
+const Day: React.FunctionComponent<DayProps> = ({
   select,
   selectedDay,
   day,

@@ -2,7 +2,7 @@ import { Moment } from "moment";
 import { Map } from "immutable";
 import { TimePointType } from "../helpers/dateHelper";
 import { MomentDictionary } from "../Calendar/types";
-import { Category, Event } from "../events/types";
+import { Event } from "../events/types";
 
 export interface ApplicationState {
   calendar: {
@@ -17,10 +17,11 @@ export interface ApplicationState {
   };
   entries: {
     events: Map<string, Event>;
-    category: Map<string, Category>;
+    category: Map<string, string>;
   };
   budget: {
     currentBudget: number;
     currentBudgetDisplay: string;
+    month: number;
   };
 }
