@@ -1,4 +1,5 @@
 import * as React from "react";
+import { debounce } from "lodash";
 import { classNames } from "../../helpers/util";
 import { ButtonStyle } from "../Button";
 
@@ -66,13 +67,6 @@ export class WithRipple extends React.Component<
     this.setState({ animate: true, animateStyle });
   };
 
-  handleMouseUp = () => {
-    const { persistFocus } = this.props;
-    if (persistFocus === true) return;
-
-    return setTimeout(() => this.resetRipple(), 300);
-  };
-
   resetRipple = () => this.setState({ animate: false, animateStyle: {} });
 
   render() {
@@ -92,7 +86,7 @@ export class WithRipple extends React.Component<
           animateStyle,
           resetRipple: this.resetRipple,
           handleMouseDown: e => this.handleMouseDown(e),
-          handleMouseUp: this.handleMouseUp
+          handleMouseUp: debounce(this.resetRipple, 300)
         })}
         {animate && (
           <span

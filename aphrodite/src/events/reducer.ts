@@ -1,3 +1,4 @@
+import * as moment from "moment";
 import { Map } from "immutable";
 import { EventActionTypes, EventActions } from "./actions";
 import { EventMap, CategoryMap, Event } from "./types";
@@ -30,12 +31,13 @@ export function eventsReducer(
       const response = createEventMapFromArray(eventBase);
       return {
         ...state,
-        events: state.events.merge(...response)
+        events:
+          response.length > 0 ? state.events.merge(...response) : state.events
       };
 
     case EventActions.CreateEventResponse:
       const newEvent = createHashEvent(
-        action.response.body.date,
+        moment(action.response.body.date),
         action.response.body
       );
       return {

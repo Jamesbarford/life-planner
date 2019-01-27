@@ -53,7 +53,9 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
     } = this.props;
 
     next(1, view);
-    getEvents(currentMonth + 1);
+    if (view === TimePoint.month) {
+      getEvents(currentMonth + 1);
+    }
     calculateMomentArray(view);
   };
 
@@ -67,7 +69,9 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
     } = this.props;
 
     previous(1, view);
-    getEvents(currentMonth - 1);
+    if (view === TimePoint.month) {
+      getEvents(currentMonth - 1);
+    }
     calculateMomentArray(view);
   };
 

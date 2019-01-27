@@ -14,7 +14,7 @@ const fetchEventsEpic: Epic<GetEvents, any> = action$ =>
   action$
     .ofType(EventActions.GetEvents)
     .switchMap(action =>
-      getRequest(`${Api}/events/${action.month}`).then(
+      getRequest<EventResponseBody>(`${Api}/events/${action.month}`).then(
         response => new GetEventsResponse(response)
       )
     );

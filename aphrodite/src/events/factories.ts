@@ -11,6 +11,7 @@ export const createHashEvent = (
 export function createEventMapFromArray(
   events: Array<EventResponseBody>
 ): Array<Map<string, Event>> {
+  if (events.length === 0) return;
   const eventsFormatted = events
     .map(event => {
       const time = moment(event.time, "HH:mm:ss");
