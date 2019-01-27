@@ -19,10 +19,10 @@ import {
 import { Input, InputType } from "../components/Input";
 import { Modal } from "../components/Modal";
 import { CustomSelect } from "../components/Select";
+import { WithRipple } from "../components/Ripple";
 
 // TYPES
 import { Event } from "./types";
-import { WithRipple } from "../components/Ripple";
 import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
 
 interface CreateEventState {

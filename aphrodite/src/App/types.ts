@@ -22,5 +22,6 @@ export interface ApplicationState {
   budget: {
     currentBudget: number;
     currentBudgetDisplay: string;
+    month: number;
   };
 }

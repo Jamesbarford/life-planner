@@ -16,7 +16,7 @@ export async function createEvent(
   if (id === "") return badRequest(res, "Invalid id for event");
 
   try {
-    const request = await client.query(`
+    await client.query(`
       INSERT INTO events(
         id,
         title,

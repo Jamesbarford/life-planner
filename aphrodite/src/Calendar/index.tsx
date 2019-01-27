@@ -18,6 +18,7 @@ import { GetEvents } from "../events/actions";
 
 // COMPONENTS
 import { CreateEventModalConnected } from "../events/CreateEventModal";
+import { BudgetModalConnected } from "../budget/BudgetModal";
 import { DayNames } from "./view/Day";
 import { HourViewConnected } from "./view/HourView";
 import { MonthView } from "./view/MonthView";
@@ -28,18 +29,25 @@ import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
 import { CalendarNavigation } from "./CalendarNavigation";
 import { createHash } from "./factories";
+import { GetBudget } from "../budget/actions";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 
 interface CalendarState {
-  modalOpen: boolean;
+  eventModal: boolean;
+  budgetModal: boolean;
+  [key: string]: boolean;
 }
 
 export class Calendar extends React.Component<CalendarProps, CalendarState> {
-  state = { modalOpen: false };
+  private budgetModal: string = "budgetModal";
+  private eventModal: string = "eventModal";
+
+  state: CalendarState = { eventModal: false, budgetModal: false };
 
   componentDidMount() {
-    const { getEvents, today } = this.props;
+    const { getEvents, getBudget, today } = this.props;
+    getBudget(today.month());
     getEvents(today.month());
   }
 
@@ -49,11 +57,13 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
       view,
       calculateMomentArray,
       getEvents,
-      currentMonth
+      currentMonth,
+      getBudget
     } = this.props;
 
     next(1, view);
     if (view === TimePoint.month) {
+      getBudget(currentMonth + 1);
       getEvents(currentMonth + 1);
     }
     calculateMomentArray(view);
@@ -65,11 +75,13 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
       view,
       calculateMomentArray,
       getEvents,
-      currentMonth
+      currentMonth,
+      getBudget
     } = this.props;
 
     previous(1, view);
     if (view === TimePoint.month) {
+      getBudget(currentMonth - 1);
       getEvents(currentMonth - 1);
     }
     calculateMomentArray(view);
@@ -81,9 +93,11 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
     changeView(timePoint);
   };
 
-  select = (date: Moment) => {
-    this.props.selectDay(date);
-    this.setState({ modalOpen: true });
+  select = (key: string, date?: Moment) => {
+    if (key === this.eventModal) {
+      this.props.selectDay(date);
+    }
+    this.setState({ [key]: !this.state[key] });
   };
 
   getMomentArray = () => {
@@ -95,7 +109,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 
   render() {
     const { date, selectedDay, view, currentBudgetDisplay } = this.props;
-    const { modalOpen } = this.state;
+    const { eventModal, budgetModal } = this.state;
     const { day, week, month, year } = TimePoint;
     const timeArr = this.getMomentArray();
 
@@ -108,6 +122,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
           year={year}
           view={view}
           date={date}
+          openBudgetModal={() => this.select(this.budgetModal)}
           currentBudgetDisplay={currentBudgetDisplay}
           changeView={this.changeView}
           previous={this.previous}
@@ -120,7 +135,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
               <MonthView
                 weeks={timeArr}
                 selectedDay={selectedDay}
-                select={this.select}
+                select={() => this.select(this.eventModal, selectedDay)}
               />
             </>
           )}
@@ -132,7 +147,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
                   key={day.toString()}
                   week={day}
                   selectedDay={selectedDay}
-                  select={this.select}
+                  select={() => this.select(this.eventModal, selectedDay)}
                 />
               ))}
             </>
@@ -143,16 +158,23 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
               <HourViewConnected
                 hours={timeArr}
                 selectedDay={date}
-                select={this.select}
+                select={() => this.select(this.eventModal, selectedDay)}
               />
             </div>
           )}
         </div>
-        {modalOpen && (
+        {eventModal && (
           <CreateEventModalConnected
             selectedDay={selectedDay}
-            modalOpen={modalOpen}
-            close={() => this.setState({ modalOpen: false })}
+            modalOpen={eventModal}
+            close={() => this.setState({ eventModal: false })}
+          />
+        )}
+        {budgetModal && (
+          <BudgetModalConnected
+            date={date}
+            modalOpen={budgetModal}
+            close={() => this.setState({ budgetModal: false })}
           />
         )}
       </>
@@ -178,6 +200,7 @@ interface MapDispatchToProps {
   changeView: (newView: TimePointType) => void;
   calculateMomentArray: (t: TimePointType) => void;
   getEvents: (month: number) => void;
+  getBudget: (month: number) => void;
 }
 
 export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
@@ -199,6 +222,7 @@ export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
       dispatch(new CalendarPrevious(unitOfTime, timePoint)),
     changeView: newView => dispatch(new ChangeView(newView)),
     calculateMomentArray: t => dispatch(new CalculateMomentArray(t)),
-    getEvents: month => dispatch(new GetEvents(month))
+    getEvents: month => dispatch(new GetEvents(month)),
+    getBudget: month => dispatch(new GetBudget(month))
   })
 )(Calendar);

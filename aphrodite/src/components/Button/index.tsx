@@ -3,7 +3,7 @@ import { WithRipple } from "../Ripple";
 import { classNames } from "../../helpers/util";
 
 interface ButtonProps {
-  text: string;
+  text: React.ReactNode;
   padding: ButtonPadding;
   buttonStyle: ButtonStyle;
   type?: ButtonType;

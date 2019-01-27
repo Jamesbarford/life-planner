@@ -23,6 +23,7 @@ interface CalendarNavigationProps {
   view: TimePointType;
   date: Moment;
   currentBudgetDisplay: string;
+  openBudgetModal: () => void;
   changeView: (timePoint: TimePointType) => void;
   previous: () => void;
   next: () => void;
@@ -38,6 +39,7 @@ export const CalendarNavigation: React.FunctionComponent<
   view,
   date,
   currentBudgetDisplay,
+  openBudgetModal,
   changeView,
   previous,
   next
@@ -147,6 +149,14 @@ export const CalendarNavigation: React.FunctionComponent<
       <h2>{date.format("ddd Do MMMM YYYY")}</h2>
     </div>
     <div className="calendar-navigation__item">
+      <ToolTip helper={`set budget`}>
+        <Icon
+          hoverBackground={BackgroundColor.lightGray}
+          btnStyle={CircularButton}
+          onClick={openBudgetModal}
+          iconName="settings"
+        />
+      </ToolTip>
       <h2>Budget: &nbsp;</h2> <h3>{currentBudgetDisplay}</h3>
     </div>
     <div className="calendar-navigation__item">

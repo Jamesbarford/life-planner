@@ -1,4 +1,4 @@
-import { combineEpics, Epic } from "redux-observable";
+import { combineEpics } from "redux-observable";
 import "rxjs/add/operator/switchMap";
 import {
   EventActions,
@@ -9,17 +9,18 @@ import {
 } from "./actions";
 import { getRequest, Api, postRequest } from "../helpers/api";
 import { Event, EventResponseBody } from "./types";
+import { Epic } from "../App/middleware";
 
-const fetchEventsEpic: Epic<GetEvents, any> = action$ =>
+const fetchEventsEpic: Epic<GetEvents, GetEventsResponse> = action$ =>
   action$
     .ofType(EventActions.GetEvents)
     .switchMap(action =>
-      getRequest<EventResponseBody>(`${Api}/events/${action.month}`).then(
-        response => new GetEventsResponse(response)
-      )
+      getRequest<Array<EventResponseBody>>(
+        `${Api}/events/${action.month}`
+      ).then(response => new GetEventsResponse(response))
     );
 
-const postEventEpic: Epic<CreateEvent, any> = action$ =>
+const postEventEpic: Epic<CreateEvent, CreateEventResponse> = action$ =>
   action$
     .ofType(EventActions.CreateEvent)
     .switchMap(action =>

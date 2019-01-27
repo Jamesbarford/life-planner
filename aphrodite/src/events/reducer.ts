@@ -27,15 +27,16 @@ export function eventsReducer(
       return state;
 
     case EventActions.GetEventsResponse:
+      if (!action.response.success) return state;
       const eventBase = action.response.body;
       const response = createEventMapFromArray(eventBase);
       return {
         ...state,
-        events:
-          response.length > 0 ? state.events.merge(...response) : state.events
+        events: state.events.merge(...response)
       };
 
     case EventActions.CreateEventResponse:
+      if (!action.response.success) return state;
       const newEvent = createHashEvent(
         moment(action.response.body.date),
         action.response.body

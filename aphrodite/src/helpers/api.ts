@@ -5,9 +5,7 @@ export interface BaseResponse<T> {
   success: boolean;
 }
 
-export async function getRequest<T>(
-  url: string
-): Promise<BaseResponse<Array<T>>> {
+export async function getRequest<T>(url: string): Promise<BaseResponse<T>> {
   const getRequest = await fetch(url, { method: "GET", mode: "cors" });
   const response = await getRequest.json();
   return response;

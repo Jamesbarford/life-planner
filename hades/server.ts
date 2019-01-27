@@ -4,7 +4,7 @@ import * as bunyanRequest from "bunyan-request";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import { AddressInfo } from "net";
-import { router } from "./app/routes/events";
+import { router } from "./app/routes/routes";
 import { pool } from "./db";
 
 const app = express();

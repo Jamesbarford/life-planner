@@ -1,12 +1,36 @@
 import { ActionBase } from "../types/global";
+import { Budget } from "./types";
+import { BaseResponse } from "../helpers/api";
 
 export enum BudgetActions {
-  SetBudget = "Budget.SetBudget"
+  SetBudget = "Budget.SetBudget",
+  SetBudgetResponse = "Budget.SetBudgetResponse",
+  GetBudget = "Budget.GetBudget",
+  GetBudgetResponse = "Budget.GetBudgetResponse"
 }
 
 export class SetBudget implements ActionBase {
   readonly type = BudgetActions.SetBudget;
-  constructor(public amount: number) {}
+  constructor(public budget: Budget) {}
 }
 
-export type BudgetActionType = SetBudget;
+export class SetBudgetResponse implements ActionBase {
+  readonly type = BudgetActions.SetBudgetResponse;
+  constructor(public response: BaseResponse<Budget>) {}
+}
+
+export class GetBudget implements ActionBase {
+  readonly type = BudgetActions.GetBudget;
+  constructor(public month: number) {}
+}
+
+export class GetBudgetResponse implements ActionBase {
+  readonly type = BudgetActions.GetBudgetResponse;
+  constructor(public response: BaseResponse<Budget>) {}
+}
+
+export type BudgetActionTypes =
+  | SetBudget
+  | SetBudgetResponse
+  | GetBudget
+  | GetBudgetResponse;
