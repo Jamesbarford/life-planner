@@ -1,10 +1,22 @@
-export async function getRequest<T>(url: string): Promise<T> {
-  const response = await fetch(url, { method: "GET", mode: "cors" });
-  const data: T = await response.json();
-  return data;
+export interface BaseResponse<T> {
+  statusCode: number;
+  body: T;
+  response: string;
+  success: boolean;
 }
 
-export async function postRequest<U>(url: string, data: U): Promise<U> {
+export async function getRequest(
+  url: string
+): Promise<BaseResponse<Array<any>>> {
+  const getRequest = await fetch(url, { method: "GET", mode: "cors" });
+  const response = await getRequest.json();
+  return response;
+}
+
+export async function postRequest<U, R>(
+  url: string,
+  data: U
+): Promise<BaseResponse<R>> {
   const postRequest = await fetch(url, {
     method: "POST",
     mode: "cors",
@@ -15,7 +27,7 @@ export async function postRequest<U>(url: string, data: U): Promise<U> {
       "Content-Type": "application/json"
     }
   });
-  const response: U = await postRequest.json();
+  const response = await postRequest.json();
   return response;
 }
 

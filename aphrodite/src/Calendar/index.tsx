@@ -39,18 +39,35 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
   state = { modalOpen: false };
 
   componentDidMount() {
-    this.props.getEvents();
+    const { getEvents, today } = this.props;
+    getEvents(today.month());
   }
 
   next = () => {
-    const { next, view, calculateMomentArray } = this.props;
+    const {
+      next,
+      view,
+      calculateMomentArray,
+      getEvents,
+      currentMonth
+    } = this.props;
+
     next(1, view);
+    getEvents(currentMonth + 1);
     calculateMomentArray(view);
   };
 
   previous = () => {
-    const { previous, view, calculateMomentArray } = this.props;
+    const {
+      previous,
+      view,
+      calculateMomentArray,
+      getEvents,
+      currentMonth
+    } = this.props;
+
     previous(1, view);
+    getEvents(currentMonth - 1);
     calculateMomentArray(view);
   };
 
@@ -156,7 +173,7 @@ interface MapDispatchToProps {
   previous: (unitOfTime: number, timePoint: TimePointType) => void;
   changeView: (newView: TimePointType) => void;
   calculateMomentArray: (t: TimePointType) => void;
-  getEvents: () => void;
+  getEvents: (month: number) => void;
 }
 
 export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
@@ -178,6 +195,6 @@ export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
       dispatch(new CalendarPrevious(unitOfTime, timePoint)),
     changeView: newView => dispatch(new ChangeView(newView)),
     calculateMomentArray: t => dispatch(new CalculateMomentArray(t)),
-    getEvents: () => dispatch(new GetEvents())
+    getEvents: month => dispatch(new GetEvents(month))
   })
 )(Calendar);

@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { Moment } from "moment";
 
 // ACTIONS
-import { CreateEventAction } from "./actions";
+import { CreateEvent } from "./actions";
 import { calculate, TimePoint } from "../helpers/dateHelper";
 
 // COMPONENTS
@@ -45,7 +45,10 @@ interface OwnProps {
 
 type CreateEventProps = MapDispatchToProps & OwnProps;
 
-class CreateEvent extends React.Component<CreateEventProps, CreateEventState> {
+class CreateEventModal extends React.Component<
+  CreateEventProps,
+  CreateEventState
+> {
   private integer = "integer";
   private fractional = "fractional";
 
@@ -202,7 +205,5 @@ interface MapDispatchToProps {
 
 export const CreateEventModalConnected = connect<{}, MapDispatchToProps>(
   null,
-  dispatch => ({
-    createEvent: event => dispatch(new CreateEventAction(event))
-  })
-)(CreateEvent);
+  dispatch => ({ createEvent: event => dispatch(new CreateEvent(event)) })
+)(CreateEventModal);

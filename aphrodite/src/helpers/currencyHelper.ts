@@ -45,7 +45,7 @@ export function currencyToNumber(amountStr: string): number {
  * @returns number
  * @example
  * mergeAmount(2000, 20);
- * => 2000.00;
+ * => 2000.20;
  */
 export const mergeAmount = <T, U>(integer: T, fractional: U): number =>
   parseFloat(`${integer}.${fractional}`);

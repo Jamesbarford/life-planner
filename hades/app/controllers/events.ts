@@ -1,3 +1,4 @@
+import * as moment from "moment";
 import { Request, Response } from "express";
 import { Event } from "../types";
 import { client } from "../../db";
@@ -21,14 +22,16 @@ export async function createEvent(
         title,
         date,
         category,
-        description
+        description,
+        time
       )
       VALUES(
         '${id}',
         '${title}',
-        '${date}',
+        '${moment(date).format("YYYY-MM-DD")}',
         '${category}',
-        '${description}'
+        '${description}',
+        '${moment(date).format("HH:mm:SS")}'
       );
     `);
     return success(res, body, "succesfully created event");
@@ -39,7 +42,12 @@ export async function createEvent(
 
 export async function getEvents(req: Request, res: Response) {
   try {
-    const request = await client.query(`SELECT * FROM events`);
+    const month = req.params.month;
+    const request = await client.query(`
+      SELECT * FROM events
+      WHERE
+      EXTRACT (MONTH FROM date) = ${month + 1};
+    `);
     return success<Array<Event>>(res, request.rows, "fetch success");
   } catch (err) {
     return failure(res, "failed to fetch events");

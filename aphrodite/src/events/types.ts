@@ -14,7 +14,14 @@ export interface Expenditure extends EventBase {
   category: string;
 }
 
-// export interface Category extends EventBase {}
+export interface EventResponseBody {
+  category: string;
+  date: Moment;
+  description: string;
+  id: string;
+  time: string;
+  title: string;
+}
 
 export interface Event extends EventBase {
   date: Moment;

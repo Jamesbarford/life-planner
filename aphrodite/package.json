@@ -23,6 +23,9 @@
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
+    "redux-observable": "^1.0.0",
+    "rxjs": "^6.3.3",
+    "rxjs-compat": "^6.3.3",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
