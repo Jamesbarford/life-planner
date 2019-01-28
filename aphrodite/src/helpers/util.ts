@@ -1,3 +1,5 @@
+import { ApplicationState } from "../App/types";
+
 /**
  *
  * @param string - string

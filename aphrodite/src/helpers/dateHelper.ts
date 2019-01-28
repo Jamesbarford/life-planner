@@ -1,12 +1,9 @@
 import { Moment } from "moment";
 import { cloneDeep } from "lodash";
-import { List } from "immutable";
-import { removeWhiteSpace } from "./util";
 
 // TYPES
 import { StringIndexSignature } from "../types/global";
 import { CalendarState } from "../Calendar/reducer";
-import { MomentDictionary } from "../Calendar/types";
 
 export enum TimePoint {
   d = "d",

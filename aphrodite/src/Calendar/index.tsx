@@ -111,6 +111,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
   render() {
     const {
       date,
+      today,
       selectedDay,
       view,
       currentBudgetDisplay,

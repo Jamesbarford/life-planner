@@ -3,6 +3,7 @@ import { Map } from "immutable";
 import { TimePointType } from "../helpers/dateHelper";
 import { MomentDictionary } from "../Calendar/types";
 import { Event } from "../events/types";
+import { Budget } from "../budget/types";
 
 export interface ApplicationState {
   calendar: {
@@ -23,5 +24,6 @@ export interface ApplicationState {
     currentBudget: number;
     currentBudgetDisplay: string;
     month: number;
+    monthlyBudget: Map<string, Budget>;
   };
 }

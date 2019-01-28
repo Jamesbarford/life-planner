@@ -25,10 +25,12 @@ const WebpackConfig = {
   },
   // To split chunks
   optimization: {
-    runtimeChunk: "single",
+    runtimeChunk: true,
     splitChunks: {
+      chunks: "all",
+      maxSize: 1000000,
       automaticNameDelimiter: "~",
-      name: true,
+      name: false,
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,

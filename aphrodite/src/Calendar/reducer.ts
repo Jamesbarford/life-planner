@@ -16,6 +16,7 @@ import { CalendarActions, CalendarActionTypes } from "./actions";
 
 // TYPES
 import { MomentDictionary } from "./types";
+import { UpdateState } from "../types/global";
 
 const newDate = moment().startOf(TimePoint.day);
 const hash = createHash(newDate, TimePoint.month);
@@ -39,47 +40,48 @@ export function calendarReducer(
   state = new CalendarState(),
   action: CalendarActionTypes
 ) {
+  const updateState: UpdateState<CalendarState> = newState => ({
+    ...state,
+    ...newState
+  });
+
   switch (action.type) {
     case CalendarActions.CalendarNext: {
       const date = alterTime(state.date, 1, action.timePoint);
-      return {
-        ...state,
+      return updateState({
         date,
         dayOfYear: date.dayOfYear(),
         currentMonth: date.month(),
         currentWeek: date.week()
-      };
+      });
     }
 
     case CalendarActions.CalendarPrevious: {
       const date = alterTime(state.date, -1, action.timePoint);
-      return {
-        ...state,
+      return updateState({
         date,
         dayOfYear: date.dayOfYear(),
         currentMonth: date.month(),
         currentWeek: date.week()
-      };
+      });
     }
 
     case CalendarActions.CalendarChangeView: {
       const momentList = createMomentList(state, action.newView);
-      return {
-        ...state,
+      return updateState({
         view: action.newView,
         momentList: state.momentList.merge(momentList)
-      };
+      });
     }
     case CalendarActions.CalendarSelectDay:
-      return {
-        ...state,
+      return updateState({
         dayOfYear: action.selectedDay.dayOfYear(),
         selectedDay: action.selectedDay
-      };
+      });
 
     case CalendarActions.CalculateMomentArray:
       const momentList = createMomentList(state, action.timePoint);
-      return { ...state, momentList: state.momentList.merge(momentList) };
+      return updateState({ momentList: state.momentList.merge(momentList) });
 
     default:
       return state;
