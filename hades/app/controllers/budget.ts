@@ -41,6 +41,9 @@ export async function getBudgetForMonth(
       WHERE
       EXTRACT (MONTH FROM month) = ${month + 1};
     `);
+    if (request.rows.length === 0) {
+      return failure(res, "no budget set for month");
+    }
     return success<Budget>(res, request.rows[0], "fetch success");
   } catch (err) {
     return failure(res, "failed to fetch budget");

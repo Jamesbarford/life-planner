@@ -25,5 +25,6 @@ export interface ApplicationState {
     currentBudgetDisplay: string;
     month: number;
     monthlyBudget: Map<string, Budget>;
+    budgetPerDay: Map<string, number>;
   };
 }

@@ -1,11 +1,11 @@
+import * as moment from "moment";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Moment } from "moment";
 
 // HELPERS
-import { TimePoint, TimePointType } from "../helpers/dateHelper";
+import { TimePoint, TimePointType, alterTime } from "../helpers/dateHelper";
 import { selectMomentFromMap } from "./selectors";
-import { averageSpend } from "../budget/selectors";
 import { createHash } from "./factories";
 
 // ACTIONS
@@ -64,8 +64,13 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 
     next(1, view);
     if (view === TimePoint.month) {
-      getBudget(currentMonth + 1);
-      getEvents(currentMonth + 1);
+      const dateToGet = alterTime(
+        moment().month(currentMonth),
+        1,
+        TimePoint.month
+      ).month();
+      getBudget(dateToGet);
+      getEvents(dateToGet);
     }
     calculateMomentArray(view);
   };
@@ -82,8 +87,13 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
 
     previous(1, view);
     if (view === TimePoint.month) {
-      getBudget(currentMonth - 1);
-      getEvents(currentMonth - 1);
+      const dateToGet = alterTime(
+        moment().month(currentMonth),
+        -1,
+        TimePoint.month
+      ).month();
+      getBudget(dateToGet);
+      getEvents(dateToGet);
     }
     calculateMomentArray(view);
   };
@@ -95,7 +105,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
   };
 
   select = (key: string, date?: Moment) => {
-    if (key === this.eventModal) {
+    if (key === "eventModal") {
       this.props.selectDay(date);
     }
     this.setState({ [key]: !this.state[key] });
@@ -120,7 +130,6 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
     const { eventModal, budgetModal } = this.state;
     const { day, week, month, year } = TimePoint;
     const timeArr = this.getMomentArray();
-    const avg = averageSpend(budget, date);
 
     return (
       <>
@@ -144,7 +153,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
               <MonthView
                 weeks={timeArr}
                 selectedDay={selectedDay}
-                select={() => this.select(this.eventModal, selectedDay)}
+                select={this.select}
               />
             </>
           )}
@@ -156,7 +165,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
                   key={day.toString()}
                   week={day}
                   selectedDay={selectedDay}
-                  select={() => this.select(this.eventModal, selectedDay)}
+                  select={this.select}
                 />
               ))}
             </>
@@ -167,7 +176,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
               <HourViewConnected
                 hours={timeArr}
                 selectedDay={date}
-                select={() => this.select(this.eventModal, selectedDay)}
+                select={this.select}
               />
             </div>
           )}

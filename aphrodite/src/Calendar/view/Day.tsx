@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as moment from "moment";
+import { Map } from "immutable";
 import { Moment } from "moment";
 import { connect } from "react-redux";
 
@@ -37,19 +38,21 @@ const Day: React.FunctionComponent<DayProps> = ({
   select,
   selectedDay,
   day,
-  events
+  events,
+  budgetPerDay
 }): JSX.Element => {
   const selected = selectedDay.toISOString() === day.toISOString();
   const eventList = selectEventsToList(day, events);
 
   return (
-    <button className="calendar-cell" onClick={() => select(day)}>
+    <button className="calendar-cell" onClick={() => select("eventModal", day)}>
       <div className="calendar-cell__inner">
         <span
           className={classNames([`${selected ? "today" : ""}`, "cell-date"])}
         >
           {day.format("D")}
         </span>
+        <span>{budgetPerDay.get(day.toISOString())}</span>
       </div>
       {eventList.map(e => (
         <Entry key={e.id} event={e} />
@@ -60,8 +63,12 @@ const Day: React.FunctionComponent<DayProps> = ({
 
 interface MapStateToProps {
   events: EventMap;
+  budgetPerDay: Map<string, number>;
 }
 
 export const DayConnected = connect<MapStateToProps>(
-  ({ entries: { events } }: ApplicationState) => ({ events })
+  ({ entries: { events }, budget: { budgetPerDay } }: ApplicationState) => ({
+    events,
+    budgetPerDay
+  })
 )(Day);

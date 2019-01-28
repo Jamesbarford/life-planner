@@ -4,9 +4,7 @@ import { List } from "immutable";
 import { TimePoint } from "../helpers/dateHelper";
 import { Event, EventMap } from "./types";
 
-export function selectEvent(hash: string, events: EventMap) {
-  return events.get(hash);
-}
+export const selectEvent = (hash: string, events: EventMap) => events.get(hash);
 
 export function matchDayToHash(hash: string): string {
   return moment(hash)

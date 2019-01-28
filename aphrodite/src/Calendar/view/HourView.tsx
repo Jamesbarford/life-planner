@@ -35,7 +35,7 @@ class HourView extends React.Component<HourViewProps> {
           <button
             key={hour.toISOString()}
             className="calendar-cell hour"
-            onClick={() => select(hour)}
+            onClick={() => select("eventModal", hour)}
           >
             <div className="calendar-cell__hour">
               <span className="cell-hour">{hour.format("H a")}</span>

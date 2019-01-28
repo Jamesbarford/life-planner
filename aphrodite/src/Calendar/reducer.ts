@@ -73,6 +73,7 @@ export function calendarReducer(
         momentList: state.momentList.merge(momentList)
       });
     }
+
     case CalendarActions.CalendarSelectDay:
       return updateState({
         dayOfYear: action.selectedDay.dayOfYear(),
