@@ -5,9 +5,12 @@ import { Map } from "immutable";
 import { connect } from "react-redux";
 import { Moment } from "moment";
 
+// HELPERS
+import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
+import { calculate, TimePoint } from "../helpers/dateHelper";
+
 // ACTIONS
 import { CreateEvent } from "./actions";
-import { calculate, TimePoint } from "../helpers/dateHelper";
 
 // COMPONENTS
 import {
@@ -23,7 +26,6 @@ import { WithRipple } from "../components/Ripple";
 
 // TYPES
 import { Event } from "./types";
-import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
 
 interface CreateEventState {
   id: string;

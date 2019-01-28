@@ -2,6 +2,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Moment } from "moment";
 
+// HELPERS
+import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
+
 // ACTIONS
 import { SetBudget } from "./actions";
 
@@ -14,11 +17,9 @@ import {
 } from "../components/Button";
 import { Input, InputType } from "../components/Input";
 import { Modal } from "../components/Modal";
-import { CustomSelect } from "../components/Select";
-import { WithRipple } from "../components/Ripple";
-import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
+
+// TYPES
 import { Budget } from "./types";
-import uuid = require("uuid");
 
 interface BudgetModalOwnProps {
   modalOpen: boolean;
@@ -45,7 +46,7 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
 
   state = { integer: "", fractional: "", inputWidth: "15.5px" };
 
-  calculateInputWidth = (str?: string) => {
+  calculateInputWidth = (str: string) => {
     const MULTIPLIER = 15.5;
     const width = str.length * MULTIPLIER + "px";
     this.setState({ inputWidth: width });
@@ -90,6 +91,7 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
               inputType={InputType.text}
               value={integer}
               placeholder="0"
+              pattern="\d*"
             />
             .
             <Input
@@ -98,6 +100,7 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
               inputType={InputType.text}
               value={fractional}
               placeholder="00"
+              pattern="\d*"
             />
           </div>
           <div className="horizonal-wrapper justify-end">
@@ -122,7 +125,5 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
 
 export const BudgetModalConnected = connect<{}, MapDispatchToProps, {}>(
   null,
-  dispatch => ({
-    setBudget: budget => dispatch(new SetBudget(budget))
-  })
+  dispatch => ({ setBudget: budget => dispatch(new SetBudget(budget)) })
 )(BudgetModal);

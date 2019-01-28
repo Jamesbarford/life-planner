@@ -11,27 +11,27 @@ export enum CalendarActions {
 }
 
 export class CalendarNext implements ActionBase {
-  readonly type = CalendarActions.CalendarNext;
+  public readonly type = CalendarActions.CalendarNext;
   constructor(public unitOfTime: number, public timePoint: TimePointType) {}
 }
 
 export class CalendarPrevious implements ActionBase {
-  readonly type = CalendarActions.CalendarPrevious;
+  public readonly type = CalendarActions.CalendarPrevious;
   constructor(public unitOfTime: number, public timePoint: TimePointType) {}
 }
 
 export class ChangeView implements ActionBase {
-  readonly type = CalendarActions.CalendarChangeView;
+  public readonly type = CalendarActions.CalendarChangeView;
   constructor(public newView: TimePointType) {}
 }
 
 export class SelectDay implements ActionBase {
-  readonly type = CalendarActions.CalendarSelectDay;
+  public readonly type = CalendarActions.CalendarSelectDay;
   constructor(public selectedDay: Moment) {}
 }
 
 export class CalculateMomentArray implements ActionBase {
-  readonly type = CalendarActions.CalculateMomentArray;
+  public readonly type = CalendarActions.CalculateMomentArray;
   constructor(public timePoint: TimePointType) {}
 }
 

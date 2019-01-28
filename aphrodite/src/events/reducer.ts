@@ -1,7 +1,7 @@
 import * as moment from "moment";
 import { Map } from "immutable";
 import { EventActionTypes, EventActions } from "./actions";
-import { EventMap, CategoryMap, Event } from "./types";
+import { EventMap, CategoryMap } from "./types";
 import { createEventMapFromArray, createHashEvent } from "./factories";
 
 export class EventsState {

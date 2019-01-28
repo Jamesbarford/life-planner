@@ -10,22 +10,22 @@ export enum BudgetActions {
 }
 
 export class SetBudget implements ActionBase {
-  readonly type = BudgetActions.SetBudget;
+  public readonly type = BudgetActions.SetBudget;
   constructor(public budget: Budget) {}
 }
 
 export class SetBudgetResponse implements ActionBase {
-  readonly type = BudgetActions.SetBudgetResponse;
+  public readonly type = BudgetActions.SetBudgetResponse;
   constructor(public response: BaseResponse<Budget>) {}
 }
 
 export class GetBudget implements ActionBase {
-  readonly type = BudgetActions.GetBudget;
+  public readonly type = BudgetActions.GetBudget;
   constructor(public month: number) {}
 }
 
 export class GetBudgetResponse implements ActionBase {
-  readonly type = BudgetActions.GetBudgetResponse;
+  public readonly type = BudgetActions.GetBudgetResponse;
   constructor(public response: BaseResponse<Budget>) {}
 }
 

@@ -5,6 +5,8 @@ import { Moment } from "moment";
 // HELPERS
 import { TimePoint, TimePointType } from "../helpers/dateHelper";
 import { selectMomentFromMap } from "./selectors";
+import { averageSpend } from "../budget/selectors";
+import { createHash } from "./factories";
 
 // ACTIONS
 import {
@@ -15,6 +17,7 @@ import {
   SelectDay
 } from "./actions";
 import { GetEvents } from "../events/actions";
+import { GetBudget } from "../budget/actions";
 
 // COMPONENTS
 import { CreateEventModalConnected } from "../events/CreateEventModal";
@@ -23,14 +26,11 @@ import { DayNames } from "./view/Day";
 import { HourViewConnected } from "./view/HourView";
 import { MonthView } from "./view/MonthView";
 import { Week } from "./view/Week";
+import { CalendarNavigation } from "./CalendarNavigation";
 
 // TYPES
 import { ApplicationState } from "../App/types";
 import { MomentDictionary } from "./types";
-import { CalendarNavigation } from "./CalendarNavigation";
-import { createHash } from "./factories";
-import { GetBudget } from "../budget/actions";
-import { averageSpend } from "../budget/selectors";
 
 type CalendarProps = MapStateToProps & MapDispatchToProps;
 

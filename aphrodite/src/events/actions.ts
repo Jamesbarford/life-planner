@@ -1,5 +1,4 @@
 import { ActionBase } from "../types/global";
-import { createHashEvent } from "./factories";
 import { Event, EventResponseBody } from "./types";
 import { BaseResponse } from "../helpers/api";
 
