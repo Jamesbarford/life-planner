@@ -29,4 +29,22 @@ export async function postRequest<U, R>(
   return response;
 }
 
+export async function patchRequest<T, R>(
+  url: string,
+  data: T
+): Promise<BaseResponse<R>> {
+  const patchRequest = await fetch(url, {
+    method: "PATCH",
+    mode: "cors",
+    body: JSON.stringify(data),
+    credentials: "include",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  });
+  const response = await patchRequest.json();
+  return response;
+}
+
 export const Api = "/api";

@@ -6,7 +6,9 @@ export const enum BudgetActions {
   GetBudget = "Budget.GetBudget",
   GetBudgetResponse = "Budget.GetBudgetResponse",
   SetBudget = "Budget.SetBudget",
-  SetBudgetResponse = "Budget.SetBudgetResponse"
+  SetBudgetResponse = "Budget.SetBudgetResponse",
+  AmendBudget = "Budget.AmendBudget",
+  AmendBudgetResponse = "Budget.AmendBudgetResponse"
 }
 
 export class SetBudget implements ActionBase {
@@ -29,8 +31,20 @@ export class GetBudgetResponse implements ActionBase {
   constructor(public response: BaseResponse<Budget>) {}
 }
 
+export class AmendBudget implements ActionBase {
+  public readonly type = BudgetActions.AmendBudget;
+  constructor(public id: string, public amount: number) {}
+}
+
+export class AmendBudgetResponse implements ActionBase {
+  public readonly type = BudgetActions.AmendBudgetResponse;
+  constructor(public response: BaseResponse<Budget>) {}
+}
+
 export type BudgetActionTypes =
   | SetBudget
   | SetBudgetResponse
   | GetBudget
-  | GetBudgetResponse;
+  | GetBudgetResponse
+  | AmendBudget
+  | AmendBudgetResponse;

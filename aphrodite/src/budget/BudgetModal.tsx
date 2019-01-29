@@ -6,7 +6,7 @@ import { Moment } from "moment";
 import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
 
 // ACTIONS
-import { SetBudget } from "./actions";
+import { SetBudget, AmendBudget } from "./actions";
 
 // COMPONENTS
 import {
@@ -20,6 +20,8 @@ import { MoneyInput, MoneyKey } from "../components/MoneyInput";
 
 // TYPES
 import { Budget } from "./types";
+import { getMonthBudget, ensureBudget } from "./selectors";
+import { ApplicationState } from "../App/types";
 
 interface BudgetModalOwnProps {
   modalOpen: boolean;
@@ -29,6 +31,12 @@ interface BudgetModalOwnProps {
 
 interface MapDispatchToProps {
   setBudget: (budget: Budget) => void;
+  amendBudget: (id: string, amount: number) => void;
+}
+
+interface MapStateToProps {
+  currentMonthsBudget: Budget;
+  id: string;
 }
 
 interface BudgetModalState {
@@ -38,7 +46,9 @@ interface BudgetModalState {
   [key: string]: string;
 }
 
-type BudgetModalProps = BudgetModalOwnProps & MapDispatchToProps;
+type BudgetModalProps = BudgetModalOwnProps &
+  MapDispatchToProps &
+  MapStateToProps;
 
 class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
   state = { integer: "", fractional: "", inputWidth: "15.5px" };
@@ -49,23 +59,36 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
 
   submit = (e: React.FormEvent) => {
     e.preventDefault();
-    const { date, close, setBudget } = this.props;
+    const {
+      date,
+      close,
+      setBudget,
+      currentMonthsBudget,
+      amendBudget,
+      id
+    } = this.props;
     const { integer, fractional } = this.state;
 
     const budget = mergeAmount(integer, fractional);
 
-    setBudget({ id: date.format("YYYY-MM"), amount: budget, date });
+    if (ensureBudget(currentMonthsBudget) && currentMonthsBudget.id === id) {
+      amendBudget(id, budget);
+    } else {
+      setBudget({ id, amount: budget, date });
+    }
 
-    close();
+    return close();
   };
 
   render() {
-    const { modalOpen, close } = this.props;
+    const { modalOpen, close, currentMonthsBudget } = this.props;
 
     return (
       <Modal open={modalOpen} close={close}>
         <form className="event-modal" onSubmit={this.submit}>
-          <h2>Set budget for month</h2>
+          <h2>{`${
+            ensureBudget(currentMonthsBudget) ? "Amend" : "Set"
+          } budget for month`}</h2>
           <div className="horizonal-wrapper">
             <h3 className="currency-symbol">{CurrencySymbols.sterling}</h3>
             <MoneyInput setBudget={this.amountHandler} />
@@ -73,7 +96,6 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
           <div className="horizonal-wrapper justify-end">
             <Button
               padding={ButtonPadding.small}
-              onClick={() => {}}
               buttonStyle={ButtonStyle.light}
               text="More options"
             />
@@ -90,7 +112,17 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
   }
 }
 
-export const BudgetModalConnected = connect<{}, MapDispatchToProps, {}>(
-  null,
-  dispatch => ({ setBudget: budget => dispatch(new SetBudget(budget)) })
+export const BudgetModalConnected = connect<
+  MapStateToProps,
+  MapDispatchToProps,
+  BudgetModalOwnProps
+>(
+  ({ budget }: ApplicationState, ownProps: BudgetModalOwnProps) => ({
+    currentMonthsBudget: getMonthBudget(ownProps.date, budget),
+    id: ownProps.date.format("YYYY-MM")
+  }),
+  dispatch => ({
+    setBudget: budget => dispatch(new SetBudget(budget)),
+    amendBudget: (id, amount) => dispatch(new AmendBudget(id, amount))
+  })
 )(BudgetModal);

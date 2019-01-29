@@ -2,11 +2,10 @@ import * as moment from "moment";
 import { Map } from "immutable";
 import { Moment } from "moment";
 import { Budget } from "./types";
-import { createHash } from "../Calendar/factories";
 import { TimePoint, alterTime } from "../helpers/dateHelper";
 
 export function setMonthBudget(date: Moment, budget: Budget) {
-  const hash = createHash(date, TimePoint.month);
+  const hash = moment(date).format("YYYY-MM");
   return Map({ [hash]: budget });
 }
 
@@ -22,7 +21,7 @@ export function setBudgetPerDay(
 
   for (let i = 0; i <= daysLeft; i++) {
     const newDate = alterTime(date.clone(), i, TimePoint.day);
-    const hash = newDate.startOf("day").toISOString();
+    const hash = newDate.format("YYYY-MM-DD");
     _obj = { ..._obj, [hash]: parseFloat(spendPerDay.toFixed(2)) };
   }
 

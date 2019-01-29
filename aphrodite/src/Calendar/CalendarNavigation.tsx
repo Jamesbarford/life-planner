@@ -14,6 +14,7 @@ import { ButtonStyle } from "../components/Button";
 
 // Types
 import { TimePointType } from "../helpers/dateHelper";
+import { SelectView } from "./components/SelectView";
 
 interface CalendarNavigationProps {
   day: TimePointType;
@@ -46,104 +47,15 @@ export const CalendarNavigation: React.FunctionComponent<
 }) => (
   <div className="calendar-navigation">
     <div className="calendar-navigation__item">
-      <CustomSelect helperText="Select View" text={view}>
-        {injectedProps => (
-          <>
-            <li className="selecter-list__item" value={day}>
-              <WithRipple
-                className="reset-width"
-                persistFocus={true}
-                rippleStyle={ButtonStyle.light}
-              >
-                {rippleProps => (
-                  <button
-                    className="selecter-list__button"
-                    onMouseUp={rippleProps.handleMouseUp}
-                    onMouseDown={rippleProps.handleMouseDown}
-                    onClick={() => {
-                      changeView(day);
-                      injectedProps.closeList();
-                    }}
-                    onBlur={rippleProps.resetRipple}
-                    value={day}
-                  >
-                    Day
-                  </button>
-                )}
-              </WithRipple>
-            </li>
-            <li className="selecter-list__item" value={week}>
-              <WithRipple
-                className="reset-width"
-                persistFocus={true}
-                rippleStyle={ButtonStyle.light}
-              >
-                {rippleProps => (
-                  <button
-                    className="selecter-list__button"
-                    onMouseUp={rippleProps.handleMouseUp}
-                    onMouseDown={rippleProps.handleMouseDown}
-                    onClick={() => {
-                      changeView(week);
-                      injectedProps.closeList();
-                    }}
-                    onBlur={rippleProps.resetRipple}
-                    value={week}
-                  >
-                    Week
-                  </button>
-                )}
-              </WithRipple>
-            </li>
-            <li className="selecter-list__item" value={month}>
-              <WithRipple
-                className="reset-width"
-                persistFocus={true}
-                rippleStyle={ButtonStyle.light}
-              >
-                {rippleProps => (
-                  <button
-                    className="selecter-list__button"
-                    onMouseUp={rippleProps.handleMouseUp}
-                    onMouseDown={rippleProps.handleMouseDown}
-                    onClick={() => {
-                      changeView(month);
-                      injectedProps.closeList();
-                    }}
-                    onBlur={rippleProps.resetRipple}
-                    value={month}
-                  >
-                    Month
-                  </button>
-                )}
-              </WithRipple>
-            </li>
-            <li className="selecter-list__item" value={year}>
-              <WithRipple
-                className="reset-width"
-                persistFocus={true}
-                rippleStyle={ButtonStyle.light}
-              >
-                {rippleProps => (
-                  <button
-                    className="selecter-list__button"
-                    onMouseUp={rippleProps.handleMouseUp}
-                    onMouseDown={rippleProps.handleMouseDown}
-                    onClick={() => {
-                      this.changeView(year);
-                      injectedProps.closeList();
-                    }}
-                    onBlur={rippleProps.resetRipple}
-                    value={year}
-                  >
-                    Year
-                  </button>
-                )}
-              </WithRipple>
-            </li>
-          </>
-        )}
-      </CustomSelect>
+      <SelectView
+        day={day}
+        view={view}
+        date={date}
+        week={week}
+        year={year}
+        month={month}
+        changeView={changeView}
+      />
     </div>
     <div className="calendar-navigation__item">
       <h2>{date.format("ddd Do MMMM YYYY")}</h2>

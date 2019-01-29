@@ -52,7 +52,7 @@ const Day: React.FunctionComponent<DayProps> = ({
         >
           {day.format("D")}
         </span>
-        <span>{budgetPerDay.get(day.toISOString())}</span>
+        <span>{budgetPerDay.get(day.format("YYYY-MM-DD"))}</span>
       </div>
       {eventList.map(e => (
         <Entry key={e.id} event={e} />

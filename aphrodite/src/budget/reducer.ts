@@ -28,10 +28,12 @@ export function budgetReducer(
 
   switch (action.type) {
     case BudgetActions.SetBudget:
+    case BudgetActions.AmendBudget:
     case BudgetActions.GetBudget:
       return state;
 
     case BudgetActions.GetBudgetResponse:
+    case BudgetActions.AmendBudgetResponse:
     case BudgetActions.SetBudgetResponse: {
       if (!action.response.success) return state;
 

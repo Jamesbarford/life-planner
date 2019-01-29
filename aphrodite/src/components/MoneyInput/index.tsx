@@ -54,7 +54,6 @@ export class MoneyInput extends React.Component<
           inputType={InputType.text}
           value={integer}
           placeholder="0"
-          pattern="/^\d+$/"
         />
         .
         <Input
@@ -63,7 +62,6 @@ export class MoneyInput extends React.Component<
           inputType={InputType.text}
           value={fractional}
           placeholder="00"
-          pattern="/^\d+$/"
         />
       </>
     );

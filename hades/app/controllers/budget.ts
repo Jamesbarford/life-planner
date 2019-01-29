@@ -49,3 +49,31 @@ export async function getBudgetForMonth(
     return failure(res, "failed to fetch budget");
   }
 }
+
+export async function amendBudgetForMonth(
+  req: Request,
+  res: Response
+): Promise<Response> {
+  try {
+    const { id } = req.params;
+    const { budget } = req.body;
+    const request = await client.query(`
+      UPDATE budget
+      SET amount = ${budget}
+      WHERE id = '${id}';
+
+      SELECT * FROM budget
+      WHERE id = '${id}';
+    `);
+    if (request[1].rows.length === 0) {
+      return failure(res, "failed to amend budget");
+    }
+    return success<Budget>(
+      res,
+      request[1].rows[0],
+      "succesfully amended budget"
+    );
+  } catch (err) {
+    return failure(res, "failed to amend budget");
+  }
+}
