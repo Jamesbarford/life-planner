@@ -13,19 +13,19 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-export enum ButtonPadding {
+export const enum ButtonPadding {
   small = "small-padding",
   normal = "normal-padding"
 }
 
-export enum ButtonStyle {
+export const enum ButtonStyle {
   success = "success",
   confirm = "success",
   warning = "warning",
   light = "light"
 }
 
-export enum ButtonType {
+export const enum ButtonType {
   submit = "submit",
   button = "button",
   reset = "reset"

@@ -2,7 +2,7 @@ import { Moment } from "moment";
 import { ActionBase } from "../types/global";
 import { TimePointType } from "../helpers/dateHelper";
 
-export enum CalendarActions {
+export const enum CalendarActions {
   CalendarNext = "Calendar.Next",
   CalendarPrevious = "Calendar.Previous",
   CalendarChangeView = "Calendar.ChangeView",

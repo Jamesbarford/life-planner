@@ -2,7 +2,7 @@ import { ActionBase } from "../types/global";
 import { Event, EventResponseBody } from "./types";
 import { BaseResponse } from "../helpers/api";
 
-export enum EventActions {
+export const enum EventActions {
   CreateEvent = "Events.CreateEvent",
   CreateEventResponse = "Events.CreateEventResponse",
   GetEvents = "Events.GetEvents",

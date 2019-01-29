@@ -21,7 +21,7 @@ interface InputProps {
  * email = "email",
  * number = "number"
  */
-export enum InputType {
+export const enum InputType {
   text = "text",
   password = "password",
   email = "email",

@@ -4,6 +4,6 @@ export const CircularButton = {
   borderRadius: "50%"
 };
 
-export enum BackgroundColor {
+export const enum BackgroundColor {
   lightGray = "#efefefb3"
 }

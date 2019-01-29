@@ -2,11 +2,11 @@ import { ActionBase } from "../types/global";
 import { Budget } from "./types";
 import { BaseResponse } from "../helpers/api";
 
-export enum BudgetActions {
-  SetBudget = "Budget.SetBudget",
-  SetBudgetResponse = "Budget.SetBudgetResponse",
+export const enum BudgetActions {
   GetBudget = "Budget.GetBudget",
-  GetBudgetResponse = "Budget.GetBudgetResponse"
+  GetBudgetResponse = "Budget.GetBudgetResponse",
+  SetBudget = "Budget.SetBudget",
+  SetBudgetResponse = "Budget.SetBudgetResponse"
 }
 
 export class SetBudget implements ActionBase {

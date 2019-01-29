@@ -1,4 +1,4 @@
-export enum CurrencySymbols {
+export const enum CurrencySymbols {
   sterling = "£",
   usd = "$",
   euro = "€"

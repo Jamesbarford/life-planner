@@ -26,6 +26,7 @@ import { WithRipple } from "../components/Ripple";
 
 // TYPES
 import { Event } from "./types";
+import { MoneyKey, MoneyInput } from "../components/MoneyInput";
 
 interface CreateEventState {
   id: string;
@@ -51,9 +52,6 @@ class CreateEventModal extends React.Component<
   CreateEventProps,
   CreateEventState
 > {
-  private integer = "integer";
-  private fractional = "fractional";
-
   state = {
     id: "",
     date: moment(this.props.selectedDay),
@@ -76,15 +74,8 @@ class CreateEventModal extends React.Component<
     this.setState({ error: Map() });
   };
 
-  amountHandler = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
-    if (e.target.value.length < 1) return this.setState({ [key]: "" });
-    let _amount = e.target.value.match(/\d+/g).join("");
-    if (key === this.fractional) {
-      if (_amount.length >= 2) _amount = _amount.substring(0, 2);
-    } else if (key === this.integer) {
-      this.calculateInputWidth(e.target.value);
-    }
-    this.setState({ [key]: _amount });
+  amountHandler = (key: MoneyKey, value: string) => {
+    this.setState({ [key]: value });
   };
 
   calculateInputWidth = (str?: string) => {
@@ -130,21 +121,7 @@ class CreateEventModal extends React.Component<
           />
           <div className="horizonal-wrapper">
             <h3 className="currency-symbol">{CurrencySymbols.sterling}</h3>
-            <Input
-              style={{ width: this.state.inputWidth }}
-              onChange={e => this.amountHandler(e, this.integer)}
-              inputType={InputType.text}
-              value={integer}
-              placeholder="0"
-            />
-            .
-            <Input
-              style={{ width: "30px" }}
-              onChange={e => this.amountHandler(e, this.fractional)}
-              inputType={InputType.text}
-              value={fractional}
-              placeholder="00"
-            />
+            <MoneyInput setBudget={this.amountHandler} />
           </div>
           <CustomSelect helperText="Select Time" text={date.format("LT")}>
             {injectedProps =>

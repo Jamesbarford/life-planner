@@ -15,8 +15,8 @@ import {
   ButtonType,
   ButtonPadding
 } from "../components/Button";
-import { Input, InputType } from "../components/Input";
 import { Modal } from "../components/Modal";
+import { MoneyInput, MoneyKey } from "../components/MoneyInput";
 
 // TYPES
 import { Budget } from "./types";
@@ -41,26 +41,10 @@ interface BudgetModalState {
 type BudgetModalProps = BudgetModalOwnProps & MapDispatchToProps;
 
 class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
-  private integer = "integer";
-  private fractional = "fractional";
-
   state = { integer: "", fractional: "", inputWidth: "15.5px" };
 
-  calculateInputWidth = (str: string) => {
-    const MULTIPLIER = 15.5;
-    const width = str.length * MULTIPLIER + "px";
-    this.setState({ inputWidth: width });
-  };
-
-  amountHandler = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
-    if (e.target.value.length < 1) return this.setState({ [key]: "" });
-    let _amount = e.target.value.match(/\d+/g).join("");
-    if (key === this.fractional) {
-      if (_amount.length >= 2) _amount = _amount.substring(0, 2);
-    } else if (key === this.integer) {
-      this.calculateInputWidth(e.target.value);
-    }
-    this.setState({ [key]: _amount });
+  amountHandler = (key: MoneyKey, value: string) => {
+    this.setState({ [key]: value });
   };
 
   submit = (e: React.FormEvent) => {
@@ -77,7 +61,6 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
 
   render() {
     const { modalOpen, close } = this.props;
-    const { integer, fractional } = this.state;
 
     return (
       <Modal open={modalOpen} close={close}>
@@ -85,23 +68,7 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
           <h2>Set budget for month</h2>
           <div className="horizonal-wrapper">
             <h3 className="currency-symbol">{CurrencySymbols.sterling}</h3>
-            <Input
-              style={{ width: this.state.inputWidth }}
-              onChange={e => this.amountHandler(e, this.integer)}
-              inputType={InputType.text}
-              value={integer}
-              placeholder="0"
-              pattern="\d*"
-            />
-            .
-            <Input
-              style={{ width: "30px" }}
-              onChange={e => this.amountHandler(e, this.fractional)}
-              inputType={InputType.text}
-              value={fractional}
-              placeholder="00"
-              pattern="\d*"
-            />
+            <MoneyInput setBudget={this.amountHandler} />
           </div>
           <div className="horizonal-wrapper justify-end">
             <Button
