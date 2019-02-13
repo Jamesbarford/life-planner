@@ -44,7 +44,7 @@ export const CalendarNavigation: React.FunctionComponent<
   changeView,
   previous,
   next
-}) => (
+}): JSX.Element => (
   <div className="calendar-navigation">
     <div className="calendar-navigation__item">
       <SelectView

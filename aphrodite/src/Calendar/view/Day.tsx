@@ -45,8 +45,11 @@ const Day: React.FunctionComponent<DayProps> = ({
   const eventList = selectEventsToList(day, events);
 
   return (
-    <button className="calendar-cell" onClick={() => select("eventModal", day)}>
-      <div className="calendar-cell__inner">
+    <div className="calendar-cell">
+      <div
+        className="calendar-cell__inner"
+        onClick={() => select("eventModal", day)}
+      >
         <span
           className={classNames([`${selected ? "today" : ""}`, "cell-date"])}
         >
@@ -57,7 +60,11 @@ const Day: React.FunctionComponent<DayProps> = ({
       {eventList.map(e => (
         <Entry key={e.id} event={e} />
       ))}
-    </button>
+      <div
+        className="calendar-cell__inner"
+        onClick={() => select("eventModal", day)}
+      />
+    </div>
   );
 };
 

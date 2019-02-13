@@ -105,7 +105,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
   };
 
   select = (key: string, date?: Moment) => {
-    if (key === "eventModal") {
+    if (key === this.eventModal) {
       this.props.selectDay(date);
     }
     this.setState({ [key]: !this.state[key] });

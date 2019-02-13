@@ -10,7 +10,7 @@ import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
 import { calculate, TimePoint } from "../helpers/dateHelper";
 
 // ACTIONS
-import { CreateEvent } from "./actions";
+import { CreateEvent, DeleteEventRequest } from "./actions";
 
 // COMPONENTS
 import {
@@ -44,6 +44,7 @@ interface OwnProps {
   modalOpen: boolean;
   close: () => void;
   selectedDay: Moment;
+  event?: Event;
 }
 
 type CreateEventProps = MapDispatchToProps & OwnProps;
@@ -87,13 +88,13 @@ class CreateEventModal extends React.Component<
   createEvent = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { createEvent, close } = this.props;
+    const { createEvent, close, deleteEvent } = this.props;
     const { title, date, id, error, integer, fractional } = this.state;
 
     mergeAmount(integer, fractional);
     if (!title) {
       return this.setState({
-        error: error.merge({ message: "Event must have a title" })
+        error: error.set("message", "Event must have a title")
       });
     }
 
@@ -104,8 +105,8 @@ class CreateEventModal extends React.Component<
   selectChangeHandler = (date: Moment) => this.setState({ date });
 
   render() {
-    const { modalOpen, close } = this.props;
-    const { timeArr, error, date, integer, fractional } = this.state;
+    const { modalOpen, close, deleteEvent, event } = this.props;
+    const { timeArr, error, date, title } = this.state;
 
     return (
       <Modal open={modalOpen} close={close}>
@@ -117,6 +118,7 @@ class CreateEventModal extends React.Component<
             autoFocus={true}
             onChange={this.changeHandler}
             inputType={InputType.text}
+            value={event ? event.title : title}
             placeholder="Event title"
           />
           <div className="horizonal-wrapper">
@@ -154,6 +156,13 @@ class CreateEventModal extends React.Component<
               ))
             }
           </CustomSelect>
+          <Button
+            padding={ButtonPadding.normal}
+            type={ButtonType.button}
+            onClick={() => deleteEvent("")}
+            buttonStyle={ButtonStyle.warning}
+            text="Delete"
+          />
           <div className="horizonal-wrapper justify-end">
             <Button
               padding={ButtonPadding.small}
@@ -161,12 +170,14 @@ class CreateEventModal extends React.Component<
               buttonStyle={ButtonStyle.light}
               text="More options"
             />
-            <Button
-              padding={ButtonPadding.normal}
-              type={ButtonType.submit}
-              buttonStyle={ButtonStyle.success}
-              text="Save"
-            />
+            {!event && (
+              <Button
+                padding={ButtonPadding.normal}
+                type={ButtonType.submit}
+                buttonStyle={ButtonStyle.success}
+                text="Save"
+              />
+            )}
           </div>
         </form>
       </Modal>
@@ -180,9 +191,13 @@ const EventError: React.FunctionComponent<{ error: string }> = ({
 
 interface MapDispatchToProps {
   createEvent: (event: Event) => void;
+  deleteEvent: (eventId: string) => void;
 }
 
 export const CreateEventModalConnected = connect<{}, MapDispatchToProps>(
   null,
-  dispatch => ({ createEvent: event => dispatch(new CreateEvent(event)) })
+  dispatch => ({
+    createEvent: event => dispatch(new CreateEvent(event)),
+    deleteEvent: eventId => dispatch(new DeleteEventRequest(eventId))
+  })
 )(CreateEventModal);

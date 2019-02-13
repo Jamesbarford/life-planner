@@ -3,7 +3,6 @@ import * as moment from "moment";
 import { BudgetActionTypes, BudgetActions } from "./actions";
 import { currencyFormatter } from "../helpers/currencyHelper";
 import { Budget } from "./types";
-import { setMonthBudget } from "./factories";
 import { UpdateState } from "../types/global";
 import { setBudgetPerDay } from "./factories";
 
@@ -37,18 +36,29 @@ export function budgetReducer(
     case BudgetActions.SetBudgetResponse: {
       if (!action.response.success) return state;
 
+      if (!action.response.body) {
+        return updateState({
+          currentBudget: 0,
+          currentBudgetDisplay: currencyFormatter("en-GB", "0"),
+          monthlyBudget: Map(),
+          budgetPerDay: Map()
+        });
+      }
+
       const { body } = action.response;
       const date = moment(body.date);
+      const hash = moment(date).format("YYYY-MM");
+      const today = date.month() === moment().month();
       const amount = parseFloat(`${body.amount}`);
 
       const currentBudgetDisplay = currencyFormatter("en-GB", `${body.amount}`);
-      const monthlyBudget = setMonthBudget(date, body);
-      const budgetPerDay = setBudgetPerDay(amount, date);
+
+      const budgetPerDay = setBudgetPerDay(amount, today ? moment() : date);
 
       return updateState({
         currentBudget: amount,
         currentBudgetDisplay,
-        monthlyBudget: state.monthlyBudget.merge(monthlyBudget),
+        monthlyBudget: state.monthlyBudget.set(hash, body),
         budgetPerDay: state.budgetPerDay.merge(budgetPerDay)
       });
     }

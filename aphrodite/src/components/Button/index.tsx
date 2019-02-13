@@ -60,7 +60,10 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
           onMouseUp={injectedProps.handleMouseUp}
           onBlur={injectedProps.resetRipple}
           autoFocus={autoFocus || false}
-          onClick={onClick}
+          onClick={e => {
+            onClick();
+            e.stopPropagation();
+          }}
           style={style}
           className={classNames([
             `custom-button__${buttonStyle}`,

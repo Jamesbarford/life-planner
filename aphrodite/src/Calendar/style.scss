@@ -94,6 +94,8 @@ $border: 1px solid #dadce0;
 .calendar-row {
   @include flexbox;
   @include flexAmount(1 1 0%);
+  height: 100%;
+  border-bottom: $border;
 }
 
 .calendar-cell {
@@ -102,11 +104,9 @@ $border: 1px solid #dadce0;
   letter-spacing: 0.5px;
   position: relative;
   background: white;
-  border: none;
-  padding: 0;
-  display: block;
+  @include flexbox;
   border-left: $border;
-  border-bottom: $border;
+  flex-direction: column;
 
   &.hour {
     border: none;
@@ -149,9 +149,10 @@ $border: 1px solid #dadce0;
   .calendar-cell__inner {
     width: 100%;
     @include flexbox;
-    justify-content: center;
-    align-items: self-start;
-    height: inherit;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
 
     .cell-date {
       height: 30px;
@@ -159,8 +160,6 @@ $border: 1px solid #dadce0;
       @include flexbox;
       justify-content: center;
       align-items: center;
-      position: absolute;
-      top: 5px;
     }
   }
 }

@@ -1,8 +1,14 @@
 import * as React from "react";
 import { Event } from "../../events/types";
 
+import { CreateEventModalConnected } from "../../events/CreateEventModal";
+
 interface EntryProps {
   event: Event;
+}
+
+interface EntryState {
+  modalOpen: boolean;
 }
 
 /**
@@ -17,6 +23,34 @@ interface EntryProps {
  * @param location?: string;
  * @param category?: Category;
  */
-export const Entry: React.FunctionComponent<EntryProps> = ({
-  event
-}): JSX.Element => <span className="entry">{event.title}</span>;
+export class Entry extends React.PureComponent<EntryProps, EntryState> {
+  state = { modalOpen: false };
+
+  toggleModal = () => this.setState({ modalOpen: !this.state.modalOpen });
+
+  render() {
+    const { event } = this.props;
+    const { modalOpen } = this.state;
+    return (
+      <>
+        <button
+          onClick={e => {
+            this.toggleModal();
+            return e.stopPropagation();
+          }}
+          className="entry"
+        >
+          {event.title}
+        </button>
+        {modalOpen && (
+          <CreateEventModalConnected
+            modalOpen={modalOpen}
+            close={this.toggleModal}
+            selectedDay={event.date}
+            event={event}
+          />
+        )}
+      </>
+    );
+  }
+}

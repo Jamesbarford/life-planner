@@ -6,7 +6,9 @@ export const enum EventActions {
   CreateEvent = "Events.CreateEvent",
   CreateEventResponse = "Events.CreateEventResponse",
   GetEvents = "Events.GetEvents",
-  GetEventsResponse = "Events.GetEventsResponse"
+  GetEventsResponse = "Events.GetEventsResponse",
+  DeleteEventRequest = "Events.DeleteEventRequest",
+  DeleteEventResponse = "Events.DeleteEventResponse"
 }
 
 export class CreateEvent implements ActionBase {
@@ -29,8 +31,20 @@ export class GetEventsResponse implements ActionBase {
   constructor(public response: BaseResponse<Array<EventResponseBody>>) {}
 }
 
+export class DeleteEventRequest implements ActionBase {
+  public readonly type = EventActions.DeleteEventRequest;
+  constructor(public id: string) {}
+}
+
+export class DeleteEventResponse implements ActionBase {
+  public readonly type = EventActions.DeleteEventRequest;
+  constructor(public response: BaseResponse<{}>) {}
+}
+
 export type EventActionTypes =
   | CreateEvent
   | GetEvents
   | GetEventsResponse
-  | CreateEventResponse;
+  | CreateEventResponse
+  | DeleteEventRequest
+  | DeleteEventResponse;

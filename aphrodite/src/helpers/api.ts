@@ -47,4 +47,10 @@ export async function patchRequest<T, R>(
   return response;
 }
 
+export async function deleteRequest<R>(url: string): Promise<BaseResponse<R>> {
+  const postRequest = await fetch(url, { method: "DELETE", mode: "cors" });
+  const response = await postRequest.json();
+  return response;
+}
+
 export const Api = "/api";

@@ -10,11 +10,9 @@ module.exports = {
       diagnostics: {
         pathRegex: ".*\\.jest.test\\.tsx?$",
         warnOnly: true
-      },
-      window: true
+      }
     }
   },
-  testEnvironment: "node",
   testRegex: "(/__tests__/.*|(\\.|/)(test|spec|unit))\\.(tsx|ts)?$",
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
   snapshotSerializers: ["enzyme-to-json/serializer"],

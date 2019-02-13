@@ -10,11 +10,7 @@ const analyse = process.env.NODE_ENV === "analyse";
 const development = process.env.NODE_ENV === "development";
 const mode = development ? "development" : "production";
 
-console.log({
-  development,
-  production,
-  analyse
-});
+console.log({ development, production, analyse });
 
 const WebpackConfig = {
   entry: "./src/App/index.tsx",

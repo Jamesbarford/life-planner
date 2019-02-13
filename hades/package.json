@@ -15,6 +15,7 @@
     "bunyan-request": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "lodash": "^4.17.11",
     "moment": "^2.23.0",
     "pg": "^7.8.0",
     "pg-format": "^1.0.4",

@@ -5,9 +5,11 @@ import {
   GetEventsResponse,
   GetEvents,
   CreateEvent,
-  CreateEventResponse
+  CreateEventResponse,
+  DeleteEventRequest,
+  DeleteEventResponse
 } from "./actions";
-import { getRequest, Api, postRequest } from "../helpers/api";
+import { getRequest, Api, postRequest, deleteRequest } from "../helpers/api";
 import { Event, EventResponseBody } from "./types";
 import { Epic } from "../App/middleware";
 
@@ -29,6 +31,18 @@ const postEventEpic: Epic<CreateEvent, CreateEventResponse> = action$ =>
       )
     );
 
-const epics = [fetchEventsEpic, postEventEpic];
+const deleteEventEpic: Epic<
+  DeleteEventRequest,
+  DeleteEventResponse
+> = action$ =>
+  action$
+    .ofType(EventActions.DeleteEventRequest)
+    .switchMap(action =>
+      deleteRequest<{ id: string }>(`${Api}/events/${action.id}`).then(
+        response => new DeleteEventResponse(response)
+      )
+    );
+
+const epics = [fetchEventsEpic, postEventEpic, deleteEventEpic];
 
 export const eventEpics = combineEpics(...epics);

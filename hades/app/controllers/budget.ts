@@ -1,4 +1,5 @@
 import * as moment from "moment";
+import { isEmpty } from "lodash";
 import { Request, Response } from "express";
 import { client } from "../../db";
 import { success, failure } from "../helpers/responseHandlers";
@@ -9,7 +10,22 @@ export async function setBudget(
   res: Response
 ): Promise<Response> {
   const body = req.body as Budget;
-  const { id, date, amount } = body;
+  const { id, amount } = body;
+  const date = moment(body.date);
+  const todaysMonth = moment()
+    .startOf("day")
+    .month();
+  const requestedMonth = moment(body.date)
+    .startOf("day")
+    .month();
+
+  let _dateFormatted: string;
+
+  if (todaysMonth !== requestedMonth) {
+    _dateFormatted = date.startOf("month").format("YYYY-MM-DD");
+  } else {
+    _dateFormatted = date.format("YYYY-MM-DD");
+  }
 
   try {
     await client.query(`
@@ -20,7 +36,7 @@ export async function setBudget(
       )
       VALUES(
         '${id}',
-        '${moment(date).format("YYYY-MM-DD")}',
+        '${_dateFormatted}',
         '${amount}'
       )
     `);
@@ -39,12 +55,18 @@ export async function getBudgetForMonth(
     const request = await client.query(`
       SELECT * FROM budget
       WHERE
-      EXTRACT (MONTH FROM month) = ${month + 1};
+      EXTRACT (MONTH FROM month) = ${parseInt(month) + 1};
     `);
-    if (request.rows.length === 0) {
-      return failure(res, "no budget set for month");
-    }
-    return success<Budget>(res, request.rows[0], "fetch success");
+
+    const response = request.rows[0];
+    if (isEmpty(response)) return success(res, [], "fetch success");
+
+    const body = {
+      id: response.id,
+      amount: response.amount,
+      date: response.month
+    };
+    return success<Budget>(res, body, "fetch success");
   } catch (err) {
     return failure(res, "failed to fetch budget");
   }
@@ -65,9 +87,6 @@ export async function amendBudgetForMonth(
       SELECT * FROM budget
       WHERE id = '${id}';
     `);
-    if (request[1].rows.length === 0) {
-      return failure(res, "failed to amend budget");
-    }
     return success<Budget>(
       res,
       request[1].rows[0],

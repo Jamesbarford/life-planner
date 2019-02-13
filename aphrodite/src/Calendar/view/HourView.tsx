@@ -32,10 +32,12 @@ class HourView extends React.Component<HourViewProps> {
           </div>
         </div>
         {hours.map(hour => (
-          <button
+          <div
             key={hour.toISOString()}
             className="calendar-cell hour"
-            onClick={() => select("eventModal", hour)}
+            onClick={e => {
+              select("eventModal", hour);
+            }}
           >
             <div className="calendar-cell__hour">
               <span className="cell-hour">{hour.format("H a")}</span>
@@ -47,7 +49,7 @@ class HourView extends React.Component<HourViewProps> {
               )}
               <hr className="hour-line" />
             </div>
-          </button>
+          </div>
         ))}
       </>
     );
