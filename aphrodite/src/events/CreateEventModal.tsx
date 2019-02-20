@@ -29,7 +29,6 @@ import { Event } from "./types";
 import { MoneyKey, MoneyInput } from "../components/MoneyInput";
 
 interface CreateEventState {
-  id: string;
   date: Moment;
   title: string;
   timeArr: Array<Moment>;
@@ -54,7 +53,6 @@ class CreateEventModal extends React.Component<
   CreateEventState
 > {
   state = {
-    id: "",
     date: moment(this.props.selectedDay),
     title: "",
     timeArr: [] as Array<Moment>,
@@ -66,8 +64,7 @@ class CreateEventModal extends React.Component<
 
   componentDidMount() {
     const timeArr = calculate(this.props.selectedDay, TimePoint.hour, 30, 48);
-    const id = uuid();
-    this.setState({ id, timeArr });
+    this.setState({ timeArr });
   }
 
   changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,9 +85,9 @@ class CreateEventModal extends React.Component<
   createEvent = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const { createEvent, close, deleteEvent } = this.props;
-    const { title, date, id, error, integer, fractional } = this.state;
-
+    const { createEvent, close } = this.props;
+    const { title, date, error, integer, fractional } = this.state;
+    const id = date.toISOString();
     mergeAmount(integer, fractional);
     if (!title) {
       return this.setState({
@@ -156,13 +153,6 @@ class CreateEventModal extends React.Component<
               ))
             }
           </CustomSelect>
-          <Button
-            padding={ButtonPadding.normal}
-            type={ButtonType.button}
-            onClick={() => deleteEvent("")}
-            buttonStyle={ButtonStyle.warning}
-            text="Delete"
-          />
           <div className="horizonal-wrapper justify-end">
             <Button
               padding={ButtonPadding.small}
@@ -180,6 +170,15 @@ class CreateEventModal extends React.Component<
             )}
           </div>
         </form>
+        {event && (
+          <Button
+            padding={ButtonPadding.normal}
+            type={ButtonType.button}
+            onClick={() => deleteEvent(event.id)}
+            buttonStyle={ButtonStyle.warning}
+            text="Delete"
+          />
+        )}
       </Modal>
     );
   }

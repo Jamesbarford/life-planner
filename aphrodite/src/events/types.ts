@@ -3,6 +3,7 @@ import { Map } from "immutable";
 
 interface EventBase {
   id: string;
+  uid?: string;
   title: string;
   description?: string;
 }

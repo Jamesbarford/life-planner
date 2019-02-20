@@ -1,3 +1,4 @@
+import * as moment from "moment";
 import { Moment } from "moment";
 import { cloneDeep } from "lodash";
 
@@ -136,8 +137,7 @@ export const calculate = (
   const duration = isDay ? 1 : isHours ? 30 : -1;
 
   const incrementor = findIncrementalTimePoint(timePoint);
-
-  const mutableDate = date
+  const mutableDate = moment(date)
     .clone()
     .startOf(timePoint)
     .add(duration, incrementor)

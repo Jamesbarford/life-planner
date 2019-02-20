@@ -24,6 +24,7 @@ export function eventsReducer(
   switch (action.type) {
     case EventActions.GetEvents:
     case EventActions.CreateEvent:
+    case EventActions.DeleteEventRequest:
       return state;
 
     case EventActions.GetEventsResponse: {
@@ -41,6 +42,12 @@ export function eventsReducer(
 
       const newEvent = createHashEvent(date, body);
       return updateState({ events: state.events.merge(newEvent) });
+    }
+
+    case EventActions.DeleteEventResponse: {
+      return updateState({
+        events: state.events.delete(action.response.body.id)
+      });
     }
 
     default:

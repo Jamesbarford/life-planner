@@ -61,7 +61,7 @@ export const Button: React.FunctionComponent<ButtonProps> = ({
           onBlur={injectedProps.resetRipple}
           autoFocus={autoFocus || false}
           onClick={e => {
-            onClick();
+            if (onClick) onClick();
             e.stopPropagation();
           }}
           style={style}

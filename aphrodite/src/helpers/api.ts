@@ -48,8 +48,8 @@ export async function patchRequest<T, R>(
 }
 
 export async function deleteRequest<R>(url: string): Promise<BaseResponse<R>> {
-  const postRequest = await fetch(url, { method: "DELETE", mode: "cors" });
-  const response = await postRequest.json();
+  const deleteRequest = await fetch(url, { method: "DELETE", mode: "cors" });
+  const response = await deleteRequest.json();
   return response;
 }
 

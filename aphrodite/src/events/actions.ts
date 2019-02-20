@@ -37,8 +37,8 @@ export class DeleteEventRequest implements ActionBase {
 }
 
 export class DeleteEventResponse implements ActionBase {
-  public readonly type = EventActions.DeleteEventRequest;
-  constructor(public response: BaseResponse<{}>) {}
+  public readonly type = EventActions.DeleteEventResponse;
+  constructor(public response: BaseResponse<{ id: string }>) {}
 }
 
 export type EventActionTypes =

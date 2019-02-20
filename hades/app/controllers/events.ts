@@ -46,10 +46,23 @@ export async function getEvents(req: Request, res: Response) {
     const request = await client.query(`
       SELECT * FROM events
       WHERE
-      EXTRACT (MONTH FROM date) = ${month + 1};
+      EXTRACT (MONTH FROM date) = ${parseInt(month) + 1};
     `);
     return success<Array<Event>>(res, request.rows, "fetch success");
   } catch (err) {
     return failure(res, "failed to fetch events");
+  }
+}
+
+export async function deleteEvent(req: Request, res: Response) {
+  try {
+    const id = req.params.id;
+    await client.query(`
+      DELETE FROM events
+      WHERE id = '${id}';
+    `);
+    return success(res, { id }, "successfuly deleted event");
+  } catch (err) {
+    return failure(res, "failed to delete event");
   }
 }

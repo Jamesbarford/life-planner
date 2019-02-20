@@ -20,7 +20,7 @@ export function createEventMapFromArray(
         .minutes(time.minutes())
         .seconds(time.seconds());
       return {
-        id: event.id,
+        id: date.toISOString(),
         category: event.category,
         description: event.description,
         title: event.title,
