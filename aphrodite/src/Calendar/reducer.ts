@@ -7,9 +7,10 @@ import {
   TimePoint,
   TimePointType,
   calculate,
-  alterTime
+  alterTime,
+  getHashIndex
 } from "../helpers/dateHelper";
-import { createMomentList, createHash } from "./factories";
+import { createHash } from "./factories";
 
 // ACTIONS
 import { CalendarActions, CalendarActionTypes } from "./actions";
@@ -67,12 +68,18 @@ export function calendarReducer(
     }
 
     case CalendarActions.CalendarChangeView: {
-      const momentList = createMomentList(state, action.newView);
-      const hash = createHash(action.date, action.newView);
+      const hashIndex = getHashIndex(action.newView, state);
+      const hash = createHash(hashIndex, action.newView);
+
+      if (state.momentList.has(hash)) {
+        return updateState({ view: action.newView });
+      }
+
+      const momentArr = calculate(action.date, action.newView, 1);
 
       return updateState({
         view: action.newView,
-        momentList: state.momentList.set(hash, momentList)
+        momentList: state.momentList.set(hash, List(momentArr))
       });
     }
 
@@ -83,12 +90,14 @@ export function calendarReducer(
       });
 
     case CalendarActions.CalculateMomentArray:
-      const hash = createHash(action.date, action.timePoint);
+      const hashIndex = getHashIndex(action.timePoint, state);
+      const hash = createHash(hashIndex, action.timePoint);
       if (state.momentList.has(hash)) return state;
 
-      const momentList = createMomentList(state, action.timePoint);
+      const momentArr = calculate(action.date, action.timePoint, 1);
+
       return updateState({
-        momentList: state.momentList.set(hash, momentList)
+        momentList: state.momentList.set(hash, List(momentArr))
       });
 
     default:

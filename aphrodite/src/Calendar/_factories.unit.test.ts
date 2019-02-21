@@ -1,10 +1,6 @@
 import * as moment from "moment";
-import { List, Map } from "immutable";
 import { createHash } from "./factories";
-import { TimePoint, calculate } from "../helpers/dateHelper";
-import { CalendarState } from "./reducer";
-
-const state = new CalendarState();
+import { TimePoint } from "../helpers/dateHelper";
 
 describe("Date factories", () => {
   it("creates a date hash", () => {

@@ -1,13 +1,8 @@
 import { Moment } from "moment";
-import { List, Map } from "immutable";
 
 // HELPERS
 import { removeWhiteSpace } from "../helpers/util";
-import { TimePointType, getHashIndex, calculate } from "../helpers/dateHelper";
-
-// TYPES
-import { CalendarState } from "./reducer";
-import { MomentDictionary } from "./types";
+import { TimePointType } from "../helpers/dateHelper";
 
 /**
  *
@@ -22,30 +17,4 @@ export function createHash(date: Moment, timePoint: TimePointType): string {
   const formattedDate = date.startOf("day").toISOString();
   const hash = removeWhiteSpace(formattedDate);
   return `${timePoint}-${hash}`;
-}
-
-/**
- *
- * Creates a date hash map with a date hash e.g: `"month-12022019"` and the
- * states current date.
- *
- * @param state calendar state
- * @param timePoint timepoint i.e month
- * @returns a `Map` with a `datehash` as it's key containing a `List` of `moments`
- * @example
- * createMomentList(TimePoint.month, state);
- * => { Map[1] {"month-12012019" => List[5]
- *   0: Moment
- *   1: Moment
- *   2: Moment
- *   3: Moment
- *   4: Moment
- * }
- */
-export function createMomentList(
-  state: CalendarState,
-  timePoint: TimePointType
-): List<Moment> {
-  const newList = List(calculate(state.date, timePoint, 1));
-  return newList;
 }

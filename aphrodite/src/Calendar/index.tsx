@@ -100,8 +100,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
   };
 
   changeView = (timePoint: TimePointType) => {
-    const { calculateMomentArray, changeView, date } = this.props;
-    calculateMomentArray(timePoint, date);
+    const { changeView, date } = this.props;
     changeView(timePoint, date);
   };
 

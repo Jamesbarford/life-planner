@@ -29,6 +29,7 @@ export function eventsReducer(
 
     case EventActions.GetEventsResponse: {
       if (!action.response.success) return state;
+      if (action.response.body.length === 0) return state;
 
       const eventBase = action.response.body;
       const response = createEventMapFromArray(eventBase);
