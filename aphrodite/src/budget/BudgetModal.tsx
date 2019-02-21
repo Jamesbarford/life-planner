@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Moment } from "moment";
 
 // HELPERS
-import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
+import { CurrencySymbols, CurrencyAccessor } from "../helpers/currencyAccessor";
 
 // ACTIONS
 import { SetBudget, AmendBudget } from "./actions";
@@ -69,7 +69,7 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
     } = this.props;
     const { integer, fractional } = this.state;
 
-    const budget = mergeAmount(integer, fractional);
+    const budget = CurrencyAccessor.mergeAmount(integer, fractional);
 
     if (
       BudgetSelector.ensureBudget(currentMonthsBudget) &&

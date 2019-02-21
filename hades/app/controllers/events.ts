@@ -2,7 +2,7 @@ import * as moment from "moment";
 import { Request, Response } from "express";
 import { Event } from "../types";
 import { client } from "../../db";
-import { success, failure, badRequest } from "../helpers/responseHandlers";
+import { RequestHandler } from "../helpers/responseHandlers";
 
 export async function createEvent(
   req: Request,
@@ -13,7 +13,7 @@ export async function createEvent(
 
   // Validate request
   // ===========================================================================
-  if (id === "") return badRequest(res, "Invalid id for event");
+  if (id === "") return RequestHandler.badRequest(res, "Invalid id for event");
 
   try {
     await client.query(`
@@ -34,9 +34,9 @@ export async function createEvent(
         '${moment(date).format("HH:mm:SS")}'
       );
     `);
-    return success(res, body, "succesfully created event");
+    return RequestHandler.success(res, body, "succesfully created event");
   } catch (err) {
-    return failure(res, "failed to create event");
+    return RequestHandler.failure(res, "failed to create event");
   }
 }
 
@@ -48,9 +48,13 @@ export async function getEvents(req: Request, res: Response) {
       WHERE
       EXTRACT (MONTH FROM date) = ${parseInt(month) + 1};
     `);
-    return success<Array<Event>>(res, request.rows, "fetch success");
+    return RequestHandler.success<Array<Event>>(
+      res,
+      request.rows,
+      "fetch success"
+    );
   } catch (err) {
-    return failure(res, "failed to fetch events");
+    return RequestHandler.failure(res, "failed to fetch events");
   }
 }
 
@@ -61,8 +65,8 @@ export async function deleteEvent(req: Request, res: Response) {
       DELETE FROM events
       WHERE id = '${id}';
     `);
-    return success(res, { id }, "successfuly deleted event");
+    return RequestHandler.success(res, { id }, "successfuly deleted event");
   } catch (err) {
-    return failure(res, "failed to delete event");
+    return RequestHandler.failure(res, "failed to delete event");
   }
 }

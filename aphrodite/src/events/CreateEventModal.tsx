@@ -1,12 +1,11 @@
 import * as React from "react";
-import * as uuid from "uuid";
 import * as moment from "moment";
 import { Map } from "immutable";
 import { connect } from "react-redux";
 import { Moment } from "moment";
 
 // HELPERS
-import { CurrencySymbols, mergeAmount } from "../helpers/currencyHelper";
+import { CurrencySymbols, CurrencyAccessor } from "../helpers/currencyAccessor";
 import { calculate, TimePoint } from "../helpers/dateHelper";
 
 // ACTIONS
@@ -88,7 +87,7 @@ class CreateEventModal extends React.Component<
     const { createEvent, close } = this.props;
     const { title, date, error, integer, fractional } = this.state;
     const id = date.toISOString();
-    const amount = mergeAmount(integer, fractional);
+    const amount = CurrencyAccessor.mergeAmount(integer, fractional);
     if (!title) {
       return this.setState({
         error: error.set("message", "Event must have a title")

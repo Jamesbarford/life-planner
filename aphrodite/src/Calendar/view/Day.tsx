@@ -14,7 +14,7 @@ import { CalendarShared } from "../types";
 import { ApplicationState } from "../../App/types";
 import { EventMap } from "../../events/types";
 import { EventSelector } from "../../events/selectors";
-import { currencyFormatter } from "../../helpers/currencyHelper";
+import { CurrencyAccessor } from "../../helpers/currencyAccessor";
 
 export const DayNames: React.FunctionComponent = (): JSX.Element => {
   const weekdays = moment.weekdaysShort();
@@ -46,7 +46,7 @@ const Day: React.FunctionComponent<DayProps> = ({
   const eventList = EventSelector.selectEventsToList(day, events);
   const hash = day.format("YYYY-MM-DD");
   const dayBudget = budgetPerDay.get(hash)
-    ? currencyFormatter("en-gb", `${budgetPerDay.get(hash)}`)
+    ? CurrencyAccessor.format("en-gb", `${budgetPerDay.get(hash)}`)
     : "";
 
   return (

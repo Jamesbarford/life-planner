@@ -2,11 +2,7 @@ import * as moment from "moment";
 import { isMoment } from "moment";
 import { removeWhiteSpace, isString } from "./util";
 import { calculate, TimePoint, alterTime } from "./dateHelper";
-import {
-  currencyFormatter,
-  currencyToNumber,
-  mergeAmount
-} from "./currencyHelper";
+import { CurrencyAccessor } from "./currencyAccessor";
 
 describe("Util functions", () => {
   it("should remove whitespace", () => {
@@ -48,20 +44,20 @@ describe("Date helpers", () => {
     it("converts a number into currency", () => {
       const number = "2000000";
 
-      expect(currencyFormatter("en-GB", number)).toEqual("£2,000,000");
+      expect(CurrencyAccessor.format("en-GB", number)).toEqual("£2,000,000");
     });
 
     it("converts currency to a number", () => {
       const currency = "£2,000,000";
 
-      expect(currencyToNumber(currency)).toEqual(2000000);
+      expect(CurrencyAccessor.toNumber(currency)).toEqual(2000000);
     });
 
     it("merges two numbers to create a floating point", () => {
       const num1 = 10000;
       const num2 = 12;
 
-      expect(mergeAmount(num1, num2)).toEqual(10000.12);
+      expect(CurrencyAccessor.mergeAmount(num1, num2)).toEqual(10000.12);
     });
   });
 });

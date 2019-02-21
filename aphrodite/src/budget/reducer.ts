@@ -1,7 +1,7 @@
 import { Map } from "immutable";
 import * as moment from "moment";
 import { BudgetActionTypes, BudgetActions } from "./actions";
-import { currencyFormatter } from "../helpers/currencyHelper";
+import { CurrencyAccessor } from "../helpers/currencyAccessor";
 import { Budget } from "./types";
 import { UpdateState } from "../types/global";
 import { setBudgetPerDay } from "./factories";
@@ -10,7 +10,7 @@ import { isEmpty } from "lodash";
 export class BudgetState {
   constructor(
     public currentBudget: number = 0,
-    public currentBudgetDisplay: string = currencyFormatter("en-GB", "0"),
+    public currentBudgetDisplay: string = CurrencyAccessor.format("en-GB", "0"),
     public month: number = 0,
     public monthlyBudget: Map<string, Budget> = Map(),
     public budgetPerDay: Map<string, number> = Map()
@@ -20,7 +20,7 @@ export class BudgetState {
 export function budgetReducer(
   state = new BudgetState(),
   action: BudgetActionTypes
-) {
+): BudgetState {
   const updateState: UpdateState<BudgetState> = update => ({
     ...state,
     ...update
@@ -40,7 +40,7 @@ export function budgetReducer(
       if (isEmpty(action.response.body)) {
         return updateState({
           currentBudget: 0,
-          currentBudgetDisplay: currencyFormatter("en-GB", "0"),
+          currentBudgetDisplay: CurrencyAccessor.format("en-GB", "0"),
           monthlyBudget: Map(),
           budgetPerDay: Map()
         });
@@ -52,7 +52,10 @@ export function budgetReducer(
       const thisMonth = date.month() === moment().month();
       const amount = parseFloat(`${body.amount}`);
 
-      const currentBudgetDisplay = currencyFormatter("en-GB", `${body.amount}`);
+      const currentBudgetDisplay = CurrencyAccessor.format(
+        "en-GB",
+        `${body.amount}`
+      );
 
       const budgetPerDay = setBudgetPerDay(amount, thisMonth ? moment() : date);
 

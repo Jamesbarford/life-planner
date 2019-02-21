@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Input, InputType } from "../Input";
-import { splitAmount } from "../../helpers/currencyHelper";
+import { CurrencyAccessor } from "../../helpers/currencyAccessor";
 
 interface MoneyInputProps {
   amount?: number;
@@ -51,7 +51,9 @@ export class MoneyInput extends React.PureComponent<
 
   handleAmount = () => {
     if (!this.props.amount) return;
-    const [integer, fractional] = splitAmount(this.props.amount);
+    const [integer, fractional] = CurrencyAccessor.splitAmount(
+      this.props.amount
+    );
     this.calculateInputWidth(integer);
     this.setState({ integer, fractional: fractional || "" });
   };

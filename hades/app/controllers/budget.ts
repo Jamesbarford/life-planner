@@ -2,7 +2,7 @@ import * as moment from "moment";
 import { isEmpty } from "lodash";
 import { Request, Response } from "express";
 import { client } from "../../db";
-import { success, failure } from "../helpers/responseHandlers";
+import { RequestHandler } from "../helpers/responseHandlers";
 import { Budget } from "../types";
 
 export async function setBudget(
@@ -40,9 +40,9 @@ export async function setBudget(
         '${amount}'
       )
     `);
-    return success(res, body, "succesfully added budget");
+    return RequestHandler.success(res, body, "succesfully added budget");
   } catch (error) {
-    return failure(res, "failed to set budget");
+    return RequestHandler.failure(res, "failed to set budget");
   }
 }
 
@@ -59,16 +59,17 @@ export async function getBudgetForMonth(
     `);
 
     const response = request.rows[0];
-    if (isEmpty(response)) return success(res, {}, "fetch success");
+    if (isEmpty(response))
+      return RequestHandler.success(res, {}, "fetch success");
 
     const body = {
       id: response.id,
       amount: response.amount,
       date: response.month
     };
-    return success<Budget>(res, body, "fetch success");
+    return RequestHandler.success<Budget>(res, body, "fetch success");
   } catch (err) {
-    return failure(res, "failed to fetch budget");
+    return RequestHandler.failure(res, "failed to fetch budget");
   }
 }
 
@@ -87,12 +88,12 @@ export async function amendBudgetForMonth(
       SELECT * FROM budget
       WHERE id = '${id}';
     `);
-    return success<Budget>(
+    return RequestHandler.success<Budget>(
       res,
       request[1].rows[0],
       "succesfully amended budget"
     );
   } catch (err) {
-    return failure(res, "failed to amend budget");
+    return RequestHandler.failure(res, "failed to amend budget");
   }
 }
