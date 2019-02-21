@@ -15,9 +15,10 @@ export const enum CurrencySymbols {
  */
 export function currencyFormatter<T extends string>(
   format: string,
-  amount: T
+  amount: T | undefined
 ): string {
-  if (amount === "") return amount;
+  console.log(amount);
+  if (!amount) return "£0";
   const formatAmount = amount.replace(/,/g, "");
   const formatAmountToNumber = parseFloat(formatAmount);
   const currencyFormatted = new Intl.NumberFormat(format).format(
@@ -49,3 +50,6 @@ export function currencyToNumber(amountStr: string): number {
  */
 export const mergeAmount = <T, U>(integer: T, fractional: U): number =>
   parseFloat(`${integer}.${fractional}`);
+
+export const splitAmount = (amount: number): Array<string> =>
+  `${amount}`.split(".");

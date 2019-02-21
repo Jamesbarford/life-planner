@@ -25,7 +25,7 @@ export function removeWhiteSpace(str: string): string {
  * isString(str) // true;
  * isString(num) // false;
  */
-export function isString<T>(str: T): boolean {
+export function isString<T>(str: T): str is T {
   return toString.call(str) === "[object String]";
 }
 
@@ -39,19 +39,6 @@ export function isString<T>(str: T): boolean {
  */
 export function classNames(classes: Array<string>): string {
   return classes.join(" ").trim();
-}
-
-/**
- *
- * @param obj an object
- * @returns boolean
- * @example
- * const obj = {};
- * isEmptyObject(obj);
- * => true
- */
-export function isEmptyObject(obj: object): boolean {
-  return Object.keys(obj).length > 1;
 }
 
 export const isOfTypeNumber = <T>(value: T): boolean => isNaN(Number(value));

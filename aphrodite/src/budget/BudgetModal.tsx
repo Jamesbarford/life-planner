@@ -20,7 +20,7 @@ import { MoneyInput, MoneyKey } from "../components/MoneyInput";
 
 // TYPES
 import { Budget } from "./types";
-import { getMonthBudget, ensureBudget } from "./selectors";
+import { BudgetSelector } from "./selectors";
 import { ApplicationState } from "../App/types";
 
 interface BudgetModalOwnProps {
@@ -71,7 +71,10 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
 
     const budget = mergeAmount(integer, fractional);
 
-    if (ensureBudget(currentMonthsBudget) && currentMonthsBudget.id === id) {
+    if (
+      BudgetSelector.ensureBudget(currentMonthsBudget) &&
+      currentMonthsBudget.id === id
+    ) {
       amendBudget(id, budget);
     } else {
       setBudget({ id, amount: budget, date });
@@ -82,16 +85,20 @@ class BudgetModal extends React.Component<BudgetModalProps, BudgetModalState> {
 
   render() {
     const { modalOpen, close, currentMonthsBudget } = this.props;
+    const isBudget = BudgetSelector.ensureBudget(currentMonthsBudget);
 
     return (
       <Modal open={modalOpen} close={close}>
         <form className="event-modal" onSubmit={this.submit}>
-          <h2>{`${
-            ensureBudget(currentMonthsBudget) ? "Amend" : "Set"
-          } budget for month`}</h2>
+          <h2>{`${isBudget ? "Amend" : "Set"} budget for month`}</h2>
           <div className="horizonal-wrapper">
             <h3 className="currency-symbol">{CurrencySymbols.sterling}</h3>
-            <MoneyInput setBudget={this.amountHandler} />
+            <MoneyInput
+              amount={
+                isBudget && parseFloat(currentMonthsBudget.amount as string)
+              }
+              setBudget={this.amountHandler}
+            />
           </div>
           <div className="horizonal-wrapper justify-end">
             <Button
@@ -118,7 +125,7 @@ export const BudgetModalConnected = connect<
   BudgetModalOwnProps
 >(
   ({ budget }: ApplicationState, ownProps: BudgetModalOwnProps) => ({
-    currentMonthsBudget: getMonthBudget(ownProps.date, budget),
+    currentMonthsBudget: BudgetSelector.getMonthBudget(ownProps.date, budget),
     id: ownProps.date.format("YYYY-MM")
   }),
   dispatch => ({

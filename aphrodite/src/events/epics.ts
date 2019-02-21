@@ -9,7 +9,7 @@ import {
   DeleteEventRequest,
   DeleteEventResponse
 } from "./actions";
-import { getRequest, Api, postRequest, deleteRequest } from "../helpers/api";
+import { ApiRequest } from "../helpers/api";
 import { Event, EventResponseBody } from "./types";
 import { Epic } from "../App/middleware";
 
@@ -17,8 +17,8 @@ const fetchEventsEpic: Epic<GetEvents, GetEventsResponse> = action$ =>
   action$
     .ofType(EventActions.GetEvents)
     .switchMap(action =>
-      getRequest<Array<EventResponseBody>>(
-        `${Api}/events/${action.month}`
+      ApiRequest.get<Array<EventResponseBody>>(
+        `${ApiRequest.route}/events/${action.month}`
       ).then(response => new GetEventsResponse(response))
     );
 
@@ -26,9 +26,10 @@ const postEventEpic: Epic<CreateEvent, CreateEventResponse> = action$ =>
   action$
     .ofType(EventActions.CreateEvent)
     .switchMap(action =>
-      postRequest<Event, EventResponseBody>(`${Api}/events`, action.event).then(
-        response => new CreateEventResponse(response)
-      )
+      ApiRequest.post<Event, EventResponseBody>(
+        `${ApiRequest.route}/events`,
+        action.event
+      ).then(response => new CreateEventResponse(response))
     );
 
 const deleteEventEpic: Epic<
@@ -38,9 +39,9 @@ const deleteEventEpic: Epic<
   action$
     .ofType(EventActions.DeleteEventRequest)
     .switchMap(action =>
-      deleteRequest<{ id: string }>(`${Api}/events/${action.id}`).then(
-        response => new DeleteEventResponse(response)
-      )
+      ApiRequest.delete<{ id: string }>(
+        `${ApiRequest.route}/events/${action.id}`
+      ).then(response => new DeleteEventResponse(response))
     );
 
 const epics = [fetchEventsEpic, postEventEpic, deleteEventEpic];

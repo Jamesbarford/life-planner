@@ -1,13 +1,12 @@
 import * as moment from "moment";
 import { Moment } from "moment";
-import { Map } from "immutable";
 import { TimePoint, alterTime } from "../helpers/dateHelper";
 import { Dictionary } from "lodash";
 
 export function setBudgetPerDay(
   budget: number,
   date: Moment
-): Map<string, number> {
+): Dictionary<number> {
   const endOfMonth = moment(date).endOf(TimePoint.month);
   const daysLeft = endOfMonth.diff(date, TimePoint.day);
   const spendPerDay = budget / daysLeft;
@@ -19,5 +18,5 @@ export function setBudgetPerDay(
     obj = { ...obj, [hash]: parseFloat(spendPerDay.toFixed(2)) };
   }
 
-  return Map({ ...obj });
+  return obj;
 }

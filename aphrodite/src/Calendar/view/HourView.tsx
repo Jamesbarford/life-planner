@@ -2,11 +2,6 @@ import * as React from "react";
 import { List } from "immutable";
 import { Moment } from "moment";
 import { CalendarShared } from "../types";
-import {
-  selectEventsToList,
-  selectEvent,
-  matchDayToHash
-} from "../../events/selectors";
 import { EventMap } from "../../events/types";
 import { connect } from "react-redux";
 import { ApplicationState } from "../../App/types";
@@ -41,10 +36,10 @@ class HourView extends React.Component<HourViewProps> {
           >
             <div className="calendar-cell__hour">
               <span className="cell-hour">{hour.format("H a")}</span>
-              {selectEvent(hour.toISOString(), events) && (
+              {events.get(hour.toISOString()) && (
                 <Entry
                   key={hour.toISOString()}
-                  event={selectEvent(hour.toISOString(), events)}
+                  event={events.get(hour.toISOString())}
                 />
               )}
               <hr className="hour-line" />

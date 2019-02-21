@@ -5,16 +5,19 @@ import { TimePoint } from "../helpers/dateHelper";
 import { BudgetState } from "./reducer";
 import { Budget } from "./types";
 
-export function averageSpend(budget: number, date: Moment): number {
-  const endOfMonth = moment().endOf(TimePoint.month);
-  const daysLeft = endOfMonth.diff(date, TimePoint.day);
-  return budget / daysLeft;
-}
+export class BudgetSelector {
+  public static getMonthBudget = memoize(
+    (date: Moment, budgetState: BudgetState) => {
+      return budgetState.monthlyBudget.get(date.format("YYYY-MM"));
+    }
+  );
 
-export const getMonthBudget = memoize(
-  (date: Moment, budgetState: BudgetState) => {
-    return budgetState.monthlyBudget.get(date.format("YYYY-MM"));
+  public static averageSpend(budget: number, date: Moment): number {
+    const endOfMonth = moment().endOf(TimePoint.month);
+    return budget / endOfMonth.diff(date, TimePoint.day);
   }
-);
 
-export const ensureBudget = (budget: Budget) => budget && budget.id;
+  public static ensureBudget(budget: Budget) {
+    return budget && budget.id;
+  }
+}

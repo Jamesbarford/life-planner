@@ -5,6 +5,7 @@ import { currencyFormatter } from "../helpers/currencyHelper";
 import { Budget } from "./types";
 import { UpdateState } from "../types/global";
 import { setBudgetPerDay } from "./factories";
+import { isEmpty } from "lodash";
 
 export class BudgetState {
   constructor(
@@ -36,7 +37,7 @@ export function budgetReducer(
     case BudgetActions.SetBudgetResponse: {
       if (!action.response.success) return state;
 
-      if (!action.response.body) {
+      if (isEmpty(action.response.body)) {
         return updateState({
           currentBudget: 0,
           currentBudgetDisplay: currencyFormatter("en-GB", "0"),
@@ -48,12 +49,12 @@ export function budgetReducer(
       const { body } = action.response;
       const date = moment(body.date);
       const hash = moment(date).format("YYYY-MM");
-      const today = date.month() === moment().month();
+      const thisMonth = date.month() === moment().month();
       const amount = parseFloat(`${body.amount}`);
 
       const currentBudgetDisplay = currencyFormatter("en-GB", `${body.amount}`);
 
-      const budgetPerDay = setBudgetPerDay(amount, today ? moment() : date);
+      const budgetPerDay = setBudgetPerDay(amount, thisMonth ? moment() : date);
 
       return updateState({
         currentBudget: amount,

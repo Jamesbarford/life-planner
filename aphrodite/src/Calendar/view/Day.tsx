@@ -13,7 +13,8 @@ import { Entry } from "../../components/Entry";
 import { CalendarShared } from "../types";
 import { ApplicationState } from "../../App/types";
 import { EventMap } from "../../events/types";
-import { selectEventsToList } from "../../events/selectors";
+import { EventSelector } from "../../events/selectors";
+import { currencyFormatter } from "../../helpers/currencyHelper";
 
 export const DayNames: React.FunctionComponent = (): JSX.Element => {
   const weekdays = moment.weekdaysShort();
@@ -42,7 +43,11 @@ const Day: React.FunctionComponent<DayProps> = ({
   budgetPerDay
 }): JSX.Element => {
   const selected = selectedDay.toISOString() === day.toISOString();
-  const eventList = selectEventsToList(day, events);
+  const eventList = EventSelector.selectEventsToList(day, events);
+  const hash = day.format("YYYY-MM-DD");
+  const dayBudget = budgetPerDay.get(hash)
+    ? currencyFormatter("en-gb", `${budgetPerDay.get(hash)}`)
+    : "";
 
   return (
     <div className="calendar-cell">
@@ -55,7 +60,7 @@ const Day: React.FunctionComponent<DayProps> = ({
         >
           {day.format("D")}
         </span>
-        <span>{budgetPerDay.get(day.format("YYYY-MM-DD"))}</span>
+        <span>{dayBudget}</span>
       </div>
       {eventList.map(e => (
         <Entry key={e.id} event={e} />

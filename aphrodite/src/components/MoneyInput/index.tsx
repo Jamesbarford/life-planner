@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Input, InputType } from "../Input";
+import { splitAmount } from "../../helpers/currencyHelper";
 
 interface MoneyInputProps {
+  amount?: number;
   setBudget: (key: MoneyKey, value: string) => void;
 }
 
@@ -17,11 +19,15 @@ export const enum MoneyKey {
   fractional = "fractional"
 }
 
-export class MoneyInput extends React.Component<
+export class MoneyInput extends React.PureComponent<
   MoneyInputProps,
   MoneyInputState
 > {
   state = { integer: "", fractional: "", inputWidth: "15.5px" };
+
+  componentDidMount() {
+    this.handleAmount();
+  }
 
   calculateInputWidth = (str: string) => {
     const MULTIPLIER = 15.5;
@@ -41,6 +47,13 @@ export class MoneyInput extends React.Component<
     }
     this.props.setBudget(key, _amount);
     this.setState({ [key]: _amount });
+  };
+
+  handleAmount = () => {
+    if (!this.props.amount) return;
+    const [integer, fractional] = splitAmount(this.props.amount);
+    this.calculateInputWidth(integer);
+    this.setState({ integer, fractional: fractional || "" });
   };
 
   render() {

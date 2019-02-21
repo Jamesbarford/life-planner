@@ -59,7 +59,7 @@ export async function getBudgetForMonth(
     `);
 
     const response = request.rows[0];
-    if (isEmpty(response)) return success(res, [], "fetch success");
+    if (isEmpty(response)) return success(res, {}, "fetch success");
 
     const body = {
       id: response.id,
