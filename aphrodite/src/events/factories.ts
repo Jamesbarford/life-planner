@@ -1,12 +1,6 @@
 import { Map } from "immutable";
 import * as moment from "moment";
-import { Moment } from "moment";
 import { Event, EventResponseBody } from "./types";
-
-export const createHashEvent = (
-  date: Moment,
-  event: Event
-): Map<string, Event> => Map({ [date.toISOString()]: event });
 
 export function createEventMapFromArray(
   events: Array<EventResponseBody>
@@ -27,6 +21,6 @@ export function createEventMapFromArray(
         date
       };
     })
-    .map(event => createHashEvent(event.date, event));
+    .map(event => Map({ [event.date.toISOString()]: event }));
   return eventsFormatted;
 }

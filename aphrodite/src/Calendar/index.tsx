@@ -58,7 +58,8 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
       calculateMomentArray,
       getEvents,
       currentMonth,
-      getBudget
+      getBudget,
+      date
     } = this.props;
 
     next(1, view);
@@ -71,7 +72,7 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
       getBudget(dateToGet);
       getEvents(dateToGet);
     }
-    calculateMomentArray(view);
+    calculateMomentArray(view, date);
   };
 
   previous = () => {
@@ -81,7 +82,8 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
       calculateMomentArray,
       getEvents,
       currentMonth,
-      getBudget
+      getBudget,
+      date
     } = this.props;
 
     previous(1, view);
@@ -94,13 +96,13 @@ export class Calendar extends React.Component<CalendarProps, CalendarState> {
       getBudget(dateToGet);
       getEvents(dateToGet);
     }
-    calculateMomentArray(view);
+    calculateMomentArray(view, date);
   };
 
   changeView = (timePoint: TimePointType) => {
-    const { calculateMomentArray, changeView } = this.props;
-    calculateMomentArray(timePoint);
-    changeView(timePoint);
+    const { calculateMomentArray, changeView, date } = this.props;
+    calculateMomentArray(timePoint, date);
+    changeView(timePoint, date);
   };
 
   select = (key: string, date?: Moment) => {
@@ -215,8 +217,8 @@ interface MapDispatchToProps {
   next: (unitOfTime: number, timePoint: TimePointType) => void;
   selectDay: (date: Moment) => void;
   previous: (unitOfTime: number, timePoint: TimePointType) => void;
-  changeView: (newView: TimePointType) => void;
-  calculateMomentArray: (t: TimePointType) => void;
+  changeView: (newView: TimePointType, date: Moment) => void;
+  calculateMomentArray: (t: TimePointType, date: Moment) => void;
   getEvents: (month: number) => void;
   getBudget: (month: number) => void;
 }
@@ -239,8 +241,9 @@ export const CalendarConnected = connect<MapStateToProps, MapDispatchToProps>(
     selectDay: date => dispatch(new SelectDay(date)),
     previous: (unitOfTime, timePoint) =>
       dispatch(new CalendarPrevious(unitOfTime, timePoint)),
-    changeView: newView => dispatch(new ChangeView(newView)),
-    calculateMomentArray: t => dispatch(new CalculateMomentArray(t)),
+    changeView: (newView, date) => dispatch(new ChangeView(newView, date)),
+    calculateMomentArray: (t, date) =>
+      dispatch(new CalculateMomentArray(t, date)),
     getEvents: month => dispatch(new GetEvents(month)),
     getBudget: month => dispatch(new GetBudget(month))
   })

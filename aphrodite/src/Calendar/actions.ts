@@ -22,7 +22,7 @@ export class CalendarPrevious implements ActionBase {
 
 export class ChangeView implements ActionBase {
   public readonly type = CalendarActions.CalendarChangeView;
-  constructor(public newView: TimePointType) {}
+  constructor(public newView: TimePointType, public date: Moment) {}
 }
 
 export class SelectDay implements ActionBase {
@@ -32,7 +32,7 @@ export class SelectDay implements ActionBase {
 
 export class CalculateMomentArray implements ActionBase {
   public readonly type = CalendarActions.CalculateMomentArray;
-  constructor(public timePoint: TimePointType) {}
+  constructor(public timePoint: TimePointType, public date: Moment) {}
 }
 
 export type CalendarActionTypes =

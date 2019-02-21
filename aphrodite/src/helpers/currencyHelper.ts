@@ -17,7 +17,6 @@ export function currencyFormatter<T extends string>(
   format: string,
   amount: T | undefined
 ): string {
-  console.log(amount);
   if (!amount) return "£0";
   const formatAmount = amount.replace(/,/g, "");
   const formatAmountToNumber = parseFloat(formatAmount);

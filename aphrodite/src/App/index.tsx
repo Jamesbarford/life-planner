@@ -29,7 +29,7 @@ export const store = createStore(
   applyMiddleware(classToObject, logger, epicMiddleware)
 );
 
-epicMiddleware.run(rootEpic);
+epicMiddleware.run(rootEpic as any);
 
 const App: React.FunctionComponent = (): JSX.Element => (
   <Provider store={store}>

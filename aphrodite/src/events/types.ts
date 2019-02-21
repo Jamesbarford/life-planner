@@ -26,6 +26,7 @@ export interface EventResponseBody {
 
 export interface Event extends EventBase {
   date: Moment;
+  amount?: number;
   location?: string;
   category?: string;
 }

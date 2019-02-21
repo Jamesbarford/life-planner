@@ -2,7 +2,7 @@ import * as moment from "moment";
 import { Map } from "immutable";
 import { EventActionTypes, EventActions } from "./actions";
 import { EventMap, CategoryMap } from "./types";
-import { createEventMapFromArray, createHashEvent } from "./factories";
+import { createEventMapFromArray } from "./factories";
 import { UpdateState } from "../types/global";
 
 export class EventsState {
@@ -15,7 +15,7 @@ export class EventsState {
 export function eventsReducer(
   state = new EventsState(),
   action: EventActionTypes
-) {
+): EventsState {
   const updateState: UpdateState<EventsState> = newState => ({
     ...state,
     ...newState
@@ -40,8 +40,9 @@ export function eventsReducer(
       const { body } = action.response;
       const date = moment(body.date);
 
-      const newEvent = createHashEvent(date, body);
-      return updateState({ events: state.events.merge(newEvent) });
+      return updateState({
+        events: state.events.set(date.toISOString(), body)
+      });
     }
 
     case EventActions.DeleteEventResponse: {

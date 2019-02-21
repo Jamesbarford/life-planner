@@ -39,7 +39,7 @@ export class CalendarState {
 export function calendarReducer(
   state = new CalendarState(),
   action: CalendarActionTypes
-) {
+): CalendarState {
   const updateState: UpdateState<CalendarState> = newState => ({
     ...state,
     ...newState
@@ -68,9 +68,11 @@ export function calendarReducer(
 
     case CalendarActions.CalendarChangeView: {
       const momentList = createMomentList(state, action.newView);
+      const hash = createHash(action.date, action.newView);
+
       return updateState({
         view: action.newView,
-        momentList: state.momentList.merge(momentList)
+        momentList: state.momentList.set(hash, momentList)
       });
     }
 
@@ -81,8 +83,13 @@ export function calendarReducer(
       });
 
     case CalendarActions.CalculateMomentArray:
+      const hash = createHash(action.date, action.timePoint);
+      if (state.momentList.has(hash)) return state;
+
       const momentList = createMomentList(state, action.timePoint);
-      return updateState({ momentList: state.momentList.merge(momentList) });
+      return updateState({
+        momentList: state.momentList.set(hash, momentList)
+      });
 
     default:
       return state;

@@ -88,14 +88,14 @@ class CreateEventModal extends React.Component<
     const { createEvent, close } = this.props;
     const { title, date, error, integer, fractional } = this.state;
     const id = date.toISOString();
-    mergeAmount(integer, fractional);
+    const amount = mergeAmount(integer, fractional);
     if (!title) {
       return this.setState({
         error: error.set("message", "Event must have a title")
       });
     }
 
-    createEvent({ id, title, date, category: "test" });
+    createEvent({ id, title, date, category: "test", amount });
     close();
   };
 
